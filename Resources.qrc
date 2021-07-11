@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/Icons">
+        <file>Resources/Icons/Marshal Logo.svg</file>
+        <file>Resources/Icons/Profile.svg</file>
+        <file>Resources/Icons/Search.svg</file>
+        <file>Resources/Icons/Settings.svg</file>
+        <file>Resources/Icons/New Page.svg</file>
+        <file>Resources/Icons/Templates.svg</file>
+        <file>Resources/Icons/Drop Down.svg</file>
+    </qresource>
+</RCC>
