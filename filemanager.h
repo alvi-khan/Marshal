@@ -16,8 +16,8 @@ private:
     QString homeDirectory;
     QString fileExtension;
     QTreeView *sidebar;
-    void updateSidebar();
-    QStandardItem* addItem(QString directory, QStandardItem *parent);
+    void getChildren(QString directory, QStandardItem *parent);
+    QStandardItem* addChild(QString fileName, QString filePath, QStandardItem *parent);
 };
 
 #endif // FILEMANAGER_H
