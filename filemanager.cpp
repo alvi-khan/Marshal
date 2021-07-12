@@ -15,15 +15,14 @@ FileManager::FileManager()
  */
 QStandardItem* FileManager::addChild(QString fileName, QString filePath, QStandardItem *parent)
 {
-    QStandardItem* item = new QStandardItem(fileName);
-    QStandardItem* fullPath = new QStandardItem(filePath + "\\" + fileName + fileExtension);
+    QStandardItem* childItem = new QStandardItem(fileName);
 
     QList<QStandardItem *> data;
-    data.append(item);
-    data.append(fullPath);
+    data.append(childItem);
+    data.append(new QStandardItem(filePath));
 
     parent->appendRow(data);
-    return item;
+    return childItem;
 }
 
 /**
@@ -42,12 +41,8 @@ void FileManager::createNewPage()
         filePath = homeDirectory;
         parent = model->invisibleRootItem();
     }
-    else
-    {
-        int cutOff = filePath.lastIndexOf(QChar('\\'));
-        filePath = filePath.left(cutOff);
-        parent = model->itemFromIndex(selectedIndex);
-    }
+    else    parent = model->itemFromIndex(selectedIndex);
+
     filePath += "\\Untitled Page";
 
     QDir dir;
@@ -58,6 +53,7 @@ void FileManager::createNewPage()
 
     addChild("Untitled Page", filePath, parent);
     sidebar->setExpanded(selectedIndex, true);
+    sidebar->setColumnHidden(1, true);
 }
 
 /**
@@ -91,5 +87,3 @@ void FileManager::init(QTreeView *sidebar)
     sidebar->setModel(model);
     sidebar->setColumnHidden(1, true);
 }
-
-

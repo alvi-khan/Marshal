@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "filemanager.h"
+#include "filedisplay.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -28,6 +29,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     FileManager *fileManager;
+    FileDisplay *display;
     void init();
 };
 #endif // MAINWINDOW_H
