@@ -1,39 +1,26 @@
 #include "filemanager.h"
+#include "sidebarmanager.h"
+
+QTreeView * FileManager::sidebar;
+QString FileManager::homeDirectory;
+QString FileManager::fileExtension;
+QTextBrowser * FileManager::mainPage;
 
 FileManager::FileManager()
 {
-    homeDirectory = "E:\\Downloads\\Main Folder";
-    fileExtension = ".txt";
-}
 
-/**
- * @brief FileManager::addChild adds a child item to a parent item
- * @param fileName of the child item
- * @param filePath of the child item
- * @param parent
- * @return the child item created
- */
-QStandardItem* FileManager::addChild(QString fileName, QString filePath, QStandardItem *parent)
-{
-    QStandardItem* childItem = new QStandardItem(fileName);
-
-    QList<QStandardItem *> data;
-    data.append(childItem);
-    data.append(new QStandardItem(filePath));
-
-    parent->appendRow(data);
-    return childItem;
 }
 
 /**
  * @brief FileManager::createNewPage adds a new page to the sidebar
  */
-void FileManager::createNewPage()
+void FileManager::addPage(QString fileName)
 {
+    QTreeView* sidebar = sidebarManager::sidebar;
     QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
     QModelIndex selectedIndex = sidebar->currentIndex();
+    QString filePath = selectedIndex.parent().siblingAtColumn(1).data().toString();
 
-    QString filePath = selectedIndex.siblingAtColumn(1).data().toString();
     QStandardItem *parent;
 
     if (filePath == "")
@@ -41,17 +28,22 @@ void FileManager::createNewPage()
         filePath = homeDirectory;
         parent = model->invisibleRootItem();
     }
-    else    parent = model->itemFromIndex(selectedIndex);
+    else    parent = model->itemFromIndex(selectedIndex.parent());
 
-    filePath += "\\Untitled Page";
+    filePath += "\\" + fileName;
 
     QDir dir;
     dir.mkpath(filePath);
-    QFile file(filePath + "\\Untitled Page" + fileExtension);
+    QFile file(filePath + "\\" + fileName + fileExtension);
     file.open(QFile::ReadWrite);
+    QTextStream text(&file);
+    text << mainPage->document()->toHtml();
+
     file.close();
 
-    addChild("Untitled Page", filePath, parent);
+    QStandardItem *finalPage = sidebarManager::addChild(fileName, filePath, parent);
+    sidebar->setCurrentIndex(QModelIndex(finalPage->index()));
+    sidebarManager::removeItem(selectedIndex);
     sidebar->setExpanded(selectedIndex, true);
     sidebar->setColumnHidden(1, true);
 }
@@ -73,15 +65,20 @@ void FileManager::getChildren(QString directory, QStandardItem *parent)
         if (validDir)
         {
             QString fileName = dir.dirName().section("/", -1);
-            QStandardItem* item = addChild(fileName, directory + "\\" + fileName, parent);
+            sidebarManager sidebarManager;
+            QStandardItem* item = sidebarManager.addChild(fileName, directory + "\\" + fileName, parent);
             getChildren(directory + "\\" + fileName, item);
         }
     }
 }
 
-void FileManager::init(QTreeView *sidebar)
+void FileManager::init(QTextBrowser *mainPage, QTreeView *sidebar)
 {
-    this->sidebar = sidebar;
+    homeDirectory = "E:\\Downloads\\Main Folder";
+    fileExtension = ".txt";
+    FileManager::mainPage = mainPage;
+
+    FileManager::sidebar = sidebar;
     QStandardItemModel *model = new QStandardItemModel();
     getChildren(homeDirectory, model->invisibleRootItem());
     sidebar->setModel(model);

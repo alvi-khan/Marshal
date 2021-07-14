@@ -17,15 +17,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_sideBar_clicked(const QModelIndex &index)
 {
-    display->openFile(index, this->ui->mainPage, this->ui->pageTitle);
+    display->openFile(index);
 }
 
 void MainWindow::init()
 {
-    fileManager = new FileManager();
-    fileManager->init(this->ui->sideBar);
-
-    display = new FileDisplay();
+    FileManager::init(this->ui->mainPage, this->ui->sideBar);
+    FileDisplay::init(this->ui->mainPage, this->ui->pageTitle, this->ui->sideBar);
+    sidebarManager::init(this->ui->sideBar);
 
     QSplitter *splitter = this->ui->splitter;
     splitter->setStretchFactor(0, 0);
@@ -34,23 +33,29 @@ void MainWindow::init()
 
 void MainWindow::on_newPageButton_clicked()
 {
-    fileManager->createNewPage();
+    sidebarManager::createEmptyPage();
+    this->ui->mainPage->setText("");
+    this->ui->pageTitle->setText("");
+
 }
 
 
 void MainWindow::on_mainPage_textChanged()
 {
-    QModelIndex index = this->ui->sideBar->currentIndex();
-    display->saveFile(index, this->ui->mainPage);
+    //if (this->ui->mainPage->toPlainText() == "")    this->ui->mainPage->setTextColor(QColor(Qt::gray));
+    //else    this->ui->mainPage->setTextColor(QColor(Qt::white));
+    display->saveFile();
+    // TODO show placeholder text if empty
 }
 
 
 void MainWindow::on_pageTitle_textChanged()
 {
-    QStandardItemModel *model = (QStandardItemModel *) this->ui->sideBar->model();
-    QModelIndex index = this->ui->sideBar->currentIndex();
-    QLineEdit *newFileName = this->ui->pageTitle;
-
-    display->changeTitle(model, index, newFileName);
+    // TODO show placehoder text again
 }
 
+
+void MainWindow::on_pageTitle_editingFinished()
+{
+    display->changeTitle();
+}

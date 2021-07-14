@@ -6,16 +6,21 @@
 #include<QFile>
 #include<QLineEdit>
 #include<QDir>
+#include<QTreeView>
 
 class FileDisplay
 {
 public:
     FileDisplay();
-    void openFile(QModelIndex index, QTextBrowser *content, QLineEdit *title);
-    void saveFile(QModelIndex index, QTextBrowser *content);
-    void changeTitle(QStandardItemModel *model, QModelIndex index, QLineEdit *title);
+    static void openFile(QModelIndex index);
+    static void saveFile();
+    static void changeTitle();
+    static void init(QTextBrowser *mainPage, QLineEdit *pageTitle, QTreeView *sideBar);
 private:
-    QString fileExtension;
+    static QString fileExtension;
+    static QTextBrowser *mainPage;
+    static QLineEdit *pageTitle;
+    static QTreeView *sideBar;
 };
 
 #endif // FILEDISPLAY_H

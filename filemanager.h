@@ -5,19 +5,20 @@
 #include <QFileSystemModel>
 #include <QStandardItemModel>
 #include <QTextBrowser>
+#include "sidebarmanager.h"
 
 class FileManager
 {
 public:
     FileManager();
-    void init(QTreeView *sidebar);
-    void createNewPage();
+    static void init(QTextBrowser *mainPage, QTreeView *sidebar);
+    static void addPage(QString fileName);
 private:
-    QString homeDirectory;
-    QString fileExtension;
-    QTreeView *sidebar;
-    void getChildren(QString directory, QStandardItem *parent);
-    QStandardItem* addChild(QString fileName, QString filePath, QStandardItem *parent);
+    static QString homeDirectory;
+    static QString fileExtension;
+    static QTreeView *sidebar;
+    static void getChildren(QString directory, QStandardItem *parent);
+    static QTextBrowser *mainPage;
 };
 
 #endif // FILEMANAGER_H

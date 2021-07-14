@@ -13,11 +13,13 @@ SOURCES += \
     filemanager.cpp \
     main.cpp \
     mainwindow.cpp \
+    sidebarmanager.cpp
 
 HEADERS += \
     filedisplay.h \
     filemanager.h \
     mainwindow.h \
+    sidebarmanager.h
 
 FORMS += \
     mainwindow.ui

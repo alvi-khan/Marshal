@@ -26,6 +26,8 @@ private slots:
 
     void on_pageTitle_textChanged();
 
+    void on_pageTitle_editingFinished();
+
 private:
     Ui::MainWindow *ui;
     FileManager *fileManager;
