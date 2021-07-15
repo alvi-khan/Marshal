@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    error.cpp \
     filedisplay.cpp \
     filemanager.cpp \
     main.cpp \
@@ -16,12 +17,14 @@ SOURCES += \
     sidebarmanager.cpp
 
 HEADERS += \
+    error.h \
     filedisplay.h \
     filemanager.h \
     mainwindow.h \
     sidebarmanager.h
 
 FORMS += \
+    error.ui \
     mainwindow.ui
 
 INCLUDEPATH += include/

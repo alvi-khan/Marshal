@@ -1,4 +1,6 @@
 #include "sidebarmanager.h"
+#include "error.h"
+#include "filedisplay.h"
 
 QTreeView * sidebarManager::sidebar;
 QStandardItem * sidebarManager::temporaryPage;
@@ -48,7 +50,9 @@ void sidebarManager::createEmptyPage()
     temporaryPage = addChild("Untitled Page", "", parent);
 
     sidebar->setCurrentIndex(QModelIndex(temporaryPage->index()));
+
     tempPageExists = true;
+    FileDisplay::lastIndex = sidebar->currentIndex();
 }
 
 void sidebarManager::init(QTreeView *sidebar)

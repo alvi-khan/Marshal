@@ -1,10 +1,12 @@
 #include "filedisplay.h"
 #include "filemanager.h"
+#include "error.h"
 
 QString FileDisplay::fileExtension;
 QTextBrowser * FileDisplay::mainPage;
 QLineEdit * FileDisplay::pageTitle;
 QTreeView * FileDisplay::sideBar;
+QModelIndex FileDisplay::lastIndex;
 
 FileDisplay::FileDisplay()
 {
@@ -13,21 +15,37 @@ FileDisplay::FileDisplay()
 
 void FileDisplay::openFile(QModelIndex index)
 {
-    // TODO if title empty but page not empty, show warning
+    if (pageTitle->text() == "" && mainPage->toPlainText() != "")
+    {
+        Error *error = new Error(nullptr, "Page cannot be saved without a title. \
+                                            Content will be lost.\nContinue?");
+        error->exec();
+        if (!error->errorAccepted())
+        {
+                sideBar->setCurrentIndex(lastIndex);
+                return;
+        }
+    }
+
     if (pageTitle->text() == "")    sidebarManager::removeItem();
 
-    pageTitle->setText(index.data().toString());
     QString filePath = index.siblingAtColumn(1).data().toString();
     filePath += "\\" + filePath.section("\\", -1) + fileExtension;
 
     QFile file(filePath);
     if (!file.open(QFile::ReadOnly | QFile::Text))
+    {
+        Error *error = new Error(nullptr, "Error opening file.");
+        error->exec();
         return;
-        // TODO show an error message
+    }
 
     QTextStream text(&file);
     mainPage->setText(text.readAll());
     file.close();
+    pageTitle->setText(index.data().toString());
+    lastIndex = index;
+    sideBar->setCurrentIndex(lastIndex);
 }
 
 void FileDisplay::saveFile()
@@ -38,8 +56,11 @@ void FileDisplay::saveFile()
 
     QFile file(filePath);
     if (!file.open(QFile::WriteOnly | QFile::Text))
+    {
+        Error *error = new Error(nullptr, "Error opening file.");
+        error->exec();
         return;
-        // TODO show an error message
+    }
 
     QTextStream text(&file);
     text << mainPage->document()->toHtml();
@@ -56,10 +77,19 @@ void FileDisplay::changeTitle()
     QString newFileName = pageTitle->text();
 
     if (oldFileName == "" && newFileName == "") return; // still an empty file
-    else if (newFileName == "")  return;         // TODO show an error and revert to old name
+    else if (newFileName == "")
+    {
+        Error *error = new Error(nullptr, "File name cannot be empty.");
+        error->exec();
+        pageTitle->setText(oldFileName);
+        pageTitle->setFocus();
+        sideBar->setCurrentIndex(lastIndex);
+        return;
+    }
     else if (oldFileName == "" && newFileName != "")
     {
         FileManager::addPage(newFileName);
+        return;
     }
     else
     {
@@ -77,6 +107,7 @@ void FileDisplay::changeTitle()
         dir.rename(oldFilePath, newFilePath);
 
         QFile::rename(newFilePath + "\\" + oldFileName + ".txt", newFilePath + "\\" + newFileName + ".txt");
+        return;
     }
 }
 

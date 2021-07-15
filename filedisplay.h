@@ -16,6 +16,7 @@ public:
     static void saveFile();
     static void changeTitle();
     static void init(QTextBrowser *mainPage, QLineEdit *pageTitle, QTreeView *sideBar);
+    static QModelIndex lastIndex;
 private:
     static QString fileExtension;
     static QTextBrowser *mainPage;
