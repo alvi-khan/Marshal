@@ -24,8 +24,6 @@ private slots:
 
     void on_mainPage_textChanged();
 
-    void on_pageTitle_textChanged();
-
     void on_pageTitle_editingFinished();
 
 private:

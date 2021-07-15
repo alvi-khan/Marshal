@@ -335,7 +335,7 @@ Text-align: left;</string>
        </layout>
       </widget>
       <widget class="QWidget" name="layoutWidget">
-       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0,0">
         <property name="spacing">
          <number>10</number>
         </property>
@@ -458,6 +458,9 @@ color: rgb(255, 255, 255);</string>
         </item>
         <item>
          <widget class="QLineEdit" name="pageTitle">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -529,6 +532,19 @@ p, li { white-space: pre-wrap; }
            <string>Start typing!</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </widget>

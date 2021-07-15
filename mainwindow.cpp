@@ -17,6 +17,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_sideBar_clicked(const QModelIndex &index)
 {
+    this->ui->pageTitle->setVisible(true);
+    this->ui->mainPage->setVisible(true);
     display->openFile(index);
 }
 
@@ -29,29 +31,29 @@ void MainWindow::init()
     QSplitter *splitter = this->ui->splitter;
     splitter->setStretchFactor(0, 0);
     splitter->setStretchFactor(1, 1);
+
+    QPalette *palette = new QPalette();
+    palette->setColor(QPalette::PlaceholderText, Qt::darkGray);
+    this->ui->pageTitle->setPalette(*palette);
+    this->ui->mainPage->setPalette(*palette);
+
+    this->ui->pageTitle->setVisible(false);
+    this->ui->mainPage->setVisible(false);
 }
 
 void MainWindow::on_newPageButton_clicked()
 {
-    sidebarManager::createEmptyPage();
+    this->ui->pageTitle->setVisible(true);
+    this->ui->mainPage->setVisible(true);
     this->ui->mainPage->setText("");
     this->ui->pageTitle->setText("");
-
+    sidebarManager::createEmptyPage();
 }
 
 
 void MainWindow::on_mainPage_textChanged()
 {
-    //if (this->ui->mainPage->toPlainText() == "")    this->ui->mainPage->setTextColor(QColor(Qt::gray));
-    //else    this->ui->mainPage->setTextColor(QColor(Qt::white));
     display->saveFile();
-    // TODO show placeholder text if empty
-}
-
-
-void MainWindow::on_pageTitle_textChanged()
-{
-    // TODO show placehoder text again
 }
 
 
