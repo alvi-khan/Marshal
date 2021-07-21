@@ -1,86 +1,69 @@
 #include "filemanager.h"
 #include "sidebarmanager.h"
+#include "error.h"
 
-QTreeView * FileManager::sidebar;
+#include <QDir>
+
 QString FileManager::homeDirectory;
-QString FileManager::fileExtension;
-QTextBrowser * FileManager::mainPage;
 
 FileManager::FileManager()
 {
 
 }
 
-/**
- * @brief FileManager::createNewPage adds a new page to the sidebar
- */
-void FileManager::addPage(QString fileName)
+void FileManager::updateFileTracker(QString parent, QString child)
 {
-    QTreeView* sidebar = sidebarManager::sidebar;
-    QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
-    QModelIndex selectedIndex = sidebar->currentIndex();
-    QString filePath = selectedIndex.parent().siblingAtColumn(1).data().toString();
-
-    QStandardItem *parent;
-
-    if (filePath == "")
+    QFile file(parent + "/files.mar");
+    if (!file.open(QFile::Append))
     {
-        filePath = homeDirectory;
-        parent = model->invisibleRootItem();
+        Error *error = new Error(nullptr, "Error creating file.");
+        error->exec();
+        return;
     }
-    else    parent = model->itemFromIndex(selectedIndex.parent());
+    QTextStream content(&file);
+    content << child.replace(parent, "") + "/files.mar\n";
+    file.close();
+}
 
-    filePath += "\\" + fileName;
+QString FileManager::getValidFileName(QString parent)
+{
+    int i = 0;
+    QDir dir(parent + "/Untitled Page " + QString::number(i));
+    while (dir.exists())
+    {
+        i++;
+        dir.setPath(parent + "/Untitled Page " + QString::number(i));
+    }
+    return dir.path();
+}
 
-    QDir dir;
-    dir.mkpath(filePath);
-    QFile file(filePath + "\\" + fileName + fileExtension);
-    file.open(QFile::ReadWrite);
-    QTextStream text(&file);
-    text << mainPage->document()->toHtml();
+void FileManager::addFile(QModelIndex index)
+{
+    homeDirectory = "E:/Downloads/Main Folder";
+    QString parent = index.siblingAtColumn(1).data().toString();
+    if (parent == "")   parent = homeDirectory;
 
+    QDir dir(getValidFileName(parent));
+    dir.mkpath(dir.path());
+    QFile file(dir.path() + "/files.mar");
+    if (!file.open(QFile::ReadWrite));
+    {
+        Error *error = new Error(nullptr, "Error creating file.");
+        error->exec();
+        return;
+    }
     file.close();
 
-    QStandardItem *finalPage = sidebarManager::addChild(fileName, filePath, parent);
-    sidebar->setCurrentIndex(QModelIndex(finalPage->index()));
-    sidebarManager::removeItem(selectedIndex);
-    sidebar->setExpanded(selectedIndex, true);
-    sidebar->setColumnHidden(1, true);
+    if (parent != homeDirectory)    updateFileTracker(parent, dir.path());
+    SidebarManager::createItem(dir.dirName(), dir.path());
 }
 
-/**
- * @brief FileManager::getChildren retrieves all possible child items
- * @param directory of the parent item
- * @param parent
- */
-void FileManager::getChildren(QString directory, QStandardItem *parent)
+QString FileManager::renameFile(QString oldPath, QString newName)
 {
-    QDirIterator it(directory, QDir::Dirs|QDir::NoDotAndDotDot);
-    while (it.hasNext())
-    {
-        QStringList nameFilter("*" + fileExtension);
-        QDir dir = it.next();
-        bool validDir = !dir.entryList(nameFilter).empty();
-
-        if (validDir)
-        {
-            QString fileName = dir.dirName().section("/", -1);
-            sidebarManager sidebarManager;
-            QStandardItem* item = sidebarManager.addChild(fileName, directory + "\\" + fileName, parent);
-            getChildren(directory + "\\" + fileName, item);
-        }
-    }
-}
-
-void FileManager::init(QTextBrowser *mainPage, QTreeView *sidebar)
-{
-    homeDirectory = "E:\\Downloads\\Main Folder";
-    fileExtension = ".txt";
-    FileManager::mainPage = mainPage;
-
-    FileManager::sidebar = sidebar;
-    QStandardItemModel *model = new QStandardItemModel();
-    getChildren(homeDirectory, model->invisibleRootItem());
-    sidebar->setModel(model);
-    sidebar->setColumnHidden(1, true);
+    QString newPath = oldPath;
+    newPath.truncate(newPath.lastIndexOf(QChar('/')));
+    newPath += "/" + newName;
+    QDir dir(oldPath);
+    dir.rename(oldPath, newPath);
+    return newName;
 }

@@ -2,8 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "filemanager.h"
-#include "filedisplay.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,14 +20,10 @@ private slots:
 
     void on_newPageButton_clicked();
 
-    void on_mainPage_textChanged();
-
     void on_pageTitle_editingFinished();
 
 private:
     Ui::MainWindow *ui;
-    FileManager *fileManager;
-    FileDisplay *display;
     void init();
 };
 #endif // MAINWINDOW_H

@@ -1,18 +1,40 @@
 #include "sidebarmanager.h"
-#include "error.h"
-#include "filedisplay.h"
 
-QTreeView * sidebarManager::sidebar;
-QStandardItem * sidebarManager::temporaryPage;
-bool sidebarManager::tempPageExists;
+#include <QDirIterator>
 
-sidebarManager::sidebarManager()
+QString SidebarManager::homeDirectory;
+QTreeView * SidebarManager::sidebar;
+
+SidebarManager::SidebarManager()
 {
 
 }
 
-QStandardItem* sidebarManager::addChild(QString fileName, QString filePath, QStandardItem *parent)
+void SidebarManager::removeItem(QModelIndex index)
 {
+    if (!index.isValid())  return;
+    QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
+
+    QStandardItem *item = model->itemFromIndex(index);
+    model->removeRow(item->row(), item->parent()->index());
+}
+
+/**
+ * @brief SidebarManager::createItem creates a new entry in the sidebar
+ * @param fileName
+ * @param filePath
+ * @param parent
+ * @return
+ */
+QStandardItem* SidebarManager::createItem(QString fileName, QString filePath, QStandardItem *parent)
+{
+    if (parent == nullptr)
+    {
+        QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
+        if (!sidebar->currentIndex().isValid()) parent = model->invisibleRootItem();
+        else    parent = model->itemFromIndex(sidebar->currentIndex());
+    }
+
     QStandardItem* childItem = new QStandardItem(fileName);
 
     QList<QStandardItem *> data;
@@ -23,41 +45,44 @@ QStandardItem* sidebarManager::addChild(QString fileName, QString filePath, QSta
     return childItem;
 }
 
-void sidebarManager::removeItem(QModelIndex index)
+/**
+ * @brief SidebarManager::getChildren retrieves all child items from a particular location
+ * @param directory
+ * @param parent
+ */
+void SidebarManager::getChildren(QString directory, QStandardItem *parent)
 {
-    if (index == temporaryPage->index() && !tempPageExists) return;
-    else if (index == temporaryPage->index())   tempPageExists = false;
-
-    if (index.data().toString() == "")  return;
-    QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
-
-    QStandardItem *temporaryItem = model->itemFromIndex(index);
-    model->removeRow(temporaryItem->row(), temporaryPage->index().parent());
+    QDirIterator it(directory, QDir::Dirs|QDir::NoDotAndDotDot);
+    while (it.hasNext())
+    {
+        QDir dir = it.next();
+        QStandardItem* newItem = createItem(dir.dirName(), dir.absolutePath(), parent);
+        getChildren(dir.absolutePath(), newItem);
+    }
 }
 
-void sidebarManager::createEmptyPage()
+/**
+ * @brief SidebarManager::init populates the sidebar
+ * @param sidebar
+ */
+void SidebarManager::init(QTreeView *sidebar)
 {
-    if (tempPageExists) return;
-
-    QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
-    QModelIndex emptyPageParentIndex = sidebar->currentIndex();
-    QString filePath = emptyPageParentIndex.siblingAtColumn(1).data().toString();
-
-    QStandardItem *parent;
-    if (filePath == "") parent = model->invisibleRootItem();
-    else                parent = model->itemFromIndex(emptyPageParentIndex);
-
-    temporaryPage = addChild("Untitled Page", "", parent);
-
-    sidebar->setCurrentIndex(QModelIndex(temporaryPage->index()));
-
-    tempPageExists = true;
-    FileDisplay::lastIndex = sidebar->currentIndex();
+    homeDirectory = "E:/Downloads/Main Folder";
+    SidebarManager::sidebar = sidebar;
+    QStandardItemModel *model = new QStandardItemModel();
+    getChildren(homeDirectory, model->invisibleRootItem());
+    sidebar->setModel(model);
+    sidebar->setColumnHidden(1, true);
 }
 
-void sidebarManager::init(QTreeView *sidebar)
+void SidebarManager::rename(QModelIndex index, QString newName)
 {
-    sidebarManager::sidebar = sidebar;
-    tempPageExists = false;
-    temporaryPage = new QStandardItem();
+    QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
+    QStandardItem *item = model->itemFromIndex(index);
+    item->setText(newName);
+    item = model->itemFromIndex(index.siblingAtColumn(1));
+    QString newPath = item->text();
+    newPath.truncate(newPath.lastIndexOf(QChar('/')));
+    newPath += "/" + newName;
+    item->setText(newPath);
 }

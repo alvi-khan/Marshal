@@ -1,21 +1,21 @@
 #ifndef SIDEBARMANAGER_H
 #define SIDEBARMANAGER_H
 
-#include <QStandardItemModel>
+#include <QString>
+#include <QStandardItem>
 #include <QTreeView>
-#include <QItemSelection>
 
-class sidebarManager
+class SidebarManager
 {
 public:
-    sidebarManager();
-    static QStandardItem* addChild(QString fileName, QString filePath, QStandardItem *parent);
-    static void removeItem(QModelIndex index = temporaryPage->index());
-    static void createEmptyPage();
-    static QTreeView *sidebar;
-    static QStandardItem *temporaryPage;
-    static bool tempPageExists;
+    SidebarManager();
+    static QStandardItem* createItem(QString fileName, QString filePath, QStandardItem *parent = nullptr);
+    static void getChildren(QString directory, QStandardItem *parent);
     static void init(QTreeView *sidebar);
+    static void rename(QModelIndex index, QString newName);
+    static QString homeDirectory;
+    static QTreeView *sidebar;
+    void removeItem(QModelIndex index);
 };
 
 #endif // SIDEBARMANAGER_H
