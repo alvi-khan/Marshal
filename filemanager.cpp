@@ -29,6 +29,28 @@ void FileManager::saveBlock()
     file.close();
 }
 
+void FileManager::createBlock(QModelIndex index)
+{
+    QString page = index.siblingAtColumn(1).data().toString();
+
+    int i = 0;
+    QString block = page + "/Block " + QString::number(i) + ".html";
+    while (QFileInfo::exists(block) && QFileInfo(block).isFile())
+    {
+        i++;
+        block = page + "/Block " + QString::number(i) + ".html";
+    }
+    QFile file(block);
+    if (!file.open(QFile::ReadWrite))
+    {
+        Error *error = new Error(nullptr, "Error creating file.");
+        error->exec();
+        return;
+    }
+    file.close();
+    updateFileTracker(page, block.replace(page, "") + "\n");
+}
+
 void FileManager::updateFileTracker(QString parent, QString child)
 {
     QFile file(parent + "/files.mar");
@@ -39,7 +61,7 @@ void FileManager::updateFileTracker(QString parent, QString child)
         return;
     }
     QTextStream content(&file);
-    content << child.replace(parent, "") + "/files.mar\n";
+    content << child;
     file.close();
 }
 
@@ -75,10 +97,11 @@ void FileManager::addFile(QModelIndex index)
 
     if (parent != homeDirectory)
     {
-        updateFileTracker(parent, dir.path());
+        updateFileTracker(parent, dir.path().replace(parent, "") + "/files.mar\n");
         Blocks::addSubfileBlock(dir.path() + "/files.mar");
     }
-    SidebarManager::createItem(dir.dirName(), dir.path());
+    QStandardItem *newItem = SidebarManager::createItem(dir.dirName(), dir.path());
+    createBlock(newItem->index());
 }
 
 QString FileManager::renameFile(QString oldPath, QString newName)

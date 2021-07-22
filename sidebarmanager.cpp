@@ -106,3 +106,8 @@ void SidebarManager::setCurrentIndex(QModelIndex index)
 {
     sidebar->setCurrentIndex(index);
 }
+
+QModelIndex SidebarManager::getCurrentIndex()
+{
+    return sidebar->currentIndex();
+}

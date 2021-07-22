@@ -69,8 +69,7 @@ void DisplayManager::renameFile(QModelIndex index)
  */
 void DisplayManager::openFile(QModelIndex index)
 {
-    //TODO fix this
-    foreach (QWidget* widget, mainPage->findChildren<QWidget*>())   mainPage->layout()->removeWidget(widget);
+    while (QWidget *w = mainPage->findChild<QWidget*>())    delete w;
 
     QString filePath = index.siblingAtColumn(1).data().toString();
     QFile file(filePath + "/files.mar");

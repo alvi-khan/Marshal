@@ -16,6 +16,7 @@ public:
     static void updateFileTracker(QString parent, QString child);
     static QString getValidFileName(QString parent);
     static QString renameFile(QString oldPath, QString newName);
+    static void createBlock(QModelIndex index);
 public slots:
     void saveBlock();
 };

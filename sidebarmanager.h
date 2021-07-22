@@ -19,6 +19,7 @@ public:
     static QModelIndex getChild(QString data);
 
     static void setCurrentIndex(QModelIndex index);
+    static QModelIndex getCurrentIndex();
 };
 
 #endif // SIDEBARMANAGER_H

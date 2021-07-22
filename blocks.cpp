@@ -24,7 +24,8 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     newBlock->setTextColor(QColor::fromRgb(255, 255, 255));
     QFontMetrics m(newBlock->font());
     int rowHeight = m.lineSpacing();
-    newBlock->setMaximumHeight(rowHeight * newBlock->document()->lineCount() * 1.5);
+    int lineCount = newBlock->document()->lineCount();
+    newBlock->setMaximumHeight(rowHeight * lineCount * 1.5);
 
     // connect block to save function
     connect(newBlock, &QTextEdit::textChanged, new FileManager(), &FileManager::saveBlock);
@@ -32,6 +33,7 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     // add block to main page
     QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
     layout->addWidget(newBlock);
+    layout->setAlignment(Qt::AlignTop);
     mainPage->setLayout(layout);
 
     return newBlock;
