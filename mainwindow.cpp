@@ -3,6 +3,7 @@
 #include "sidebarmanager.h"
 #include "displaymanager.h"
 #include "filemanager.h"
+#include "blocks.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,6 +23,7 @@ void MainWindow::init()
 {
     SidebarManager::init(this->ui->sideBar);
     DisplayManager::init(this->ui->mainPage, this->ui->pageTitle);
+    Blocks::init(this->ui->mainPage);
 
     QSplitter *splitter = this->ui->splitter;
     splitter->setStretchFactor(0, 0);

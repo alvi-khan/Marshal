@@ -2,6 +2,7 @@
 #include "sidebarmanager.h"
 #include "error.h"
 #include "displaymanager.h"
+#include "blocks.h"
 
 #include <QDir>
 
@@ -10,6 +11,22 @@ QString FileManager::homeDirectory;
 FileManager::FileManager()
 {
 
+}
+
+void FileManager::saveBlock()
+{
+    QTextBrowser *htmlBlock = qobject_cast<QTextBrowser*>(sender());
+    QString filePath = htmlBlock->documentTitle();
+    QFile file(filePath);
+    if (!file.open(QFile::WriteOnly))
+    {
+        Error *error = new Error(nullptr, "Error saving file.");
+        error->exec();
+        return;
+    }
+    QTextStream text(&file);
+    text << htmlBlock->document()->toHtml();
+    file.close();
 }
 
 void FileManager::updateFileTracker(QString parent, QString child)
@@ -58,7 +75,7 @@ void FileManager::addFile(QModelIndex index)
     if (parent != homeDirectory)
     {
         updateFileTracker(parent, dir.path());
-        DisplayManager::addSubfileBlock(dir.path() + "/files.mar");
+        Blocks::addSubfileBlock(dir.path() + "/files.mar");
     }
     SidebarManager::createItem(dir.dirName(), dir.path());
 }

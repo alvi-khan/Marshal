@@ -5,8 +5,10 @@
 
 
 
-class FileManager
+class FileManager : public QObject
 {
+    Q_OBJECT
+
 public:
     FileManager();
     static void addFile(QModelIndex index);
@@ -14,6 +16,8 @@ public:
     static void updateFileTracker(QString parent, QString child);
     static QString getValidFileName(QString parent);
     static QString renameFile(QString oldPath, QString newName);
+public slots:
+    void saveBlock();
 };
 
 #endif // FILEMANAGER_H
