@@ -43,7 +43,7 @@ void FileManager::updateFileTracker(QString parent, QString child)
     file.close();
 }
 
-QString FileManager::getValidFileName(QString parent)
+QString FileManager::getValidFileName(QString parent)  // gets valid name for untitled page
 {
     int i = 0;
     QDir dir(parent + "/Untitled Page " + QString::number(i));
@@ -59,6 +59,7 @@ void FileManager::addFile(QModelIndex index)
 {
     homeDirectory = "E:/Downloads/Main Folder";
     QString parent = index.siblingAtColumn(1).data().toString();
+    qDebug()<<parent;
     if (parent == "")   parent = homeDirectory;
 
     QDir dir(getValidFileName(parent));

@@ -24,6 +24,8 @@ private slots:
 
     void on_urlButton_clicked();
 
+    void on_subpageButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void init();

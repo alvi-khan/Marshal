@@ -5,9 +5,7 @@
 #include "filemanager.h"
 #include "blocks.h"
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     init();
@@ -33,7 +31,7 @@ void MainWindow::init()
 }
 
 
-void MainWindow::on_sideBar_clicked(const QModelIndex &index)
+void MainWindow::on_sideBar_clicked(const QModelIndex &index)     // opens a file from sidebar
 {
     this->ui->pageTitle->setVisible(true);
     this->ui->mainPage->setVisible(true);
@@ -41,14 +39,15 @@ void MainWindow::on_sideBar_clicked(const QModelIndex &index)
 }
 
 
-void MainWindow::on_newPageButton_clicked()
+void MainWindow::on_newPageButton_clicked()        // creates a new page
 {
     this->ui->pageTitle->setVisible(true);
     this->ui->mainPage->setVisible(true);
-    FileManager::addFile(this->ui->sideBar->currentIndex());
+    QStandardItemModel *model = (QStandardItemModel*) this->ui->sideBar->model();
+    FileManager::addFile(model->invisibleRootItem()->index());
 }
 
-void MainWindow::on_pageTitle_editingFinished()
+void MainWindow::on_pageTitle_editingFinished()     // changes page title
 {
     DisplayManager::renameFile(this->ui->sideBar->currentIndex());
 }
@@ -57,5 +56,15 @@ void MainWindow::on_pageTitle_editingFinished()
 void MainWindow::on_urlButton_clicked()
 {
     DisplayManager::createUrl("www.google.com", "Google");
+}
+
+
+
+
+void MainWindow::on_subpageButton_clicked()
+{
+    this->ui->pageTitle->setVisible(true);
+    this->ui->mainPage->setVisible(true);
+    FileManager::addFile(this->ui->sideBar->currentIndex());
 }
 

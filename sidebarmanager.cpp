@@ -10,7 +10,7 @@ SidebarManager::SidebarManager()
 
 }
 
-QModelIndex SidebarManager::getChild(QString data)
+QModelIndex SidebarManager::getChild(QString data)    // opens sub file
 {
     QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
     QStandardItem *parent = model->itemFromIndex(sidebar->currentIndex());
