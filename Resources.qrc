@@ -7,5 +7,6 @@
         <file>Resources/Icons/Search.svg</file>
         <file>Resources/Icons/Settings.svg</file>
         <file>Resources/Icons/Templates.svg</file>
+        <file>Resources/Icons/URL.svg</file>
     </qresource>
 </RCC>

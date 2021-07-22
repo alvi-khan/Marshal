@@ -1,6 +1,7 @@
 #include "filemanager.h"
 #include "sidebarmanager.h"
 #include "error.h"
+#include "displaymanager.h"
 
 #include <QDir>
 
@@ -46,7 +47,7 @@ void FileManager::addFile(QModelIndex index)
     QDir dir(getValidFileName(parent));
     dir.mkpath(dir.path());
     QFile file(dir.path() + "/files.mar");
-    if (!file.open(QFile::ReadWrite));
+    if (!file.open(QFile::ReadWrite))
     {
         Error *error = new Error(nullptr, "Error creating file.");
         error->exec();
@@ -54,7 +55,11 @@ void FileManager::addFile(QModelIndex index)
     }
     file.close();
 
-    if (parent != homeDirectory)    updateFileTracker(parent, dir.path());
+    if (parent != homeDirectory)
+    {
+        updateFileTracker(parent, dir.path());
+        DisplayManager::addSubfileBlock(dir.path() + "/files.mar");
+    }
     SidebarManager::createItem(dir.dirName(), dir.path());
 }
 

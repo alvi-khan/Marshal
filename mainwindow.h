@@ -22,6 +22,8 @@ private slots:
 
     void on_pageTitle_editingFinished();
 
+    void on_urlButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void init();

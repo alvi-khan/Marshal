@@ -1,9 +1,12 @@
 #include "displaymanager.h"
 
+#include <QCalendarWidget>
 #include <QDir>
 #include <QFile>
 #include <QTextBrowser>
 #include <QVBoxLayout>
+#include <QDesktopServices>
+#include <QLabel>
 #include "error.h"
 #include "filemanager.h"
 #include "sidebarmanager.h"
@@ -21,7 +24,7 @@ void DisplayManager::saveBlock()
     QTextBrowser *htmlBlock = qobject_cast<QTextBrowser*>(sender());
     QString filePath = htmlBlock->documentTitle();
     QFile file(filePath);
-    file.open(QFile::WriteOnly);
+    if (!file.open(QFile::WriteOnly))
     {
         Error *error = new Error(nullptr, "Error saving file.");
         error->exec();
@@ -52,7 +55,10 @@ void DisplayManager::addHtmlBlock(QString filePath)
     htmlBlock->setReadOnly(false);
     htmlBlock->setFrameStyle(QFrame::NoFrame);
     htmlBlock->setTextColor(QColor::fromRgb(255, 255, 255));
-    //htmlBlock->setFixedHeight(htmlBlock->document()->pageSize().height());
+
+    QFontMetrics m(htmlBlock->font());
+    int rowHeight = m.lineSpacing();
+    htmlBlock->setMaximumHeight(rowHeight * htmlBlock->document()->lineCount() * 1.5);
 
     connect(htmlBlock, &QTextEdit::textChanged, new DisplayManager(), &DisplayManager::saveBlock);
 
@@ -60,6 +66,67 @@ void DisplayManager::addHtmlBlock(QString filePath)
     layout->addWidget(htmlBlock);
     mainPage->setLayout(layout);
     file.close();
+}
+
+void DisplayManager::openLink(QUrl url)
+{
+    QString link = url.toString();
+    if (!link.endsWith(".mar")) QDesktopServices::openUrl(url);
+    else
+    {
+        link.truncate(link.lastIndexOf(QChar('/')));
+        QModelIndex index = SidebarManager::getChild(link);
+        SidebarManager::setCurrentIndex(index);
+        openFile(index);
+    }
+}
+
+void DisplayManager::addSubfileBlock(QString filePath)
+{
+    QString fileName = filePath.section("/", -2, -2);
+
+    QTextBrowser *subfileBlock = new QTextBrowser();
+    subfileBlock->insertHtml("<a style=\"color: #66d9ee\" href=\"" + filePath + "\">" + fileName + "</a>");
+    subfileBlock->setOpenLinks(false);
+    subfileBlock->setFrameStyle(QFrame::NoFrame);
+    subfileBlock->setTextColor(QColor::fromRgb(102, 217, 238));
+
+    QFontMetrics m(subfileBlock->font());
+    int rowHeight = m.lineSpacing();
+    subfileBlock->setMaximumHeight(rowHeight * subfileBlock->document()->lineCount() * 1.5);
+
+    subfileBlock->connect(subfileBlock, &QTextBrowser::anchorClicked, new DisplayManager(), &DisplayManager::openLink);
+
+    QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
+    layout->addWidget(subfileBlock);
+    mainPage->setLayout(layout);
+}
+
+void DisplayManager::addUrlBlock(QString url, QString displayName)
+{
+    QTextBrowser *urlBlock = new QTextBrowser();
+    urlBlock->insertHtml("<a style=\"color: #66d9ee\" href=\"" + url + "\">" + displayName + "</a>");
+    urlBlock->setOpenLinks(false);
+    urlBlock->setFrameStyle(QFrame::NoFrame);
+    urlBlock->setTextColor(QColor::fromRgb(102, 217, 238));
+
+    QFontMetrics m(urlBlock->font());
+    int rowHeight = m.lineSpacing();
+    urlBlock->setMaximumHeight(rowHeight * urlBlock->document()->lineCount() * 1.5);
+
+    urlBlock->connect(urlBlock, &QTextBrowser::anchorClicked, new DisplayManager(), &DisplayManager::openLink);
+
+    QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
+    layout->addWidget(urlBlock);
+    mainPage->setLayout(layout);
+}
+
+void DisplayManager::createUrl(QString url, QString displayName)
+{
+    // new dialog, get url
+    addUrlBlock(url, displayName);
+    // save block as file
+    // update file tracker
 }
 
 /**
@@ -90,6 +157,7 @@ void DisplayManager::renameFile(QModelIndex index)
  */
 void DisplayManager::openFile(QModelIndex index)
 {
+    //TODO fix this
     foreach (QWidget* widget, mainPage->findChildren<QWidget*>())   mainPage->layout()->removeWidget(widget);
 
     QString filePath = index.siblingAtColumn(1).data().toString();
@@ -111,6 +179,8 @@ void DisplayManager::openFile(QModelIndex index)
         QFileInfo block(filePath + blocks.readLine());
         if (block.completeSuffix() == "html")
             addHtmlBlock(block.absoluteFilePath());
+        else if (block.completeSuffix() == "mar")
+            addSubfileBlock(block.absoluteFilePath());
     }
 
     file.close();

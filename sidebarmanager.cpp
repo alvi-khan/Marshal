@@ -10,6 +10,21 @@ SidebarManager::SidebarManager()
 
 }
 
+QModelIndex SidebarManager::getChild(QString data)
+{
+    QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
+    QStandardItem *parent = model->itemFromIndex(sidebar->currentIndex());
+    QStandardItem *child;
+
+    for (int row=0; row < parent->rowCount(); row++)
+    {
+        child = parent->child(row, 0);
+        if (QString::compare(child->index().siblingAtColumn(1).data().toString(), data, Qt::CaseInsensitive) == 0)
+            return child->index();
+    }
+    return sidebar->currentIndex();
+}
+
 void SidebarManager::removeItem(QModelIndex index)
 {
     if (!index.isValid())  return;
@@ -72,7 +87,7 @@ void SidebarManager::init(QTreeView *sidebar)
     QStandardItemModel *model = new QStandardItemModel();
     getChildren(homeDirectory, model->invisibleRootItem());
     sidebar->setModel(model);
-    sidebar->setColumnHidden(1, true);
+    //sidebar->setColumnHidden(1, true);
 }
 
 void SidebarManager::rename(QModelIndex index, QString newName)
@@ -85,4 +100,9 @@ void SidebarManager::rename(QModelIndex index, QString newName)
     newPath.truncate(newPath.lastIndexOf(QChar('/')));
     newPath += "/" + newName;
     item->setText(newPath);
+}
+
+void SidebarManager::setCurrentIndex(QModelIndex index)
+{
+    sidebar->setCurrentIndex(index);
 }

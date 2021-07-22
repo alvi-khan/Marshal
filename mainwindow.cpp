@@ -51,3 +51,9 @@ void MainWindow::on_pageTitle_editingFinished()
     DisplayManager::renameFile(this->ui->sideBar->currentIndex());
 }
 
+
+void MainWindow::on_urlButton_clicked()
+{
+    DisplayManager::createUrl("www.google.com", "Google");
+}
+

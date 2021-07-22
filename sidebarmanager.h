@@ -16,6 +16,9 @@ public:
     static QString homeDirectory;
     static QTreeView *sidebar;
     void removeItem(QModelIndex index);
+    static QModelIndex getChild(QString data);
+
+    static void setCurrentIndex(QModelIndex index);
 };
 
 #endif // SIDEBARMANAGER_H
