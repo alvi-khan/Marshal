@@ -111,3 +111,10 @@ QModelIndex SidebarManager::getCurrentIndex()
 {
     return sidebar->currentIndex();
 }
+
+QStandardItem* SidebarManager::getItemAt(QModelIndex index)
+{
+    QStandardItemModel *model = (QStandardItemModel *) sidebar->model();
+    if (index.isValid())    return model->itemFromIndex(index);
+    else                    return model->invisibleRootItem();
+}

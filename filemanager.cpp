@@ -80,9 +80,9 @@ QString FileManager::getValidFileName(QString parent)  // gets valid name for un
 void FileManager::addFile(QModelIndex index)
 {
     homeDirectory = "E:/Downloads/Main Folder";
-    QString parent = index.siblingAtColumn(1).data().toString();
-    qDebug()<<parent;
-    if (parent == "")   parent = homeDirectory;
+    QString parent;
+    if (index.isValid())    parent = index.siblingAtColumn(1).data().toString();
+    else                    parent = homeDirectory;
 
     QDir dir(getValidFileName(parent));
     dir.mkpath(dir.path());
@@ -100,7 +100,7 @@ void FileManager::addFile(QModelIndex index)
         updateFileTracker(parent, dir.path().replace(parent, "") + "/files.mar\n");
         Blocks::addSubfileBlock(dir.path() + "/files.mar");
     }
-    QStandardItem *newItem = SidebarManager::createItem(dir.dirName(), dir.path());
+    QStandardItem *newItem = SidebarManager::createItem(dir.dirName(), dir.path(), SidebarManager::getItemAt(index));
     createBlock(newItem->index());
 }
 

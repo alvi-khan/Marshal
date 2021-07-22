@@ -20,6 +20,7 @@ public:
 
     static void setCurrentIndex(QModelIndex index);
     static QModelIndex getCurrentIndex();
+    static QStandardItem* getItemAt(QModelIndex index);
 };
 
 #endif // SIDEBARMANAGER_H
