@@ -85,7 +85,7 @@ QString FileManager::readFromFile(QString filePath)
 }
 
 /**
- * @brief FileManager::updateFileTracker adds path to new block to parent page's tracker
+ * @brief FileManager::addToFileTracker adds path to new block to parent page's tracker
  * @param parent is the path to the parent page
  * @param child is the path to add
  */
@@ -161,6 +161,12 @@ QString FileManager::renameFile(QString oldPath, QString newName)
     return newName;
 }
 
+/**
+ * @brief FileManager::updateFileTracker replaces the path to an old subpage with the new one
+ * @param parent is the path to the parent page
+ * @param oldPath is the old subpage path
+ * @param newPath is the new subpage path
+ */
 void FileManager::updateFileTracker(QString parent, QString oldPath, QString newPath)
 {
     QString data = readFromFile(parent + "/files.mar");
