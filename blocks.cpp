@@ -27,6 +27,7 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     // setting up style
     newBlock->setFrameStyle(QFrame::NoFrame);
     newBlock->setTextColor(QColor::fromRgb(255, 255, 255)); // white
+    newBlock->setFontPointSize(12);
     QFontMetrics m(newBlock->font());
     int rowHeight = m.lineSpacing();
     int lineCount = newBlock->document()->lineCount();

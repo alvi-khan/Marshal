@@ -484,7 +484,7 @@ color: rgb(255, 255, 255);</string>
           <property name="font">
            <font>
             <family>Segoe UI</family>
-            <pointsize>16</pointsize>
+            <pointsize>20</pointsize>
             <weight>50</weight>
             <bold>false</bold>
            </font>
@@ -492,13 +492,14 @@ color: rgb(255, 255, 255);</string>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(47, 52, 55);
 color: rgb(255, 255, 255);
-border: none;</string>
+border: none;
+</string>
           </property>
           <property name="text">
            <string/>
           </property>
           <property name="placeholderText">
-           <string>Untitled Page</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -527,8 +528,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>356</width>
-             <height>347</height>
+             <width>357</width>
+             <height>334</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -599,7 +600,7 @@ border: none;</string>
      <x>0</x>
      <y>0</y>
      <width>733</width>
-     <height>29</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="autoFillBackground">
