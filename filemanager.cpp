@@ -17,16 +17,7 @@ void FileManager::saveBlock()
 {
     QTextBrowser *htmlBlock = qobject_cast<QTextBrowser*>(sender());    // retrieve block that emitted signal
     QString filePath = htmlBlock->documentTitle();  // retrieve file path stored in hidden title
-    QFile file(filePath);
-    if (!file.open(QFile::WriteOnly))
-    {
-        Error *error = new Error(nullptr, "Error saving file.");
-        error->exec();
-        return;
-    }
-    QTextStream text(&file);
-    text << htmlBlock->document()->toHtml();
-    file.close();
+    writeToFile(filePath, htmlBlock->document()->toHtml());
 }
 
 /**
@@ -47,14 +38,7 @@ void FileManager::createBlock(QModelIndex index)
     }
 
     // creating file for block
-    QFile file(block);
-    if (!file.open(QFile::ReadWrite))
-    {
-        Error *error = new Error(nullptr, "Error creating file.");
-        error->exec();
-        return;
-    }
-    file.close();
+    readFromFile(block);
 
     // add block to display
     QTextBrowser* newBlock = Blocks::addHtmlBlock(block);
@@ -64,6 +48,50 @@ void FileManager::createBlock(QModelIndex index)
     updateFileTracker(page, block.replace(page, "") + "\n");
 }
 
+void FileManager::writeToFile(QString filePath, QString content)
+{
+    QFile file(filePath);
+    if (!file.open(QFile::WriteOnly))
+    {
+        Error *error = new Error(nullptr, "Error opening file.");
+        error->exec();
+        return;
+    }
+    QTextStream text(&file);
+    text << content;
+    file.close();
+}
+
+void FileManager::appendToFile(QString filePath, QString content)
+{
+    QFile file(filePath);
+    if (!file.open(QFile::Append))
+    {
+        Error *error = new Error(nullptr, "Error opening file.");
+        error->exec();
+        return;
+    }
+    QTextStream text(&file);
+    text << content;
+    file.close();
+}
+
+QString FileManager::readFromFile(QString filePath)
+{
+    QString data = "";
+    QFile file(filePath);
+    if (!file.open(QFile::ReadWrite))
+    {
+        Error *error = new Error(nullptr, "Error opening file.");
+        error->exec();
+        return data;
+    }
+    QTextStream content(&file);
+    data = content.readAll();
+    file.close();
+    return data;
+}
+
 /**
  * @brief FileManager::updateFileTracker adds path to new block to parent page's tracker
  * @param parent is the path to the parent page
@@ -71,16 +99,7 @@ void FileManager::createBlock(QModelIndex index)
  */
 void FileManager::updateFileTracker(QString parent, QString child)
 {
-    QFile file(parent + "/files.mar");
-    if (!file.open(QFile::Append))
-    {
-        Error *error = new Error(nullptr, "Error opening file.");
-        error->exec();
-        return;
-    }
-    QTextStream content(&file);
-    content << child;
-    file.close();
+    appendToFile(parent + "/files.mar", child);
 }
 
 /**
@@ -114,14 +133,7 @@ void FileManager::addFile(QModelIndex index)
 
     QDir dir(getValidFileName(parent)); // create tracker for new subpage
     dir.mkpath(dir.path());
-    QFile file(dir.path() + "/files.mar");
-    if (!file.open(QFile::ReadWrite))
-    {
-        Error *error = new Error(nullptr, "Error creating file.");
-        error->exec();
-        return;
-    }
-    file.close();
+    readFromFile(dir.path() + "/files.mar");
 
     // if parent is a page
     if (parent != homeDirectory)

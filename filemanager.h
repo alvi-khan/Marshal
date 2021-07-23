@@ -19,6 +19,9 @@ public:
     static QString getValidFileName(QString parent);
     static QString renameFile(QString oldPath, QString newName);
     static void createBlock(QModelIndex index);
+    static void writeToFile(QString filePath, QString content);
+    static void appendToFile(QString filePath, QString content);
+    static QString readFromFile(QString filePath);
 public slots:
     void saveBlock();
 };

@@ -7,7 +7,7 @@
 
 
 /**
- * @brief The Blocks class deals with blocks inside the currently opened page
+ * @brief The Blocks class is a utility class that deals with blocks inside the currently opened page
  */
 class Blocks : public QObject
 {

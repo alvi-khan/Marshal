@@ -29,5 +29,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     void init();
+    void revealMainPage();
 };
 #endif // MAINWINDOW_H

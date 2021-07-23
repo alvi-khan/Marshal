@@ -51,19 +51,9 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
  */
 QTextBrowser* Blocks::addHtmlBlock(QString filePath)
 {
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        Error *error = new Error(nullptr, "Error opening file.");
-        error->exec();
-        return nullptr;
-    }
-    QTextStream content(&file);
+    QString data = FileManager::readFromFile(filePath);
 
-    QTextBrowser *htmlBlock = createTextBrowser(content.readAll());
-
-    file.close();
-
+    QTextBrowser *htmlBlock = createTextBrowser(data);
     htmlBlock->setDocumentTitle(filePath);  // storing filepath in hidden title; needed to save block
     htmlBlock->setReadOnly(false);          // TODO check if this is necessary
     return htmlBlock;
