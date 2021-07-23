@@ -33,6 +33,22 @@ void MainWindow::init()
     // TODO hide from designer before final release
     this->ui->pageTitle->setVisible(false);
     this->ui->mainPage->setVisible(false);
+
+    this->ui->sideBar->setStyleSheet(""""
+        "QTreeView::branch:open:has-children:!has-siblings,"
+        "QTreeView::branch:open:has-children:has-siblings"
+        "{"
+            "border-image: none;"
+            "image: url(:/Icons/Resources/Icons/Drop Down Open.svg);"
+        "}"
+        "QTreeView::branch:has-children:!has-siblings:closed,"
+        "QTreeView::branch:closed:has-children:has-siblings"
+        "{"
+            "border-image: none;"
+            "image: url(:/Icons/Resources/Icons/Drop Down Closed.svg);"
+        "}"
+    """");
+
 }
 
 /**
