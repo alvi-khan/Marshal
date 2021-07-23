@@ -48,6 +48,8 @@ void FileManager::createBlock(QModelIndex index)
         return;
     }
     file.close();
+    QTextBrowser* newBlock = Blocks::addHtmlBlock(block);
+    if (newBlock != nullptr)   newBlock->setFocus();
     updateFileTracker(page, block.replace(page, "") + "\n");
 }
 
@@ -101,7 +103,12 @@ void FileManager::addFile(QModelIndex index)
         Blocks::addSubfileBlock(dir.path() + "/files.mar");
     }
     QStandardItem *newItem = SidebarManager::createItem(dir.dirName(), dir.path(), SidebarManager::getItemAt(index));
-    createBlock(newItem->index());
+
+    if (!index.isValid())
+    {
+        DisplayManager::openFile(newItem->index());
+        SidebarManager::setCurrentIndex(newItem->index());
+    }
 }
 
 QString FileManager::renameFile(QString oldPath, QString newName)

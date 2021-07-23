@@ -13,7 +13,7 @@ public:
     Blocks();
     static QTextBrowser* createTextBrowser(QString content);
     static QFrame *mainPage;
-    static void addHtmlBlock(QString filePath);
+    static QTextBrowser* addHtmlBlock(QString filePath);
     static void addLinkBlock(QString link, QString name);
     static void addSubfileBlock(QString filePath);
     static void init(QFrame *mainPage);

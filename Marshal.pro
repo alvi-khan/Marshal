@@ -14,6 +14,7 @@ SOURCES += \
     error.cpp \
     filemanager.cpp \
     main.cpp \
+    mainpage.cpp \
     mainwindow.cpp \
     sidebarmanager.cpp
 
@@ -22,6 +23,7 @@ HEADERS += \
     displaymanager.h \
     error.h \
     filemanager.h \
+    mainpage.h \
     mainwindow.h \
     sidebarmanager.h
 

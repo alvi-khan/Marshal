@@ -127,7 +127,7 @@ Text-align: left;</string>
                <string>Search</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="Resources.qrc">
                 <normaloff>:/Icons/Resources/Icons/Search.svg</normaloff>:/Icons/Resources/Icons/Search.svg</iconset>
               </property>
               <property name="autoExclusive">
@@ -170,7 +170,7 @@ Text-align: left;</string>
                <string>Settings</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="Resources.qrc">
                 <normaloff>:/Icons/Resources/Icons/Settings.svg</normaloff>:/Icons/Resources/Icons/Settings.svg</iconset>
               </property>
               <property name="flat">
@@ -204,7 +204,7 @@ Text-align: left;</string>
                <string>Profile</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="Resources.qrc">
                 <normaloff>:/Icons/Resources/Icons/Profile.svg</normaloff>:/Icons/Resources/Icons/Profile.svg</iconset>
               </property>
               <property name="flat">
@@ -282,7 +282,7 @@ Text-align: left;</string>
                <string>Templates</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="Resources.qrc">
                 <normaloff>:/Icons/Resources/Icons/Templates.svg</normaloff>:/Icons/Resources/Icons/Templates.svg</iconset>
               </property>
               <property name="flat">
@@ -307,7 +307,7 @@ Text-align: left;</string>
                <string>New Page</string>
               </property>
               <property name="icon">
-               <iconset>
+               <iconset resource="Resources.qrc">
                 <normaloff>:/Icons/Resources/Icons/New Page.svg</normaloff>:/Icons/Resources/Icons/New Page.svg</iconset>
               </property>
               <property name="flat">
@@ -451,7 +451,7 @@ color: rgb(255, 255, 255);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset>
+                <iconset resource="Resources.qrc">
                  <normaloff>:/Icons/Resources/Icons/URL.svg</normaloff>:/Icons/Resources/Icons/URL.svg</iconset>
                </property>
                <property name="autoDefault">
@@ -527,8 +527,8 @@ border: none;</string>
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>353</width>
-             <height>343</height>
+             <width>356</width>
+             <height>347</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -548,7 +548,7 @@ border: none;</string>
              <number>0</number>
             </property>
             <item>
-             <widget class="QFrame" name="mainPage">
+             <widget class="MainPage" name="mainPage">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                 <horstretch>0</horstretch>
@@ -599,7 +599,7 @@ border: none;</string>
      <x>0</x>
      <y>0</y>
      <width>733</width>
-     <height>31</height>
+     <height>29</height>
     </rect>
    </property>
    <property name="autoFillBackground">
@@ -631,6 +631,16 @@ border: none;</string>
    <addaction name="menuHelp"/>
   </widget>
  </widget>
- <resources/>
+ <customwidgets>
+  <customwidget>
+   <class>MainPage</class>
+   <extends>QFrame</extends>
+   <header>mainpage.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

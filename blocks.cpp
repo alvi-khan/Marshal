@@ -39,14 +39,14 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     return newBlock;
 }
 
-void Blocks::addHtmlBlock(QString filePath)
+QTextBrowser* Blocks::addHtmlBlock(QString filePath)
 {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         Error *error = new Error(nullptr, "Error opening file.");
         error->exec();
-        return;
+        return nullptr;
     }
     QTextStream content(&file);
 
@@ -56,6 +56,7 @@ void Blocks::addHtmlBlock(QString filePath)
 
     htmlBlock->setDocumentTitle(filePath);
     htmlBlock->setReadOnly(false);          // TODO check if this is necessary
+    return htmlBlock;
 }
 
 void Blocks::addLinkBlock(QString link, QString name)

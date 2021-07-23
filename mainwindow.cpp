@@ -4,6 +4,7 @@
 #include "displaymanager.h"
 #include "filemanager.h"
 #include "blocks.h"
+#include "mainpage.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -57,9 +58,6 @@ void MainWindow::on_urlButton_clicked()
 {
     DisplayManager::createUrl("www.google.com", "Google");
 }
-
-
-
 
 void MainWindow::on_subpageButton_clicked()
 {
