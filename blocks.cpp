@@ -35,6 +35,9 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     // connect block to save function
     connect(newBlock, &QTextEdit::textChanged, new FileManager(), &FileManager::saveBlock);
 
+    // connect block to update function
+    connect(newBlock, &QTextEdit::textChanged, new Blocks(), &Blocks::updateBlockSize);
+
     // add block to main page
     QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
     layout->addWidget(newBlock);
@@ -42,6 +45,15 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     mainPage->setLayout(layout);
 
     return newBlock;
+}
+
+void Blocks::updateBlockSize()
+{
+    QTextBrowser *htmlBlock = qobject_cast<QTextBrowser*>(sender());
+    QFontMetrics m(htmlBlock->font());
+    int rowHeight = m.lineSpacing();
+    int lineCount = htmlBlock->document()->lineCount();
+    htmlBlock->setMaximumHeight(rowHeight * lineCount * 1.5);
 }
 
 /**

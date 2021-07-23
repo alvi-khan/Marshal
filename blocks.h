@@ -11,6 +11,7 @@
  */
 class Blocks : public QObject
 {
+    Q_OBJECT
 public:
     Blocks();
     static QTextBrowser* createTextBrowser(QString content);
@@ -19,6 +20,8 @@ public:
     static void addLinkBlock(QString link, QString name);
     static void addSubfileBlock(QString filePath);
     static void init(QFrame *mainPage);
+public slots:
+    void updateBlockSize();
 };
 
 #endif // BLOCKS_H
