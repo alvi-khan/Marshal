@@ -27,15 +27,7 @@ void FileManager::saveBlock()
 void FileManager::createBlock(QModelIndex index)
 {
     QString page = index.siblingAtColumn(1).data().toString();  // path to parent file
-
-    // finding a valid block name
-    int i = 0;
-    QString block = page + "/Block " + QString::number(i) + ".html";
-    while (QFileInfo::exists(block) && QFileInfo(block).isFile())
-    {
-        i++;
-        block = page + "/Block " + QString::number(i) + ".html";
-    }
+    QString block = getValidFileName(page, "/Block ", ".html");
 
     // creating file for block
     readFromFile(block);
@@ -103,20 +95,22 @@ void FileManager::updateFileTracker(QString parent, QString child)
 }
 
 /**
- * @brief FileManager::getValidFileName retrieves an availble name for a new subpage
- * @param parent is the path to the parent page
- * @return the path to the new subpage
+ * @brief FileManager::getValidFileName generates a valid name for a subfile/block
+ * @param parent is the path to the parent folder
+ * @param prefix is the prefix required for the new file
+ * @param suffix is the optional suffix for the new file
+ * @return the path to the new file
  */
-QString FileManager::getValidFileName(QString parent)  // gets valid name for untitled page
+QString FileManager::getValidFileName(QString parent, QString prefix, QString suffix)
 {
     int i = 0;
-    QDir dir(parent + "/Untitled Page " + QString::number(i));
-    while (dir.exists())
+    QString path = parent + prefix + QString::number(i) + suffix;
+    while (QDir().exists(path))
     {
         i++;
-        dir.setPath(parent + "/Untitled Page " + QString::number(i));
+        path = parent + prefix + QString::number(i) + suffix;
     }
-    return dir.path();
+    return path;
 }
 
 /**
@@ -131,7 +125,7 @@ void FileManager::addFile(QModelIndex index)
     if (index.isValid())    parent = index.siblingAtColumn(1).data().toString();
     else                    parent = homeDirectory;
 
-    QDir dir(getValidFileName(parent)); // create tracker for new subpage
+    QDir dir(getValidFileName(parent, "/Untitled Page ")); // create tracker for new subpage
     dir.mkpath(dir.path());
     readFromFile(dir.path() + "/files.mar");
 
