@@ -37,7 +37,7 @@ void FileManager::createBlock(QModelIndex index)
     if (newBlock != nullptr)   newBlock->setFocus();
 
     // update parent page's tracker with relative path to new block
-    updateFileTracker(page, block.replace(page, "") + "\n");
+    addToFileTracker(page, block.replace(page, "") + "\n");
 }
 
 void FileManager::writeToFile(QString filePath, QString content)
@@ -89,7 +89,7 @@ QString FileManager::readFromFile(QString filePath)
  * @param parent is the path to the parent page
  * @param child is the path to add
  */
-void FileManager::updateFileTracker(QString parent, QString child)
+void FileManager::addToFileTracker(QString parent, QString child)
 {
     appendToFile(parent + "/files.mar", child);
 }
@@ -132,7 +132,7 @@ void FileManager::addFile(QModelIndex index)
     // if parent is a page
     if (parent != homeDirectory)
     {
-        updateFileTracker(parent, dir.path().replace(parent, "") + "/files.mar\n"); // update parent's tracker
+        addToFileTracker(parent, dir.path().replace(parent, "") + "/files.mar\n"); // update parent's tracker
         Blocks::addSubfileBlock(dir.path() + "/files.mar"); // add subpage block to parent
     }
 
@@ -159,4 +159,11 @@ QString FileManager::renameFile(QString oldPath, QString newName)
     QDir dir(oldPath);
     dir.rename(oldPath, newPath);
     return newName;
+}
+
+void FileManager::updateFileTracker(QString parent, QString oldPath, QString newPath)
+{
+    QString data = readFromFile(parent + "/files.mar");
+    data.replace(oldPath, newPath);
+    writeToFile(parent + "/files.mar", data);
 }
