@@ -22,6 +22,7 @@ public:
     static void writeToFile(QString filePath, QString content);
     static void appendToFile(QString filePath, QString content);
     static QString readFromFile(QString filePath);
+    static void updateName(QString parent, QString oldPath, QString newPath);
 public slots:
     void saveBlock();
 };

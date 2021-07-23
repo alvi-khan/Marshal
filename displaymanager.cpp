@@ -60,6 +60,13 @@ void DisplayManager::renameFile(QModelIndex index)
 
     QString newName = FileManager::renameFile(oldPath, pageTitle->text());
     SidebarManager::rename(index, newName);
+
+    if (index.parent().isValid())
+    {
+        QString parentPath = index.parent().siblingAtColumn(1).data().toString();
+        FileManager::updateFileTracker(parentPath, "/" + oldName + "/files.mar", "/" + newName + "/files.mar");
+    }
+
     openFile(index);
 }
 
