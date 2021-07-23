@@ -7,7 +7,9 @@
 #include <QTextBrowser>
 
 
-
+/**
+ * @brief The DisplayManager class is a utility classs that deals with how content is displayed
+ */
 class DisplayManager : public QObject
 {
     Q_OBJECT

@@ -6,7 +6,9 @@
 #include <QTextBrowser>
 
 
-
+/**
+ * @brief The Blocks class deals with blocks inside the currently opened page
+ */
 class Blocks : public QObject
 {
 public:

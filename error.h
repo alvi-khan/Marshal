@@ -7,6 +7,9 @@ namespace Ui {
 class Error;
 }
 
+/**
+ * @brief The Error class handles the error dialog.
+ */
 class Error : public QDialog
 {
     Q_OBJECT

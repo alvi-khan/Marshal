@@ -23,11 +23,14 @@ DisplayManager::DisplayManager()
 void DisplayManager::openLink(QUrl url)
 {
     QString link = url.toString();
+
+    // normal browser link; open in default browser
     if (!link.endsWith(".mar")) QDesktopServices::openUrl(url);
     else
     {
+        // subfile link
         link.truncate(link.lastIndexOf(QChar('/')));
-        QModelIndex index = SidebarManager::getChild(link);
+        QModelIndex index = SidebarManager::getChild(link); // get index of subfile
         SidebarManager::setCurrentIndex(index);
         openFile(index);
     }
@@ -41,15 +44,12 @@ void DisplayManager::createUrl(QString url, QString displayName)
     // update file tracker
 }
 
-/**
- * @brief DisplayManager::renameFile Verifies new name is valid and calls functions in file manager and sidebar to change name
- * @param index
- */
 void DisplayManager::renameFile(QModelIndex index)
 {
+    // Must use file path to derive file name. File name in tree unreliable.
     QString oldPath = index.siblingAtColumn(1).data().toString();
     QString oldName = oldPath.section("/", -1);
-    // WARNING: Must use file path to derive file name. File name in tree unreliable.
+
     if (pageTitle->text() == "")
     {
         Error *error = new Error(nullptr, "File name cannot be empty.");
@@ -63,12 +63,9 @@ void DisplayManager::renameFile(QModelIndex index)
     openFile(index);
 }
 
-/**
- * @brief DisplayManager::openFile parses all the blocks in a file
- * @param index
- */
 void DisplayManager::openFile(QModelIndex index)
 {
+    // removing existing blocks
     while (QWidget *w = mainPage->findChild<QWidget*>())    delete w;
 
     QString filePath = index.siblingAtColumn(1).data().toString();
@@ -81,13 +78,13 @@ void DisplayManager::openFile(QModelIndex index)
         return;
     }
 
+    // retrieve relative paths to all blocks
     QTextStream blocks(&file);
 
-
-
+    // for each block, open appropriately
     while (!blocks.atEnd())
     {
-        QFileInfo block(filePath + blocks.readLine());
+        QFileInfo block(filePath + blocks.readLine());      // absolute path from relative path
         if (block.completeSuffix() == "html")
             Blocks::addHtmlBlock(block.absoluteFilePath());
         else if (block.completeSuffix() == "mar")

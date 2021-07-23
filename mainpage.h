@@ -5,7 +5,9 @@
 #include <QDebug>
 
 
-
+/**
+ * @brief The MainPage class inherits from the basic QFrame class to add extra functionality.
+ */
 class MainPage : public QFrame
 {
     Q_OBJECT

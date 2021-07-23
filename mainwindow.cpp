@@ -20,49 +20,73 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
+    // initialize utility classes
     SidebarManager::init(this->ui->sideBar);
     DisplayManager::init(this->ui->mainPage, this->ui->pageTitle);
     Blocks::init(this->ui->mainPage);
 
+    // set up default splitter size
     QSplitter *splitter = this->ui->splitter;
     splitter->setStretchFactor(0, 0);
     splitter->setStretchFactor(1, 1);
+
+    // TODO hide from designer before final release
     this->ui->pageTitle->setVisible(false);
     this->ui->mainPage->setVisible(false);
 }
 
-
-void MainWindow::on_sideBar_clicked(const QModelIndex &index)     // opens a file from sidebar
+/**
+ * @brief MainWindow::revealMainPage makes the main page visible
+ */
+void MainWindow::revealMainPage()
 {
     this->ui->pageTitle->setVisible(true);
     this->ui->mainPage->setVisible(true);
+}
+
+/**
+ * @brief MainWindow::on_sideBar_clicked, open the clicked file
+ * @param index is the index of the file clicked
+ */
+void MainWindow::on_sideBar_clicked(const QModelIndex &index)
+{
+    revealMainPage();
     DisplayManager::openFile(index);
 }
 
-
+/**
+ * @brief MainWindow::on_newPageButton_clicked creates a new root level page
+ */
 void MainWindow::on_newPageButton_clicked()        // creates a new page
 {
-    this->ui->pageTitle->setVisible(true);
-    this->ui->mainPage->setVisible(true);
+    revealMainPage();
     QStandardItemModel *model = (QStandardItemModel*) this->ui->sideBar->model();
     FileManager::addFile(model->invisibleRootItem()->index());
 }
 
-void MainWindow::on_pageTitle_editingFinished()     // changes page title
+/**
+ * @brief MainWindow::on_pageTitle_editingFinished updates the page name
+ */
+void MainWindow::on_pageTitle_editingFinished()
 {
     DisplayManager::renameFile(this->ui->sideBar->currentIndex());
 }
 
-
+/**
+ * @brief MainWindow::on_urlButton_clicked creates a new URL block
+ */
 void MainWindow::on_urlButton_clicked()
 {
     DisplayManager::createUrl("www.google.com", "Google");
 }
 
+/**
+ * @brief MainWindow::on_subpageButton_clicked creates a new subpage under the current page
+ */
 void MainWindow::on_subpageButton_clicked()
 {
-    this->ui->pageTitle->setVisible(true);
-    this->ui->mainPage->setVisible(true);
+    // TODO first line should be unnecessary in final release; subpage cannot be created without page already open
+    revealMainPage();
     FileManager::addFile(this->ui->sideBar->currentIndex());
 }
 

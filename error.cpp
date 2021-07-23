@@ -29,7 +29,6 @@ void Error::on_buttonBox_accepted()
     errorAcceptanceStatus = true;
 }
 
-
 void Error::on_buttonBox_rejected()
 {
     errorAcceptanceStatus = false;

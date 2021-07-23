@@ -4,7 +4,9 @@
 #include <QModelIndex>
 
 
-
+/**
+ * @brief The FileManager class is a utility class that handles back-end file management.
+ */
 class FileManager : public QObject
 {
     Q_OBJECT

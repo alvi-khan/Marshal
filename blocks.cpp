@@ -14,6 +14,11 @@ Blocks::Blocks()
 
 }
 
+/**
+ * @brief Blocks::createTextBrowser generates a basic text browser widget with custom formatting
+ * @param content is the content to put in the widget
+ * @return the text browser created
+ */
 QTextBrowser* Blocks::createTextBrowser(QString content)
 {
     QTextBrowser *newBlock = new QTextBrowser();
@@ -21,7 +26,7 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
 
     // setting up style
     newBlock->setFrameStyle(QFrame::NoFrame);
-    newBlock->setTextColor(QColor::fromRgb(255, 255, 255));
+    newBlock->setTextColor(QColor::fromRgb(255, 255, 255)); // white
     QFontMetrics m(newBlock->font());
     int rowHeight = m.lineSpacing();
     int lineCount = newBlock->document()->lineCount();
@@ -39,6 +44,11 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     return newBlock;
 }
 
+/**
+ * @brief Blocks::addHtmlBlock adds a block with text from a specific file
+ * @param filePath is the path to the file
+ * @return the block created
+ */
 QTextBrowser* Blocks::addHtmlBlock(QString filePath)
 {
     QFile file(filePath);
@@ -54,11 +64,16 @@ QTextBrowser* Blocks::addHtmlBlock(QString filePath)
 
     file.close();
 
-    htmlBlock->setDocumentTitle(filePath);
+    htmlBlock->setDocumentTitle(filePath);  // storing filepath in hidden title; needed to save block
     htmlBlock->setReadOnly(false);          // TODO check if this is necessary
     return htmlBlock;
 }
 
+/**
+ * @brief Blocks::addLinkBlock adds a block with a link (internal/external)
+ * @param link
+ * @param name is the text displayed for the link
+ */
 void Blocks::addLinkBlock(QString link, QString name)
 {
     QString content = "<a style=\"color: #66d9ee\" href=\"" + link + "\">" + name + "</a>";
@@ -68,6 +83,10 @@ void Blocks::addLinkBlock(QString link, QString name)
     linkBlock->connect(linkBlock, &QTextBrowser::anchorClicked, new DisplayManager(), &DisplayManager::openLink);
 }
 
+/**
+ * @brief Blocks::addSubfileBlock adds a block with a link to a subfile
+ * @param filePath is the path to the subfile
+ */
 void Blocks::addSubfileBlock(QString filePath)
 {
     QString fileName = filePath.section("/", -2, -2);
