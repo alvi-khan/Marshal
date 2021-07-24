@@ -26,6 +26,7 @@ void MainWindow::init()
     SidebarManager::init(this->ui->sideBar);
     DisplayManager::init(this->ui->mainPage, this->ui->pageTitle);
     Blocks::init(this->ui->mainPage);
+    RichTextFunctions::init(this->ui->boldButton, this->ui->italicButton, this->ui->underlineButton);
 
     // set up default splitter size
     QSplitter *splitter = this->ui->splitter;

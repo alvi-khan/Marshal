@@ -31,7 +31,7 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     QFontMetrics m(newBlock->font());
     int rowHeight = m.lineSpacing();
     int lineCount = newBlock->document()->lineCount();
-    newBlock->setMaximumHeight(rowHeight * lineCount * 1.5);
+    newBlock->setMaximumHeight(rowHeight * lineCount * 2);
 
     // connect block to save function
     connect(newBlock, &QTextEdit::textChanged, new FileManager(), &FileManager::saveBlock);
@@ -54,7 +54,7 @@ void Blocks::updateBlockSize()
     QFontMetrics m(htmlBlock->font());
     int rowHeight = m.lineSpacing();
     int lineCount = htmlBlock->document()->lineCount();
-    htmlBlock->setMaximumHeight(rowHeight * lineCount * 1.5);
+    htmlBlock->setMaximumHeight(rowHeight * lineCount * 2);
 }
 
 /**
