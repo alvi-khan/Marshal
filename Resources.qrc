@@ -10,4 +10,10 @@
         <file>Resources/Icons/Drop Down Closed.svg</file>
         <file>Resources/Icons/Drop Down Open.svg</file>
     </qresource>
+    <qresource prefix="/Toolbar Icons">
+        <file>Resources/Toolbar Icons/Bold.svg</file>
+        <file>Resources/Toolbar Icons/Italic.svg</file>
+        <file>Resources/Toolbar Icons/Subpage.svg</file>
+        <file>Resources/Toolbar Icons/Underline.svg</file>
+    </qresource>
 </RCC>

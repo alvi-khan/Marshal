@@ -419,7 +419,20 @@ color: rgb(255, 255, 255);</string>
                 <string notr="true">padding: 5px;</string>
                </property>
                <property name="text">
-                <string>Underline</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -429,7 +442,20 @@ color: rgb(255, 255, 255);</string>
                 <string notr="true">padding: 5px;</string>
                </property>
                <property name="text">
-                <string>Italic</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -439,27 +465,31 @@ color: rgb(255, 255, 255);</string>
                 <string notr="true">padding: 5px;</string>
                </property>
                <property name="text">
-                <string>Bold</string>
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QPushButton" name="subpageButton">
                <property name="text">
-                <string>Add Subpage</string>
+                <string/>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton">
-               <property name="font">
-                <font>
-                 <family>Segoe UI</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>B1</string>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Subpage.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Subpage.svg</iconset>
                </property>
               </widget>
              </item>
@@ -558,8 +588,8 @@ border: none;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>433</width>
-             <height>334</height>
+             <width>457</width>
+             <height>344</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -630,7 +660,7 @@ border: none;
      <x>0</x>
      <y>0</y>
      <width>733</width>
-     <height>31</height>
+     <height>29</height>
     </rect>
    </property>
    <property name="autoFillBackground">
