@@ -27,11 +27,12 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     // setting up style
     newBlock->setFrameStyle(QFrame::NoFrame);
     newBlock->setTextColor(QColor::fromRgb(255, 255, 255)); // white
-    newBlock->setFontPointSize(12);
+    //newBlock->setFontPointSize(12);
     QFontMetrics m(newBlock->font());
     int rowHeight = m.lineSpacing();
-    int lineCount = newBlock->document()->lineCount();
-    newBlock->setMaximumHeight(rowHeight * lineCount * 2);
+    int lineCount = newBlock->document()->lineCount() + 1;
+    newBlock->setMaximumHeight(rowHeight * lineCount);
+    newBlock->setMinimumHeight(rowHeight * lineCount);
 
     // connect block to save function
     connect(newBlock, &QTextEdit::textChanged, new FileManager(), &FileManager::saveBlock);
@@ -41,7 +42,7 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
 
     // add block to main page
     QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
-    layout->addWidget(newBlock);
+    layout->insertWidget(layout->count() - 1, newBlock);    // add above spacer
     layout->setAlignment(Qt::AlignTop);
     mainPage->setLayout(layout);
 
@@ -53,8 +54,9 @@ void Blocks::updateBlockSize()
     QTextBrowser *htmlBlock = qobject_cast<QTextBrowser*>(sender());
     QFontMetrics m(htmlBlock->font());
     int rowHeight = m.lineSpacing();
-    int lineCount = htmlBlock->document()->lineCount();
-    htmlBlock->setMaximumHeight(rowHeight * lineCount * 2);
+    int lineCount = htmlBlock->document()->lineCount() + 1;
+    htmlBlock->setMaximumHeight(rowHeight * lineCount);
+    htmlBlock->setMinimumHeight(rowHeight * lineCount);
 }
 
 /**
