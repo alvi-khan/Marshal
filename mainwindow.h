@@ -26,6 +26,9 @@ private slots:
 
     void on_subpageButton_clicked();
 
+
+    void onFocusChange(QWidget *oldWidget, QWidget *newWidget);
+
 private:
     Ui::MainWindow *ui;
     void init();

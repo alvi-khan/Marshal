@@ -16,6 +16,7 @@ SOURCES += \
     main.cpp \
     mainpage.cpp \
     mainwindow.cpp \
+    richtextfunctions.cpp \
     sidebarmanager.cpp
 
 HEADERS += \
@@ -25,6 +26,7 @@ HEADERS += \
     filemanager.h \
     mainpage.h \
     mainwindow.h \
+    richtextfunctions.h \
     sidebarmanager.h
 
 FORMS += \

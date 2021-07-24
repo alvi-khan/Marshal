@@ -100,3 +100,5 @@ void Blocks::init(QFrame *mainPage)
 {
     Blocks::mainPage = mainPage;
 }
+
+

@@ -414,6 +414,13 @@ color: rgb(255, 255, 255);</string>
               </spacer>
              </item>
              <item>
+              <widget class="QPushButton" name="boldButton">
+               <property name="text">
+                <string>Bold</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="subpageButton">
                <property name="text">
                 <string>Add Subpage</string>
@@ -528,7 +535,7 @@ border: none;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>357</width>
+             <width>384</width>
              <height>334</height>
             </rect>
            </property>

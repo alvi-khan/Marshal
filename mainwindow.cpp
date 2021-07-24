@@ -5,6 +5,8 @@
 #include "filemanager.h"
 #include "blocks.h"
 #include "mainpage.h"
+#include <richtextfunctions.h>
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
@@ -49,6 +51,20 @@ void MainWindow::init()
         "}"
     """");
 
+    connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(onFocusChange(QWidget*, QWidget*)));
+
+}
+
+void MainWindow::onFocusChange(QWidget *oldWidget, QWidget *newWidget)
+{
+    if (QApplication::activeWindow() == nullptr)
+        return;
+    QString objName = newWidget->objectName();
+    QTextBrowser *block = qobject_cast<QTextBrowser*>(oldWidget);
+    if (block != nullptr  && objName == "boldButton")
+    {
+        RichTextFunctions::boldText(block);
+    }
 }
 
 /**
@@ -105,4 +121,6 @@ void MainWindow::on_subpageButton_clicked()
     revealMainPage();
     FileManager::addFile(this->ui->sideBar->currentIndex());
 }
+
+
 
