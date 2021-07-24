@@ -414,6 +414,20 @@ color: rgb(255, 255, 255);</string>
               </spacer>
              </item>
              <item>
+              <widget class="QPushButton" name="underlineButton">
+               <property name="text">
+                <string>Underline</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="italicButton">
+               <property name="text">
+                <string>Italic</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QPushButton" name="boldButton">
                <property name="text">
                 <string>Bold</string>
@@ -535,7 +549,7 @@ border: none;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>384</width>
+             <width>403</width>
              <height>334</height>
             </rect>
            </property>
