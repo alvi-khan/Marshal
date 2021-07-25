@@ -1,4 +1,5 @@
 #include "blocks.h"
+#include "calendar.h"
 #include "displaymanager.h"
 #include "error.h"
 #include "filemanager.h"
@@ -96,6 +97,13 @@ void Blocks::addSubfileBlock(QString filePath)
 {
     QString fileName = filePath.section("/", -2, -2);
     addLinkBlock(filePath, fileName);
+}
+
+void Blocks::addCalendarBlock()
+{
+    Calendar *calendar = new Calendar();
+    QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
+    layout->insertWidget(layout->count() - 1, calendar);
 }
 
 void Blocks::init(QFrame *mainPage)

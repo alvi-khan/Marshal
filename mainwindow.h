@@ -29,6 +29,8 @@ private slots:
 
     void onFocusChange(QWidget *oldWidget, QWidget *newWidget);
 
+    void on_calendar_clicked();
+
 private:
     Ui::MainWindow *ui;
     void init();

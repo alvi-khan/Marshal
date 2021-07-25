@@ -384,7 +384,7 @@ color: rgb(255, 255, 255);</string>
             <property name="frameShadow">
              <enum>QFrame::Plain</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0">
              <property name="spacing">
               <number>15</number>
              </property>
@@ -412,75 +412,6 @@ color: rgb(255, 255, 255);</string>
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="underlineButton">
-               <property name="styleSheet">
-                <string notr="true">padding: 5px;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>15</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="italicButton">
-               <property name="styleSheet">
-                <string notr="true">padding: 5px;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>15</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="boldButton">
-               <property name="styleSheet">
-                <string notr="true">padding: 5px;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>15</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="subpageButton">
@@ -522,6 +453,86 @@ color: rgb(255, 255, 255);</string>
                </property>
                <property name="flat">
                 <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="boldButton">
+               <property name="styleSheet">
+                <string notr="true">padding: 5px;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="italicButton">
+               <property name="styleSheet">
+                <string notr="true">padding: 5px;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="underlineButton">
+               <property name="styleSheet">
+                <string notr="true">padding: 5px;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>15</width>
+                 <height>15</height>
+                </size>
+               </property>
+               <property name="flat">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="calendar">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Calendar.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Calendar.svg</iconset>
                </property>
               </widget>
              </item>
@@ -588,8 +599,8 @@ border: none;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>384</width>
-             <height>344</height>
+             <width>393</width>
+             <height>342</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">

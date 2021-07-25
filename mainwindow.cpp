@@ -5,6 +5,7 @@
 #include "filemanager.h"
 #include "blocks.h"
 #include "mainpage.h"
+#include "calendar.h"
 #include <richtextfunctions.h>
 
 
@@ -54,6 +55,7 @@ void MainWindow::init()
 
     connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(onFocusChange(QWidget*, QWidget*)));
 
+    this->ui->mainPage->layout()->setAlignment(Qt::AlignHCenter);
 }
 
 void MainWindow::onFocusChange(QWidget *oldWidget, QWidget *newWidget)
@@ -134,5 +136,8 @@ void MainWindow::on_subpageButton_clicked()
     FileManager::addFile(this->ui->sideBar->currentIndex());
 }
 
-
+void MainWindow::on_calendar_clicked()
+{
+    Blocks::addCalendarBlock();
+}
 
