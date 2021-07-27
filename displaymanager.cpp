@@ -73,7 +73,12 @@ void DisplayManager::renameFile(QModelIndex index)
 void DisplayManager::openFile(QModelIndex index)
 {
     // removing existing blocks
-    while (QWidget *w = mainPage->findChild<QWidget*>())    delete w;
+    QList<QObject *> objects = mainPage->children();
+    foreach (QObject *object, objects)
+    {
+        QWidget *widget = (QWidget *) object;
+        widget->hide();
+    }
 
     QString filePath = index.siblingAtColumn(1).data().toString();
     QFile file(filePath + "/files.mar");

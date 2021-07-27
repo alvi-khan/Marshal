@@ -97,6 +97,7 @@ void MainWindow::revealMainPage()
 void MainWindow::on_sideBar_clicked(const QModelIndex &index)
 {
     revealMainPage();
+    while (QWidget *w = this->ui->mainPage->findChild<QWidget*>())  delete w;   // delete all hidden objects; memory leak avoidance
     DisplayManager::openFile(index);
 }
 
