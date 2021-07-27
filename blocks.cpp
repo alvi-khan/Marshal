@@ -99,9 +99,9 @@ void Blocks::addSubfileBlock(QString filePath)
     addLinkBlock(filePath, fileName);
 }
 
-void Blocks::addCalendarBlock()
+void Blocks::addCalendarBlock(QString filePath)
 {
-    Calendar *calendar = new Calendar();
+    Calendar *calendar = new Calendar(filePath);
     QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
     layout->insertWidget(layout->count() - 1, calendar);
 }

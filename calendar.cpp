@@ -1,7 +1,15 @@
 #include "calendar.h"
+#include "newevent.h"
+#include "filemanager.h"
 
-Calendar::Calendar()
+#include <QDir>
+#include <QFile>
+
+Calendar::Calendar(QString selfPath)
 {
+    this->selfPath = selfPath;
+    retrieveEvents();
+
     yearRangeStart = 2000;
     yearRangeEnd = 2100;
     today = QDate::currentDate();
@@ -15,17 +23,8 @@ Calendar::Calendar()
     createMonthPicker();
     insertDayNames();
     populateDates();
-
-    // TODO remove after testing
-    QWidget *widget = this->cellWidget(3, 4);
-    QVBoxLayout *layout = (QVBoxLayout *) widget->layout();
-    layout->addWidget(new QPushButton());
-    layout->addWidget(new QPushButton());
-    layout->addWidget(new QPushButton());
-    layout->addWidget(new QPushButton());
-    layout->addWidget(new QPushButton());
-    layout->addWidget(new QPushButton());
     heightReset();
+    connect(this, &QTableWidget::cellClicked, this, &Calendar::addEvent);
 }
 
 void Calendar::createTable(int rows, int columns)
@@ -118,8 +117,7 @@ void Calendar::populateDates()
 
         date = date.addDays(1);
     }
-
-    heightReset();
+    addEvents();
 }
 
 QComboBox * Calendar::newCustomComboBox()
@@ -144,7 +142,8 @@ void Calendar::clearCells()
 {
     for (int i=2; i<7; i++)
         for (int j=0; j<7; j++)
-            this->removeCellWidget(i, j);
+            while (cellWidget(i, j))
+                removeCellWidget(i, j);
 }
 
 int Calendar::weekInMonth(QDate date)
@@ -178,11 +177,67 @@ QWidget* Calendar::createDateText(int date)
     return widget;
 }
 
+void Calendar::retrieveEvents()
+{
+    QFile file(selfPath);
+    file.open(QIODevice::ReadOnly);
+    QTextStream data(&file);
+    while (!data.atEnd())
+    {
+        QPair<QDate, QString> newEvent;
+        newEvent.first = QDate::fromString(data.readLine(), "dd/MM/yyyy");
+        newEvent.second = data.readLine();
+        events.append(newEvent);
+    }
+    file.close();
+}
+
+QLineEdit * Calendar::createTextField(QString text)
+{
+    QLineEdit *lineEdit = new QLineEdit();
+    lineEdit->setText(text);
+    lineEdit->setFrame(QFrame::NoFrame);
+    lineEdit->setReadOnly(true);
+
+    lineEdit->setStyleSheet("background-color: rgb(42, 202, 124); "  // green
+                            "border: 1px solid rgb(47, 52, 55); "   // same as page (hidden border)
+                            "border-radius: 5px;");
+
+    return lineEdit;
+}
+
+void Calendar::addToDate(QDate date, QLineEdit *textField)
+{
+    int row = weekInMonth(date) + 2;
+    int column = date.dayOfWeek() - 1;
+    QVBoxLayout *layout = (QVBoxLayout *) this->cellWidget(row, column)->layout();
+    layout->addWidget(textField);
+    QWidget *widget = new QWidget();
+    widget->setLayout(layout);
+    this->removeCellWidget(row, column);
+    this->setCellWidget(row, column, widget);
+}
+
+void Calendar::addEvents()
+{
+    foreach (auto event, events)
+    {
+        QDate date = event.first;
+        QString path = event.second;
+        if (date.month() == selectedMonth && date.year() == selectedYear)
+        {
+            QLineEdit *textField = createTextField(path.section("/", -2, -2));
+            addToDate(date, textField);
+        }
+    }
+}
+
 void Calendar::updateDates()
 {
     selectedMonth = monthList->currentIndex() + 1;
     selectedYear = yearList->currentIndex() + yearRangeStart;
     populateDates();
+    heightReset();
 }
 
 void Calendar::toPrevMonth()
@@ -194,8 +249,7 @@ void Calendar::toPrevMonth()
         yearList->setCurrentIndex(yearList->currentIndex() - 1);
     }
     else    monthList->setCurrentIndex(monthList->currentIndex() - 1);
-
-    updateDates();
+    heightReset();
 }
 
 void Calendar::toNextMonth()
@@ -207,6 +261,47 @@ void Calendar::toNextMonth()
         yearList->setCurrentIndex(yearList->currentIndex() + 1);
     }
     else    monthList->setCurrentIndex(monthList->currentIndex() + 1);
+    heightReset();
+}
 
-    updateDates();
+QDate Calendar::getDate(int row, int column)
+{
+    QDate date;
+    QWidget *widget = this->cellWidget(row, column);
+    if (widget != nullptr)
+    {
+        QVBoxLayout *layout = (QVBoxLayout *) widget->layout();
+        QLineEdit *dateText = (QLineEdit *) layout->itemAt(0)->widget();
+        int dateNum = dateText->text().toInt();
+        date.setDate(selectedYear, selectedMonth, dateNum);
+    }
+    return date;
+}
+
+void Calendar::addEvent(int row, int column)
+{
+    QDate date = getDate(row, column);
+    if (!date.isValid())    return;
+
+    NewEvent *newEvent = new NewEvent();
+    newEvent->exec();
+
+    if (!newEvent->accepted || newEvent->fileName == "")    return;
+
+    QLineEdit *eventText = createTextField(newEvent->fileName);
+    addToDate(date, eventText);
+    heightReset();
+    delete newEvent;
+
+    QString eventPath = "/" + eventText->text();
+    QDir dir(selfPath.section("/", 0, -2) + eventPath);
+    dir.mkpath(dir.path());
+    FileManager::readFromFile(dir.path() + "/files.mar");
+    FileManager::appendToFile(selfPath, date.toString("dd/MM/yyyy\n"));
+    FileManager::appendToFile(selfPath, eventPath + "/files.mar\n");
+
+    QPair<QDate, QString> listEvent;
+    listEvent.first = date;
+    listEvent.second = eventPath + "/files.mar";
+    events.append(listEvent);
 }

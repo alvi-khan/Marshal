@@ -96,6 +96,8 @@ void DisplayManager::openFile(QModelIndex index)
             Blocks::addHtmlBlock(block.absoluteFilePath());
         else if (block.completeSuffix() == "mar")
             Blocks::addSubfileBlock(block.absoluteFilePath());
+        else if (block.completeSuffix() == "cal")
+            Blocks::addCalendarBlock(block.absoluteFilePath());
     }
 
     file.close();

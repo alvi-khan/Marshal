@@ -75,6 +75,7 @@ void SidebarManager::addChildren(QString directory, QStandardItem *parent)
     while (it.hasNext())
     {
         QDir dir = it.next();
+        if (!QFile::exists(dir.path() + "/files.mar"))  continue;
         // create a new item for every subdirectory (subpage)
         QStandardItem* newItem = createItem(dir.dirName(), dir.absolutePath(), parent);
         // add children for each subdirectory (subpage)

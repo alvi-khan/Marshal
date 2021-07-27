@@ -23,6 +23,7 @@ public:
     static void appendToFile(QString filePath, QString content);
     static QString readFromFile(QString filePath);
     static void updateFileTracker(QString parent, QString oldPath, QString newPath);
+    static void addCalendar(QModelIndex index);
 public slots:
     void saveBlock();
 };

@@ -17,6 +17,7 @@ SOURCES += \
     main.cpp \
     mainpage.cpp \
     mainwindow.cpp \
+    newevent.cpp \
     richtextfunctions.cpp \
     sidebarmanager.cpp
 
@@ -28,12 +29,14 @@ HEADERS += \
     filemanager.h \
     mainpage.h \
     mainwindow.h \
+    newevent.h \
     richtextfunctions.h \
     sidebarmanager.h
 
 FORMS += \
     error.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    newevent.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -173,3 +173,15 @@ void FileManager::updateFileTracker(QString parent, QString oldPath, QString new
     data.replace(oldPath, newPath);
     writeToFile(parent + "/files.mar", data);
 }
+
+void FileManager::addCalendar(QModelIndex index)
+{
+    QString parent = index.siblingAtColumn(1).data().toString();
+
+    QDir dir(getValidFileName(parent, "/Calendar ")); // create tracker for calendar
+    dir.mkpath(dir.path());
+    readFromFile(dir.path() + "/files.cal");
+
+    addToFileTracker(parent, dir.path().replace(parent, "") + "/files.cal\n"); // update parent's tracker
+    Blocks::addCalendarBlock(dir.path() + "/files.cal");    // add calendar block to parent
+}

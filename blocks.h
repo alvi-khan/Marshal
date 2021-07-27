@@ -20,7 +20,7 @@ public:
     static void addLinkBlock(QString link, QString name);
     static void addSubfileBlock(QString filePath);
     static void init(QFrame *mainPage);
-    static void addCalendarBlock();
+    static void addCalendarBlock(QString filePath);
 public slots:
     void updateBlockSize();
 };

@@ -138,6 +138,6 @@ void MainWindow::on_subpageButton_clicked()
 
 void MainWindow::on_calendar_clicked()
 {
-    Blocks::addCalendarBlock();
+    FileManager::addCalendar(this->ui->sideBar->currentIndex());
 }
 
