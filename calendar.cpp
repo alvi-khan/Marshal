@@ -1,6 +1,7 @@
 #include "calendar.h"
 #include "newevent.h"
 #include "filemanager.h"
+#include "calendarevent.h"
 
 #include <QDir>
 #include <QFile>
@@ -226,7 +227,7 @@ void Calendar::addEvents()
         QString path = event.second;
         if (date.month() == selectedMonth && date.year() == selectedYear)
         {
-            QLineEdit *textField = createTextField(path.section("/", -2, -2));
+            CalendarEvent *textField = new CalendarEvent(path.section("/", -2, -2), selfPath);
             addToDate(date, textField);
         }
     }
@@ -288,7 +289,7 @@ void Calendar::addEvent(int row, int column)
 
     if (!newEvent->accepted || newEvent->fileName == "")    return;
 
-    QLineEdit *eventText = createTextField(newEvent->fileName);
+    CalendarEvent *eventText = new CalendarEvent(newEvent->fileName, selfPath);
     addToDate(date, eventText);
     heightReset();
     delete newEvent;

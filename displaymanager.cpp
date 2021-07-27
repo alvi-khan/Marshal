@@ -70,7 +70,7 @@ void DisplayManager::renameFile(QModelIndex index)
     openFile(index);
 }
 
-void DisplayManager::openFile(QModelIndex index)
+void DisplayManager::openFileFromPath(QString filePath, QString title)
 {
     // removing existing blocks
     QList<QObject *> objects = mainPage->children();
@@ -80,7 +80,6 @@ void DisplayManager::openFile(QModelIndex index)
         widget->hide();
     }
 
-    QString filePath = index.siblingAtColumn(1).data().toString();
     QFile file(filePath + "/files.mar");
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -107,7 +106,13 @@ void DisplayManager::openFile(QModelIndex index)
 
     file.close();
 
-    pageTitle->setText(index.data().toString());
+    pageTitle->setText(title);
+}
+
+void DisplayManager::openFile(QModelIndex index)
+{
+    QString filePath = index.siblingAtColumn(1).data().toString();
+    openFileFromPath(filePath, index.data().toString());
 }
 
 void DisplayManager::init(QFrame *mainPage, QLineEdit *pageTitle)

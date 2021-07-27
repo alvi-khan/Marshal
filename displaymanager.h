@@ -22,6 +22,7 @@ public:
     static void openFile(QModelIndex index);
     static void renameFile(QModelIndex index);
     static void createUrl(QString url, QString displayName);
+    static void openFileFromPath(QString filePath, QString title);
 public slots:
     void openLink(QUrl url);
 };
