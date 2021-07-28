@@ -30,9 +30,11 @@ void DisplayManager::openLink(QUrl url)
     {
         // subfile link
         link.truncate(link.lastIndexOf(QChar('/')));
+        QString fileName = link.section("/", -1);
         QModelIndex index = SidebarManager::getChild(link); // get index of subfile
         SidebarManager::setCurrentIndex(index);
-        openFile(index);
+        //openFile(index);
+        openFileFromPath(link, fileName);
     }
 }
 
@@ -48,6 +50,7 @@ void DisplayManager::renameFile(QModelIndex index)
 {
     // Must use file path to derive file name. File name in tree unreliable.
     QString oldPath = index.siblingAtColumn(1).data().toString();
+    oldPath = FileManager::openFile;
     QString oldName = oldPath.section("/", -1);
 
     if (pageTitle->text() == "")
@@ -59,19 +62,37 @@ void DisplayManager::renameFile(QModelIndex index)
     }
 
     QString newName = FileManager::renameFile(oldPath, pageTitle->text());
-    SidebarManager::rename(index, newName);
+
+    if (index.siblingAtColumn(1).data().toString() == FileManager::openFile)
+    {
+        SidebarManager::rename(index, newName);
+    }
+    else
+    {
+        QString parentPath = FileManager::openFile.section("/", 0, -2);
+        qDebug()<<parentPath;
+
+        FileManager::updateFileTracker(parentPath + "/files.cal", "/" + oldName + "/files.mar", "/" + newName + "/files.mar");
+    }
+
 
     if (index.parent().isValid())
     {
         QString parentPath = index.parent().siblingAtColumn(1).data().toString();
-        FileManager::updateFileTracker(parentPath, "/" + oldName + "/files.mar", "/" + newName + "/files.mar");
+        FileManager::updateFileTracker(parentPath + "/files.mar", "/" + oldName + "/files.mar", "/" + newName + "/files.mar");
     }
 
-    openFile(index);
+    FileManager::openFile.truncate(FileManager::openFile.lastIndexOf(QChar('/')));
+    FileManager::openFile += "/" + newName;
+
+    //openFile(index);
+    openFileFromPath(FileManager::openFile, newName);
 }
 
 void DisplayManager::openFileFromPath(QString filePath, QString title)
 {
+    FileManager::openFile = filePath;
+
     // removing existing blocks
     QList<QObject *> objects = mainPage->children();
     foreach (QObject *object, objects)

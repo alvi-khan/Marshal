@@ -24,6 +24,7 @@ public:
     static QString readFromFile(QString filePath);
     static void updateFileTracker(QString parent, QString oldPath, QString newPath);
     static void addCalendar(QModelIndex index);
+    static QString openFile;
 public slots:
     void saveBlock();
 };

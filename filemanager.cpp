@@ -7,6 +7,7 @@
 #include <QDir>
 
 QString FileManager::homeDirectory;
+QString FileManager::openFile;
 
 FileManager::FileManager()
 {
@@ -27,7 +28,7 @@ void FileManager::saveBlock()
 void FileManager::createBlock(QModelIndex index)
 {
     QString page = index.siblingAtColumn(1).data().toString();  // path to parent file
-    QString block = getValidFileName(page, "/Block ", ".html");
+    QString block = getValidFileName(openFile, "/Block ", ".html");
 
     // creating file for block
     readFromFile(block);
@@ -37,7 +38,7 @@ void FileManager::createBlock(QModelIndex index)
     if (newBlock != nullptr)   newBlock->setFocus();
 
     // update parent page's tracker with relative path to new block
-    addToFileTracker(page, block.replace(page, "") + "\n");
+    addToFileTracker(openFile, block.replace(openFile, "") + "\n");
 }
 
 void FileManager::writeToFile(QString filePath, QString content)
@@ -125,6 +126,9 @@ void FileManager::addFile(QModelIndex index)
     if (index.isValid())    parent = index.siblingAtColumn(1).data().toString();
     else                    parent = homeDirectory;
 
+    parent = openFile;
+    if (openFile == "") parent = homeDirectory;
+
     QDir dir(getValidFileName(parent, "/Untitled Page ")); // create tracker for new subpage
     dir.mkpath(dir.path());
     readFromFile(dir.path() + "/files.mar");
@@ -136,9 +140,14 @@ void FileManager::addFile(QModelIndex index)
         Blocks::addSubfileBlock(dir.path() + "/files.mar"); // add subpage block to parent
     }
 
+    QStandardItem *newItem;
     // update sidebar
-    QStandardItem *parentItem = SidebarManager::getItemAt(index);
-    QStandardItem *newItem = SidebarManager::createItem(dir.dirName(), dir.path(), parentItem);
+    if (index.siblingAtColumn(1).data().toString() == openFile)
+    {
+        QStandardItem *parentItem = SidebarManager::getItemAt(index);
+        newItem = SidebarManager::createItem(dir.dirName(), dir.path(), parentItem);
+    }
+
 
     // for root level files, open them
     if (!index.isValid())
@@ -169,14 +178,15 @@ QString FileManager::renameFile(QString oldPath, QString newName)
  */
 void FileManager::updateFileTracker(QString parent, QString oldPath, QString newPath)
 {
-    QString data = readFromFile(parent + "/files.mar");
+    QString data = readFromFile(parent);
     data.replace(oldPath, newPath);
-    writeToFile(parent + "/files.mar", data);
+    writeToFile(parent, data);
 }
 
 void FileManager::addCalendar(QModelIndex index)
 {
     QString parent = index.siblingAtColumn(1).data().toString();
+    parent = openFile;
 
     QDir dir(getValidFileName(parent, "/Calendar ")); // create tracker for calendar
     dir.mkpath(dir.path());
