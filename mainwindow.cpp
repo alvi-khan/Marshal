@@ -7,6 +7,7 @@
 #include "mainpage.h"
 #include "calendar.h"
 #include <richtextfunctions.h>
+#include "handleexternalfile.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -139,5 +140,11 @@ void MainWindow::on_subpageButton_clicked()
 void MainWindow::on_calendar_clicked()
 {
     FileManager::addCalendar(this->ui->sideBar->currentIndex());
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    HandleExternalFile::addExternalFile();
 }
 

@@ -25,7 +25,7 @@ void DisplayManager::openLink(QUrl url)
     QString link = url.toString();
 
     // normal browser link; open in default browser
-    if (!link.endsWith(".mar")) QDesktopServices::openUrl(url);
+    if (!link.endsWith(".mar")) QDesktopServices::openUrl(QUrl::fromLocalFile(link));
     else
     {
         // subfile link

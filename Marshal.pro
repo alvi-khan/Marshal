@@ -14,6 +14,7 @@ SOURCES += \
     displaymanager.cpp \
     error.cpp \
     filemanager.cpp \
+    handleexternalfile.cpp \
     main.cpp \
     mainpage.cpp \
     mainwindow.cpp \
@@ -27,6 +28,7 @@ HEADERS += \
     displaymanager.h \
     error.h \
     filemanager.h \
+    handleexternalfile.h \
     mainpage.h \
     mainwindow.h \
     newevent.h \
