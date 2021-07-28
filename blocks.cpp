@@ -102,8 +102,13 @@ void Blocks::addSubfileBlock(QString filePath)
 void Blocks::addCalendarBlock(QString filePath)
 {
     Calendar *calendar = new Calendar(filePath);
+    QHBoxLayout *layout1 = new QHBoxLayout();
+    layout1->addWidget(calendar);
+    layout1->setAlignment(Qt::AlignHCenter);
+    QWidget *widget = new QWidget();
+    widget->setLayout(layout1);
     QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
-    layout->insertWidget(layout->count() - 1, calendar);
+    layout->insertWidget(layout->count() - 1, widget);
 }
 
 void Blocks::init(QFrame *mainPage)
