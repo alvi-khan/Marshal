@@ -50,9 +50,9 @@ void DisplayManager::createUrl(QString urlFilePath)
 
 void DisplayManager::renameFile(QModelIndex index)
 {
-    // Must use file path to derive file name. File name in tree unreliable.
-    QString oldPath = index.siblingAtColumn(1).data().toString();
-    oldPath = FileManager::openFile;
+    QString selectedItem = index.siblingAtColumn(1).data().toString();
+    QString oldPath = FileManager::openFile;
+    qDebug()<<selectedItem<<oldPath;
     QString oldName = oldPath.section("/", -1);
 
     if (pageTitle->text() == "")
@@ -65,16 +65,21 @@ void DisplayManager::renameFile(QModelIndex index)
 
     QString newName = FileManager::renameFile(oldPath, pageTitle->text());
 
-    if (index.siblingAtColumn(1).data().toString() == FileManager::openFile)
+    if (QString::compare(oldPath, selectedItem, Qt::CaseInsensitive) == 0)
     {
+        qDebug()<<"Here";
         SidebarManager::rename(index, newName);
     }
     else
     {
         QString parentPath = FileManager::openFile.section("/", 0, -2);
-        qDebug()<<parentPath;
 
-        FileManager::updateFileTracker(parentPath + "/files.cal", "/" + oldName + "/files.mar", "/" + newName + "/files.mar");
+        if (QFile::exists(parentPath + "/files.cal"))
+            parentPath = parentPath + "/files.cal";
+        else
+            parentPath = parentPath + "/files.mar";
+
+        FileManager::updateFileTracker(parentPath, "/" + oldName + "/files.mar", "/" + newName + "/files.mar");
     }
 
 

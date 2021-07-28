@@ -58,6 +58,8 @@ void MainWindow::init()
     connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(onFocusChange(QWidget*, QWidget*)));
 
     this->ui->mainPage->layout()->setAlignment(Qt::AlignHCenter);
+
+    this->ui->sideBar->setColumnHidden(1, true);
 }
 
 void MainWindow::onFocusChange(QWidget *oldWidget, QWidget *newWidget)
@@ -112,6 +114,7 @@ void MainWindow::on_newPageButton_clicked()        // creates a new page
     revealMainPage();
     QStandardItemModel *model = (QStandardItemModel*) this->ui->sideBar->model();
     FileManager::addFile(model->invisibleRootItem()->index());
+    this->ui->sideBar->hideColumn(1);
 }
 
 /**
