@@ -21,8 +21,8 @@ public:
     static QLineEdit *pageTitle;
     static void openFile(QModelIndex index);
     static void renameFile(QModelIndex index);
-    static void createUrl(QString url, QString displayName);
     static void openFileFromPath(QString filePath, QString title);
+    static void createUrl(QString urlFilePath);
 public slots:
     void openLink(QUrl url);
 };

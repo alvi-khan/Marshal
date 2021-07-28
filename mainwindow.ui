@@ -401,13 +401,6 @@ color: rgb(255, 255, 255);</string>
               <number>5</number>
              </property>
              <item>
-              <widget class="QPushButton" name="pushButton">
-               <property name="text">
-                <string>PushButton</string>
-               </property>
-              </widget>
-             </item>
-             <item>
               <spacer name="horizontalSpacer_3">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -428,6 +421,17 @@ color: rgb(255, 255, 255);</string>
                <property name="icon">
                 <iconset resource="Resources.qrc">
                  <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Subpage.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Subpage.svg</iconset>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="externalFileButton">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Attachment.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Attachment.svg</iconset>
                </property>
               </widget>
              </item>
@@ -606,7 +610,7 @@ border: none;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>395</width>
+             <width>439</width>
              <height>339</height>
             </rect>
            </property>

@@ -31,7 +31,7 @@ private slots:
 
     void on_calendar_clicked();
 
-    void on_pushButton_clicked();
+    void on_externalFileButton_clicked();
 
 private:
     Ui::MainWindow *ui;

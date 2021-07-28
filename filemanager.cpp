@@ -41,6 +41,14 @@ void FileManager::createBlock(QModelIndex index)
     addToFileTracker(openFile, block.replace(openFile, "") + "\n");
 }
 
+void FileManager::createURLBlock(QString fileName, QString filePath)
+{
+    readFromFile(openFile+"/"+fileName+".url");
+    writeToFile(openFile+"/"+fileName+".url", filePath);
+    addToFileTracker(openFile, "/"+fileName+".url\n");
+    DisplayManager::createUrl(openFile+"/"+fileName+".url");
+}
+
 void FileManager::writeToFile(QString filePath, QString content)
 {
     QFile file(filePath);
