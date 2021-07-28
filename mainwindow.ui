@@ -366,7 +366,7 @@ Text-align: left;</string>
            <number>5</number>
           </property>
           <item>
-           <widget class="QFrame" name="frame">
+           <widget class="QFrame" name="toolbar">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -606,8 +606,8 @@ border: none;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>395</width>
-             <height>339</height>
+             <width>440</width>
+             <height>342</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -694,7 +694,7 @@ border: none;
      <x>0</x>
      <y>0</y>
      <width>733</width>
-     <height>31</height>
+     <height>29</height>
     </rect>
    </property>
    <property name="autoFillBackground">

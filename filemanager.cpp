@@ -122,12 +122,10 @@ void FileManager::addFile(QModelIndex index)
 {
     homeDirectory = "E:/Downloads/Main Folder";
     QString parent;
-    // check if parent is specific page or just the root
-    if (index.isValid())    parent = index.siblingAtColumn(1).data().toString();
-    else                    parent = homeDirectory;
+    QString selectedItem = index.siblingAtColumn(1).data().toString();
 
-    parent = openFile;
-    if (openFile == "") parent = homeDirectory;
+    if (!index.isValid())   parent = homeDirectory; // root level item
+    else                    parent = openFile;
 
     QDir dir(getValidFileName(parent, "/Untitled Page ")); // create tracker for new subpage
     dir.mkpath(dir.path());
@@ -140,20 +138,18 @@ void FileManager::addFile(QModelIndex index)
         Blocks::addSubfileBlock(dir.path() + "/files.mar"); // add subpage block to parent
     }
 
-    QStandardItem *newItem;
-    // update sidebar
-    if (index.siblingAtColumn(1).data().toString() == openFile)
+    // update sidebar if necessary
+    if (parent == homeDirectory || parent == selectedItem)
     {
         QStandardItem *parentItem = SidebarManager::getItemAt(index);
-        newItem = SidebarManager::createItem(dir.dirName(), dir.path(), parentItem);
-    }
+        QStandardItem *newItem = SidebarManager::createItem(dir.dirName(), dir.path(), parentItem);
 
-
-    // for root level files, open them
-    if (!index.isValid())
-    {
-        DisplayManager::openFile(newItem->index());
-        SidebarManager::setCurrentIndex(newItem->index());
+        // for root level files, open them
+        if (parent == homeDirectory)
+        {
+            DisplayManager::openFile(newItem->index());
+            SidebarManager::setCurrentIndex(newItem->index());
+        }
     }
 }
 

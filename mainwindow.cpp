@@ -38,6 +38,7 @@ void MainWindow::init()
     // TODO hide from designer before final release
     this->ui->pageTitle->setVisible(false);
     this->ui->mainPage->setVisible(false);
+    this->ui->toolbar->setVisible(false);
 
     this->ui->sideBar->setStyleSheet(""""
         "QTreeView::branch:open:has-children:!has-siblings,"
@@ -89,6 +90,7 @@ void MainWindow::revealMainPage()
 {
     this->ui->pageTitle->setVisible(true);
     this->ui->mainPage->setVisible(true);
+    this->ui->toolbar->setVisible(true);
 }
 
 /**
