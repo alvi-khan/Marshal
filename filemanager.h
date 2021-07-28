@@ -25,6 +25,7 @@ public:
     static void updateFileTracker(QString parent, QString oldPath, QString newPath);
     static void addCalendar(QModelIndex index);
     static QString openFile;
+    static void createURLBlock(QString fileName, QString filePath);
 public slots:
     void saveBlock();
 };

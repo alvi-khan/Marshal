@@ -127,7 +127,7 @@ void MainWindow::on_pageTitle_editingFinished()
  */
 void MainWindow::on_urlButton_clicked()
 {
-    DisplayManager::createUrl("www.google.com", "Google");
+    //DisplayManager::createUrl("www.google.com", "Google");
 }
 
 /**
@@ -146,8 +146,9 @@ void MainWindow::on_calendar_clicked()
 }
 
 
-void MainWindow::on_pushButton_clicked()
+
+void MainWindow::on_externalFileButton_clicked()
 {
-    HandleExternalFile::addExternalFile();
+     HandleExternalFile::addExternalFile();
 }
 

@@ -38,10 +38,12 @@ void DisplayManager::openLink(QUrl url)
     }
 }
 
-void DisplayManager::createUrl(QString url, QString displayName)
+void DisplayManager::createUrl(QString urlFilePath)
 {
+    QString filePath = FileManager::readFromFile(urlFilePath);
+    QString fileName = filePath.section("/", -1);
     // new dialog, get url
-    Blocks::addLinkBlock(url, displayName);
+    Blocks::addLinkBlock(filePath, fileName);
     // save block as file
     // update file tracker
 }
@@ -117,12 +119,16 @@ void DisplayManager::openFileFromPath(QString filePath, QString title)
     while (!blocks.atEnd())
     {
         QFileInfo block(filePath + blocks.readLine());      // absolute path from relative path
+        //qDebug()<<block.absoluteFilePath();
         if (block.completeSuffix() == "html")
             Blocks::addHtmlBlock(block.absoluteFilePath());
         else if (block.completeSuffix() == "mar")
             Blocks::addSubfileBlock(block.absoluteFilePath());
         else if (block.completeSuffix() == "cal")
             Blocks::addCalendarBlock(block.absoluteFilePath());
+        else if (block.absoluteFilePath().endsWith("url"))
+            //qDebug()<<block.absoluteFilePath();
+            DisplayManager::createUrl(block.absoluteFilePath());
     }
 
     file.close();
