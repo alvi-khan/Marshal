@@ -38,14 +38,14 @@ void FileManager::createBlock(QModelIndex index)
     if (newBlock != nullptr)   newBlock->setFocus();
 
     // update parent page's tracker with relative path to new block
-    addToFileTracker(openFile, block.replace(openFile, "") + "\n");
+    appendToFile(openFile + "/files.mar", block.replace(openFile, "") + "\n");
 }
 
 void FileManager::createURLBlock(QString fileName, QString filePath)
 {
     readFromFile(openFile+"/"+fileName+".url");
     writeToFile(openFile+"/"+fileName+".url", filePath);
-    addToFileTracker(openFile, "/"+fileName+".url\n");
+    appendToFile(openFile + "/files.mar", "/"+fileName+".url\n");
     DisplayManager::createUrl(openFile+"/"+fileName+".url");
 }
 
@@ -94,16 +94,6 @@ QString FileManager::readFromFile(QString filePath)
 }
 
 /**
- * @brief FileManager::addToFileTracker adds path to new block to parent page's tracker
- * @param parent is the path to the parent page
- * @param child is the path to add
- */
-void FileManager::addToFileTracker(QString parent, QString child)
-{
-    appendToFile(parent + "/files.mar", child);
-}
-
-/**
  * @brief FileManager::getValidFileName generates a valid name for a subfile/block
  * @param parent is the path to the parent folder
  * @param prefix is the prefix required for the new file
@@ -142,7 +132,7 @@ void FileManager::addFile(QModelIndex index)
     // if parent is a page
     if (parent != homeDirectory)
     {
-        addToFileTracker(parent, dir.path().replace(parent, "") + "/files.mar\n"); // update parent's tracker
+        appendToFile(parent + "/files.mar", dir.path().replace(parent, "") + "/files.mar\n");
         Blocks::addSubfileBlock(dir.path() + "/files.mar"); // add subpage block to parent
     }
 
@@ -196,6 +186,6 @@ void FileManager::addCalendar(QModelIndex index)
     dir.mkpath(dir.path());
     readFromFile(dir.path() + "/files.cal");
 
-    addToFileTracker(parent, dir.path().replace(parent, "") + "/files.cal\n"); // update parent's tracker
+    appendToFile(parent + "/files.mar", dir.path().replace(parent, "") + "/files.cal\n");
     Blocks::addCalendarBlock(dir.path() + "/files.cal");    // add calendar block to parent
 }

@@ -33,7 +33,6 @@ void DisplayManager::openLink(QUrl url)
         QString fileName = link.section("/", -1);
         QModelIndex index = SidebarManager::getChild(link); // get index of subfile
         SidebarManager::setCurrentIndex(index);
-        //openFile(index);
         openFileFromPath(link, fileName);
     }
 }
@@ -66,10 +65,7 @@ void DisplayManager::renameFile(QModelIndex index)
     QString newName = FileManager::renameFile(oldPath, pageTitle->text());
 
     if (QString::compare(oldPath, selectedItem, Qt::CaseInsensitive) == 0)
-    {
-        qDebug()<<"Here";
         SidebarManager::rename(index, newName);
-    }
     else
     {
         QString parentPath = FileManager::openFile.section("/", 0, -2);
@@ -91,8 +87,6 @@ void DisplayManager::renameFile(QModelIndex index)
 
     FileManager::openFile.truncate(FileManager::openFile.lastIndexOf(QChar('/')));
     FileManager::openFile += "/" + newName;
-
-    //openFile(index);
     openFileFromPath(FileManager::openFile, newName);
 }
 
@@ -103,10 +97,7 @@ void DisplayManager::openFileFromPath(QString filePath, QString title)
     // removing existing blocks
     QList<QObject *> objects = mainPage->children();
     foreach (QObject *object, objects)
-    {
-        QWidget *widget = (QWidget *) object;
-        widget->hide();
-    }
+        ((QWidget *) object)->hide();
 
     QFile file(filePath + "/files.mar");
 
@@ -124,7 +115,6 @@ void DisplayManager::openFileFromPath(QString filePath, QString title)
     while (!blocks.atEnd())
     {
         QFileInfo block(filePath + blocks.readLine());      // absolute path from relative path
-        //qDebug()<<block.absoluteFilePath();
         if (block.completeSuffix() == "html")
             Blocks::addHtmlBlock(block.absoluteFilePath());
         else if (block.completeSuffix() == "mar")
@@ -132,7 +122,6 @@ void DisplayManager::openFileFromPath(QString filePath, QString title)
         else if (block.completeSuffix() == "cal")
             Blocks::addCalendarBlock(block.absoluteFilePath());
         else if (block.absoluteFilePath().endsWith("url"))
-            //qDebug()<<block.absoluteFilePath();
             DisplayManager::createUrl(block.absoluteFilePath());
     }
 

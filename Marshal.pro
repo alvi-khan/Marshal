@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     blocks.cpp \
     calendar.cpp \
+    calendarcontrols.cpp \
     calendarevent.cpp \
     displaymanager.cpp \
     error.cpp \
@@ -26,6 +27,7 @@ SOURCES += \
 HEADERS += \
     blocks.h \
     calendar.h \
+    calendarcontrols.h \
     calendarevent.h \
     displaymanager.h \
     error.h \

@@ -66,23 +66,18 @@ void MainWindow::onFocusChange(QWidget *oldWidget, QWidget *newWidget)
 {
     if (QApplication::activeWindow() == nullptr)
         return;
+
     QString objName = newWidget->objectName();
     QTextBrowser *block = qobject_cast<QTextBrowser*>(oldWidget);
 
     if (block != nullptr  && objName == "boldButton")
-    {
         RichTextFunctions::boldText(block);
-    }
 
     else if (block != nullptr  && objName == "italicButton")
-    {
         RichTextFunctions::italicText(block);
-    }
 
     else if (block != nullptr  && objName == "underlineButton")
-    {
         RichTextFunctions::underlineText(block);
-    }
 }
 
 /**

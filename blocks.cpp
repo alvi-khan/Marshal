@@ -28,18 +28,10 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     // setting up style
     newBlock->setFrameStyle(QFrame::NoFrame);
     newBlock->setTextColor(QColor::fromRgb(255, 255, 255)); // white
-    //newBlock->setFontPointSize(12);
-    QFontMetrics m(newBlock->font());
-    int rowHeight = m.lineSpacing();
-    int lineCount = newBlock->document()->lineCount() + 1;
-    newBlock->setMaximumHeight(rowHeight * lineCount);
-    newBlock->setMinimumHeight(rowHeight * lineCount);
 
-    // connect block to save function
-    connect(newBlock, &QTextEdit::textChanged, new FileManager(), &FileManager::saveBlock);
-
-    // connect block to update function
     connect(newBlock, &QTextEdit::textChanged, new Blocks(), &Blocks::updateBlockSize);
+    newBlock->textChanged();    // to trigger height readjustment
+    connect(newBlock, &QTextEdit::textChanged, new FileManager(), &FileManager::saveBlock);
 
     // add block to main page
     QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();

@@ -15,7 +15,6 @@ public:
     FileManager();
     static void addFile(QModelIndex index);
     static QString homeDirectory;
-    static void addToFileTracker(QString parent, QString child);
     static QString getValidFileName(QString parent, QString prefix, QString suffix = "");
     static QString renameFile(QString oldPath, QString newName);
     static void createBlock(QModelIndex index);
