@@ -33,6 +33,8 @@ private slots:
 
     void on_externalFileButton_clicked();
 
+    void on_profileButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void init();

@@ -8,6 +8,8 @@
 #include "calendar.h"
 #include <richtextfunctions.h>
 #include "handleexternalfile.h"
+#include "databasemanager.h"
+#include "logindialog.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -25,6 +27,7 @@ MainWindow::~MainWindow()
 void MainWindow::init()
 {
     // initialize utility classes
+    DatabaseManager::init();
     SidebarManager::init(this->ui->sideBar);
     DisplayManager::init(this->ui->mainPage, this->ui->pageTitle);
     Blocks::init(this->ui->mainPage);
@@ -148,5 +151,13 @@ void MainWindow::on_calendar_clicked()
 void MainWindow::on_externalFileButton_clicked()
 {
      HandleExternalFile::addExternalFile();
+}
+
+
+void MainWindow::on_profileButton_clicked()
+{
+    LoginDialog *loginDialog = new LoginDialog();
+    loginDialog->exec();
+    delete loginDialog;
 }
 

@@ -97,6 +97,13 @@ void SidebarManager::init(QTreeView *sidebar)
     sidebar->setColumnHidden(1, true);
 }
 
+void SidebarManager::reloadSidebar()
+{
+    model->removeRows(0, model->rowCount());
+    addChildren(homeDirectory, model->invisibleRootItem());
+    sidebar->setColumnHidden(1, true);
+}
+
 void SidebarManager::rename(QModelIndex index, QString newName)
 {
     // update item name

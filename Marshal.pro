@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,10 +13,12 @@ SOURCES += \
     calendar.cpp \
     calendarcontrols.cpp \
     calendarevent.cpp \
+    databasemanager.cpp \
     displaymanager.cpp \
     error.cpp \
     filemanager.cpp \
     handleexternalfile.cpp \
+    logindialog.cpp \
     main.cpp \
     mainpage.cpp \
     mainwindow.cpp \
@@ -29,10 +31,12 @@ HEADERS += \
     calendar.h \
     calendarcontrols.h \
     calendarevent.h \
+    databasemanager.h \
     displaymanager.h \
     error.h \
     filemanager.h \
     handleexternalfile.h \
+    logindialog.h \
     mainpage.h \
     mainwindow.h \
     newevent.h \
@@ -41,6 +45,7 @@ HEADERS += \
 
 FORMS += \
     error.ui \
+    logindialog.ui \
     mainwindow.ui \
     newevent.ui
 

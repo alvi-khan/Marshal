@@ -25,6 +25,7 @@ public:
     static void setCurrentIndex(QModelIndex index);
     static QModelIndex getCurrentIndex();
     static QStandardItem* getItemAt(QModelIndex index);
+    static void reloadSidebar();
 };
 
 #endif // SIDEBARMANAGER_H
