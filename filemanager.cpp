@@ -118,7 +118,7 @@ QString FileManager::getValidFileName(QString parent, QString prefix, QString su
  */
 void FileManager::addFile(QModelIndex index)
 {
-    homeDirectory = "E:/Downloads/Main Folder";
+    homeDirectory = "E:/Downloads/Main Folder/Private";
     QString parent;
     QString selectedItem = index.siblingAtColumn(1).data().toString();
 
@@ -188,4 +188,10 @@ void FileManager::addCalendar(QModelIndex index)
 
     appendToFile(parent + "/files.mar", dir.path().replace(parent, "") + "/files.cal\n");
     Blocks::addCalendarBlock(dir.path() + "/files.cal");    // add calendar block to parent
+}
+
+void FileManager::deleteDirectory(QString directory)
+{
+    QDir dir(directory);
+    dir.removeRecursively();
 }

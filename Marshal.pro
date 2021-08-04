@@ -17,6 +17,7 @@ SOURCES += \
     displaymanager.cpp \
     error.cpp \
     filemanager.cpp \
+    filesharedialog.cpp \
     handleexternalfile.cpp \
     logindialog.cpp \
     main.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     displaymanager.h \
     error.h \
     filemanager.h \
+    filesharedialog.h \
     handleexternalfile.h \
     logindialog.h \
     mainpage.h \
@@ -45,6 +47,7 @@ HEADERS += \
 
 FORMS += \
     error.ui \
+    filesharedialog.ui \
     logindialog.ui \
     mainwindow.ui \
     newevent.ui

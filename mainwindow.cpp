@@ -161,3 +161,9 @@ void MainWindow::on_profileButton_clicked()
     delete loginDialog;
 }
 
+
+void MainWindow::on_shareButton_clicked()
+{
+    DatabaseManager::shareFile();
+}
+

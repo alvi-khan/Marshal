@@ -35,6 +35,8 @@ private slots:
 
     void on_profileButton_clicked();
 
+    void on_shareButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void init();

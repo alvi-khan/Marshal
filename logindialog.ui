@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>485</width>
-    <height>300</height>
+    <height>321</height>
    </rect>
   </property>
   <property name="font">
@@ -99,6 +99,12 @@ color: rgb(255, 255, 255);</string>
        <family>Segoe UI</family>
        <pointsize>12</pointsize>
       </font>
+     </property>
+     <property name="inputMethodHints">
+      <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Password</enum>
      </property>
     </widget>
    </item>

@@ -17,6 +17,7 @@ public:
     static void init(QTreeView *sidebar);
     static void rename(QModelIndex index, QString newName);
     static QString homeDirectory;
+    static QString sharedDirectory;
     static QTreeView *sidebar;
     static QStandardItemModel *model;
     void removeItem(QModelIndex index);

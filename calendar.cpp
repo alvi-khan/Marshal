@@ -235,7 +235,6 @@ void Calendar::addNewEvent(int row, int column)
         addToDateCell(date, newEvent);
         heightReset();
         newEvent->saveToDisk();
-        qDebug()<<newEvent->getEventFilePath();
         addToEventList(date, newEvent->getEventFilePath());
     }
     else    delete newEvent;

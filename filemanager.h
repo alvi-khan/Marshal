@@ -25,6 +25,7 @@ public:
     static void addCalendar(QModelIndex index);
     static QString openFile;
     static void createURLBlock(QString fileName, QString filePath);
+    static void deleteDirectory(QString directory);
 public slots:
     void saveBlock();
 };

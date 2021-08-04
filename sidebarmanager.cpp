@@ -3,6 +3,7 @@
 #include <QDirIterator>
 
 QString SidebarManager::homeDirectory;
+QString SidebarManager::sharedDirectory;
 QTreeView * SidebarManager::sidebar;
 QStandardItemModel * SidebarManager::model;
 
@@ -89,10 +90,12 @@ void SidebarManager::addChildren(QString directory, QStandardItem *parent)
  */
 void SidebarManager::init(QTreeView *sidebar)
 {
-    homeDirectory = "E:/Downloads/Main Folder";
+    homeDirectory = "E:/Downloads/Main Folder/Private";
+    sharedDirectory = "E:/Downloads/Main Folder/Shared";
     SidebarManager::sidebar = sidebar;
     model = new QStandardItemModel();
     addChildren(homeDirectory, model->invisibleRootItem());
+    addChildren(sharedDirectory, model->invisibleRootItem());
     sidebar->setModel(model);
     sidebar->setColumnHidden(1, true);
 }
@@ -101,6 +104,7 @@ void SidebarManager::reloadSidebar()
 {
     model->removeRows(0, model->rowCount());
     addChildren(homeDirectory, model->invisibleRootItem());
+    addChildren(sharedDirectory, model->invisibleRootItem());
     sidebar->setColumnHidden(1, true);
 }
 

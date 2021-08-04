@@ -384,7 +384,7 @@ color: rgb(255, 255, 255);</string>
             <property name="frameShadow">
              <enum>QFrame::Plain</enum>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0,0">
+            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0,0,0">
              <property name="spacing">
               <number>15</number>
              </property>
@@ -464,6 +464,17 @@ color: rgb(255, 255, 255);</string>
                </property>
                <property name="flat">
                 <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="shareButton">
+               <property name="text">
+                <string>...</string>
+               </property>
+               <property name="icon">
+                <iconset resource="Resources.qrc">
+                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Share.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Share.svg</iconset>
                </property>
               </widget>
              </item>
@@ -610,7 +621,7 @@ border: none;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>440</width>
+             <width>435</width>
              <height>342</height>
             </rect>
            </property>
