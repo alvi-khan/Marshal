@@ -10,9 +10,9 @@ class DatabaseManager
 public:
     DatabaseManager();
 
-    static void uploadFile(QString filePath, QString tableName);
+    static void uploadFile(QString filePath, QString tableName, QString shareFilePath = "");
     static void init();
-    static void uploadTo(QString tableName, QString directory);
+    static void uploadTo(QString tableName, QString directory, QString shareFilePath = "");
     static void downloadTo(QString directory, QString table);
     static void saveFile(QString filePath, QByteArray data);
     static bool createNewUser(QString username, QString password);

@@ -41,15 +41,16 @@ void DatabaseManager::createTable(QString table)
     executeQuery(query);
 }
 
-void DatabaseManager::uploadFile(QString filePath, QString tableName)
+void DatabaseManager::uploadFile(QString filePath, QString tableName, QString shareFilePath)
 {
     QString relativePath = filePath;
     relativePath.replace(homeDirectory, "");
 
     if (tableName.endsWith("_shared"))
     {
-        relativePath = "/Shared/" + relativePath.section("/", 2, -1);
-        qDebug()<<relativePath;
+        relativePath = filePath;
+        relativePath.replace(shareFilePath, "");
+        relativePath = "/Shared/" + relativePath;
     }
 
     QString query("INSERT INTO " + tableName + " VALUES ('" + relativePath + "', LOAD_FILE('" + filePath + "'));");
@@ -82,11 +83,14 @@ void DatabaseManager::downloadTo(QString directory, QString table)
     }
 }
 
-void DatabaseManager::uploadTo(QString table, QString directory)
+void DatabaseManager::uploadTo(QString table, QString directory, QString shareFilePath)
 {
     QDirIterator it(directory, QDir::Files | QDir::NoDotAndDotDot,  QDirIterator::Subdirectories);
     while (it.hasNext())
-        uploadFile(it.next(), table);
+    {
+        QString directory = it.next();
+        uploadFile(directory, table, shareFilePath);
+    }
 }
 
 void DatabaseManager::addUser(QString username, QString password)
@@ -197,14 +201,14 @@ QString DatabaseManager::getSharedUsername()
     FileShareDialog *fileShareDialog = new FileShareDialog();
     fileShareDialog->exec();
 
-    return fileShareDialog->username;
-
+    QString username = fileShareDialog->username;
     delete fileShareDialog;
+    return username;
 }
 
 bool DatabaseManager::verifyUsername(QString username)
 {
-    QString queryString("SELECT * FROM user_list WHERE username = '" + username + ";");
+    QString queryString("SELECT * FROM user_list WHERE username = '" + username + "';");
     QSqlQuery query = executeQuery(queryString);
     while (query.next())    return true;
     return false;
@@ -231,6 +235,6 @@ void DatabaseManager::shareFile()
     if (sharedUser != "")
     {
         createTable(sharedTable);
-        uploadTo(sharedTable, sharedFile);
+        uploadTo(sharedTable, sharedFile, sharedFile.section("/", 0, -2));
     }
 }
