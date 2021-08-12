@@ -37,6 +37,8 @@ private slots:
 
     void on_shareButton_clicked();
 
+    void on_searchBox_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     void init();

@@ -27,7 +27,7 @@ MainWindow::~MainWindow()
 void MainWindow::init()
 {
     // initialize utility classes
-    DatabaseManager::init();
+    //DatabaseManager::init();
     SidebarManager::init(this->ui->sideBar);
     DisplayManager::init(this->ui->mainPage, this->ui->pageTitle);
     Blocks::init(this->ui->mainPage);
@@ -110,6 +110,7 @@ void MainWindow::on_sideBar_clicked(const QModelIndex &index)
 void MainWindow::on_newPageButton_clicked()        // creates a new page
 {
     revealMainPage();
+    this->ui->searchBox->setText("");
     QStandardItemModel *model = (QStandardItemModel*) this->ui->sideBar->model();
     FileManager::addFile(model->invisibleRootItem()->index());
     this->ui->sideBar->hideColumn(1);
@@ -165,5 +166,11 @@ void MainWindow::on_profileButton_clicked()
 void MainWindow::on_shareButton_clicked()
 {
     DatabaseManager::shareFile();
+}
+
+
+void MainWindow::on_searchBox_textChanged(const QString &arg1)
+{
+    SidebarManager::filterItems(arg1);
 }
 

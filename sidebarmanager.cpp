@@ -1,6 +1,8 @@
 #include "sidebarmanager.h"
 
 #include <QDirIterator>
+#include <QSortFilterProxyModel>
+#include <QStack>
 
 QString SidebarManager::homeDirectory;
 QString SidebarManager::sharedDirectory;
@@ -136,4 +138,47 @@ QStandardItem* SidebarManager::getItemAt(QModelIndex index)
 {
     if (index.isValid())    return model->itemFromIndex(index);
     else                    return model->invisibleRootItem();
+}
+
+QList<QModelIndex> SidebarManager::getItemList(QAbstractItemModel *model)
+{
+    QList<QModelIndex> results;
+    QStack<QModelIndex> unprocessedItems;
+    for (int i=0; i<model->rowCount(); i++)
+        unprocessedItems.push(model->index(i, 0));
+    while(!unprocessedItems.empty())
+    {
+        QModelIndex index = unprocessedItems.pop();
+        results.push_back(index);
+        for (int i=0; i<model->rowCount(index); i++)
+            unprocessedItems.push(model->index(i, 0, index));
+    }
+    return results;
+}
+
+void SidebarManager::filterItems(QString filter)
+{
+    QList<QModelIndex> items = getItemList(model);
+    foreach (QModelIndex index, items)
+        sidebar->setRowHidden(index.row(), index.parent(), true);
+
+    QSortFilterProxyModel *filteredModel = new QSortFilterProxyModel();
+    filteredModel->setSourceModel(model);
+    filteredModel->setRecursiveFilteringEnabled(true);
+    filteredModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+    filteredModel->setFilterFixedString(filter);
+
+    items = getItemList(filteredModel);
+    foreach (QModelIndex index, items)
+    {
+        QModelIndex sourceIndex = filteredModel->mapToSource(index);
+        sidebar->setRowHidden(sourceIndex.row(), sourceIndex.parent(), false);
+
+        sourceIndex = sourceIndex.parent();
+        while(sourceIndex.isValid())
+        {
+            sidebar->expand(sourceIndex);
+            sourceIndex = sourceIndex.parent();
+        }
+    }
 }

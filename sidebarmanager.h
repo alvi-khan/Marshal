@@ -27,6 +27,10 @@ public:
     static QModelIndex getCurrentIndex();
     static QStandardItem* getItemAt(QModelIndex index);
     static void reloadSidebar();
+    static void filterItems(QString filter);
+private:
+
+    static QList<QModelIndex> getItemList(QAbstractItemModel *model);
 };
 
 #endif // SIDEBARMANAGER_H
