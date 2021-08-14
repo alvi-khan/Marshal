@@ -24,6 +24,7 @@ public:
     static QString getSharedUsername();
     static void shareFile();
     static bool verifyUsername(QString username);
+    static QList<QString> getUserList();
 private:
     static QSqlDatabase db;
     static void loginUser(QString username);

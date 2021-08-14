@@ -51,7 +51,6 @@ void DisplayManager::renameFile(QModelIndex index)
 {
     QString selectedItem = index.siblingAtColumn(1).data().toString();
     QString oldPath = FileManager::openFile;
-    qDebug()<<selectedItem<<oldPath;
     QString oldName = oldPath.section("/", -1);
 
     if (pageTitle->text() == "")

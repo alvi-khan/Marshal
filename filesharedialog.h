@@ -21,6 +21,8 @@ private slots:
 
     void on_buttonBox_rejected();
 
+    void on_username_textChanged(const QString &arg1);
+
 private:
     Ui::FileShareDialog *ui;
     void init();

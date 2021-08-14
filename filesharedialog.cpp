@@ -1,5 +1,7 @@
 #include "filesharedialog.h"
 #include "ui_filesharedialog.h"
+#include "databasemanager.h"
+#include <QCompleter>
 
 FileShareDialog::FileShareDialog(QWidget *parent) :
     QDialog(parent),
@@ -29,5 +31,21 @@ void FileShareDialog::on_buttonBox_rejected()
 void FileShareDialog::init()
 {
     username = "";
+}
+
+
+void FileShareDialog::on_username_textChanged(const QString &arg1)
+{
+    QList<QString> users = DatabaseManager::getUserList();
+
+
+    QCompleter *userSuggestions = new QCompleter(users, this);
+    userSuggestions->setCaseSensitivity(Qt::CaseInsensitive);
+    QAbstractItemView *list = userSuggestions->popup();
+    list->setStyleSheet("color: #FFFFFF; "
+                        "font-size: 12px;"
+                        "background-color: rgb(47, 52, 55);");
+    userSuggestions->setPopup(list);
+    this->ui->username->setCompleter(userSuggestions);
 }
 

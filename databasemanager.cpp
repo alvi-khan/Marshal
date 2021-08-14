@@ -223,18 +223,34 @@ void DatabaseManager::shareFile()
     }
     QString sharedUser = getSharedUsername();
 
-    if (!verifyUsername(sharedUser))
+    if (sharedUser == "")   return;
+    else if (!verifyUsername(sharedUser))
     {
         QMessageBox::warning(nullptr, "User Not Found", "The user could not be found.");
+        return;
+    }
+    else if (sharedUser == username)
+    {
+        QMessageBox::warning(nullptr, "Invalid User", "You cannot share files with yourself.");
         return;
     }
 
     QString sharedTable = sharedUser + "_shared";
     QString sharedFile = FileManager::openFile;
 
-    if (sharedUser != "")
+    createTable(sharedTable);
+    uploadTo(sharedTable, sharedFile, sharedFile.section("/", 0, -2));
+}
+
+QList<QString> DatabaseManager::getUserList()
+{
+    QString queryString = "SELECT username FROM user_list;";
+    QSqlQuery query = executeQuery(queryString);
+    QList<QString> userList;
+    while(query.next())
     {
-        createTable(sharedTable);
-        uploadTo(sharedTable, sharedFile, sharedFile.section("/", 0, -2));
+        QString user = query.value(0).toString();
+        if (user != username)   userList.append(user);
     }
+    return userList;
 }
