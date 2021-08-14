@@ -39,6 +39,15 @@ color: rgb(51, 51, 51);</string>
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QFrame { color: rgb(153, 153, 153); background-color: rgb(46, 46, 46); }
+QSplitter { background-color: rgb(47, 52, 55); }
+QFrame#mainPageFrame { color: rgb(153, 153, 153); background-color: rgb(47, 52, 55); }
+QToolButton { background-color: rgb(46, 46, 46); padding: 5px 5px 5px 5px; }
+QToolButton:hover { background-color: rgb(255, 0, 0);  }
+QPushButton { background-color: rgb(46, 46, 46); padding: 5px 5px 5px 5px; border-radius: 10px; }
+QPushButton:hover { background-color: rgb(255, 0, 0);  }</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
     <property name="spacing">
      <number>0</number>
@@ -64,7 +73,7 @@ color: rgb(51, 51, 51);</string>
        </sizepolicy>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(47, 52, 55);</string>
+       <string notr="true"/>
       </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -74,8 +83,7 @@ color: rgb(51, 51, 51);</string>
       </property>
       <widget class="QFrame" name="frame">
        <property name="styleSheet">
-        <string notr="true">color: rgb(153, 153, 153);
-background-color: rgb(46, 46, 46);</string>
+        <string notr="true"/>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="spacing">
@@ -119,6 +127,9 @@ Text-align: left;</string>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
@@ -140,7 +151,6 @@ Text-align: left;</string>
               </property>
               <property name="styleSheet">
                <string notr="true">color: rgb(153, 153, 153);
-background-color: rgb(46, 46, 46);
 Text-align: left;</string>
               </property>
               <property name="text">
@@ -151,7 +161,7 @@ Text-align: left;</string>
                 <normaloff>:/Icons/Resources/Icons/Settings.svg</normaloff>:/Icons/Resources/Icons/Settings.svg</iconset>
               </property>
               <property name="flat">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -174,7 +184,6 @@ Text-align: left;</string>
               </property>
               <property name="styleSheet">
                <string notr="true">color: rgb(153, 153, 153);
-background-color: rgb(46, 46, 46);
 Text-align: left;</string>
               </property>
               <property name="text">
@@ -185,7 +194,7 @@ Text-align: left;</string>
                 <normaloff>:/Icons/Resources/Icons/Profile.svg</normaloff>:/Icons/Resources/Icons/Profile.svg</iconset>
               </property>
               <property name="flat">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -252,7 +261,6 @@ background-color: rgb(46, 46, 46);</string>
               </property>
               <property name="styleSheet">
                <string notr="true">color: rgb(153, 153, 153);
-background-color: rgb(46, 46, 46);
 Text-align: left;</string>
               </property>
               <property name="text">
@@ -263,7 +271,7 @@ Text-align: left;</string>
                 <normaloff>:/Icons/Resources/Icons/Templates.svg</normaloff>:/Icons/Resources/Icons/Templates.svg</iconset>
               </property>
               <property name="flat">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -277,7 +285,6 @@ Text-align: left;</string>
               </property>
               <property name="styleSheet">
                <string notr="true">color: rgb(153, 153, 153);
-background-color: rgb(46, 46, 46);
 Text-align: left;</string>
               </property>
               <property name="text">
@@ -288,7 +295,7 @@ Text-align: left;</string>
                 <normaloff>:/Icons/Resources/Icons/New Page.svg</normaloff>:/Icons/Resources/Icons/New Page.svg</iconset>
               </property>
               <property name="flat">
-               <bool>true</bool>
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -312,366 +319,399 @@ Text-align: left;</string>
        </layout>
       </widget>
       <widget class="QWidget" name="layoutWidget">
-       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0,0,0">
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="0">
         <property name="spacing">
-         <number>10</number>
+         <number>0</number>
         </property>
         <property name="sizeConstraint">
          <enum>QLayout::SetMinimumSize</enum>
         </property>
         <property name="leftMargin">
-         <number>10</number>
+         <number>0</number>
         </property>
         <property name="bottomMargin">
-         <number>10</number>
+         <number>0</number>
         </property>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="spacing">
-           <number>10</number>
+         <widget class="QFrame" name="mainPageFrame">
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
           </property>
-          <property name="leftMargin">
-           <number>5</number>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
           </property>
-          <property name="topMargin">
-           <number>5</number>
+          <property name="lineWidth">
+           <number>0</number>
           </property>
-          <property name="rightMargin">
-           <number>5</number>
-          </property>
-          <property name="bottomMargin">
-           <number>5</number>
-          </property>
-          <item>
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>40</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QFrame" name="toolbar">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">border-radius: 10px;
-background-color: rgb(46, 46, 46);
-color: rgb(255, 255, 255);</string>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0,0">
+          <layout class="QVBoxLayout" name="verticalLayout_8">
+           <property name="spacing">
+            <number>10</number>
+           </property>
+           <property name="leftMargin">
+            <number>10</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>10</number>
+           </property>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
              <property name="spacing">
-              <number>15</number>
+              <number>10</number>
              </property>
              <property name="leftMargin">
-              <number>10</number>
+              <number>5</number>
              </property>
              <property name="topMargin">
               <number>5</number>
              </property>
              <property name="rightMargin">
-              <number>10</number>
+              <number>5</number>
              </property>
              <property name="bottomMargin">
               <number>5</number>
              </property>
              <item>
-              <widget class="QPushButton" name="subpageButton">
-               <property name="text">
-                <string/>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
                </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Subpage.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Subpage.svg</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="externalFileButton">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Attachment.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Attachment.svg</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="urlButton">
-               <property name="font">
-                <font>
-                 <family>Segoe UI</family>
-                 <pointsize>12</pointsize>
-                </font>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="inputMethodHints">
-                <set>Qt::ImhNone</set>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Icons/Resources/Icons/URL.svg</normaloff>:/Icons/Resources/Icons/URL.svg</iconset>
-               </property>
-               <property name="autoDefault">
-                <bool>false</bool>
-               </property>
-               <property name="default">
-                <bool>false</bool>
-               </property>
-               <property name="flat">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QToolButton" name="shareButton">
-               <property name="text">
-                <string>...</string>
-               </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Share.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Share.svg</iconset>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="boldButton">
-               <property name="styleSheet">
-                <string notr="true">padding: 5px;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</iconset>
-               </property>
-               <property name="iconSize">
+               <property name="sizeHint" stdset="0">
                 <size>
-                 <width>15</width>
-                 <height>15</height>
+                 <width>40</width>
+                 <height>20</height>
                 </size>
                </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
+              </spacer>
              </item>
              <item>
-              <widget class="QPushButton" name="italicButton">
+              <widget class="QFrame" name="toolbar">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="styleSheet">
-                <string notr="true">padding: 5px;</string>
+                <string notr="true">border-radius: 10px;
+
+color: rgb(255, 255, 255);</string>
                </property>
-               <property name="text">
-                <string/>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
                </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</iconset>
+               <property name="frameShadow">
+                <enum>QFrame::Plain</enum>
                </property>
-               <property name="iconSize">
-                <size>
-                 <width>15</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="underlineButton">
-               <property name="styleSheet">
-                <string notr="true">padding: 5px;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>15</width>
-                 <height>15</height>
-                </size>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QToolButton" name="calendar">
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="Resources.qrc">
-                 <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Calendar.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Calendar.svg</iconset>
-               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0,0">
+                <property name="spacing">
+                 <number>15</number>
+                </property>
+                <property name="leftMargin">
+                 <number>10</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>10</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="subpageButton">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Subpage.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Subpage.svg</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="externalFileButton">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Attachment.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Attachment.svg</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="urlButton">
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>12</pointsize>
+                   </font>
+                  </property>
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="inputMethodHints">
+                   <set>Qt::ImhNone</set>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Icons/Resources/Icons/URL.svg</normaloff>:/Icons/Resources/Icons/URL.svg</iconset>
+                  </property>
+                  <property name="autoDefault">
+                   <bool>false</bool>
+                  </property>
+                  <property name="default">
+                   <bool>false</bool>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="shareButton">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Share.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Share.svg</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="boldButton">
+                  <property name="styleSheet">
+                   <string notr="true">padding: 5px;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Bold.svg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>15</width>
+                    <height>15</height>
+                   </size>
+                  </property>
+                  <property name="flat">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="italicButton">
+                  <property name="styleSheet">
+                   <string notr="true">padding: 5px;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Italic.svg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>15</width>
+                    <height>15</height>
+                   </size>
+                  </property>
+                  <property name="flat">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="underlineButton">
+                  <property name="styleSheet">
+                   <string notr="true">padding: 5px;</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Underline.svg</iconset>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>15</width>
+                    <height>15</height>
+                   </size>
+                  </property>
+                  <property name="flat">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="calendar">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Calendar.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Calendar.svg</iconset>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QLineEdit" name="pageTitle">
-          <property name="enabled">
-           <bool>true</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <family>Segoe UI</family>
-            <pointsize>20</pointsize>
-            <weight>50</weight>
-            <bold>false</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color: rgb(47, 52, 55);
+           </item>
+           <item>
+            <widget class="QLineEdit" name="pageTitle">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>20</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(47, 52, 55);
 color: rgb(255, 255, 255);
 border: none;
 </string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="placeholderText">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QScrollArea" name="scrollArea">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::NoFrame</enum>
-          </property>
-          <property name="verticalScrollBarPolicy">
-           <enum>Qt::ScrollBarAlwaysOff</enum>
-          </property>
-          <property name="widgetResizable">
-           <bool>true</bool>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignJustify|Qt::AlignTop</set>
-          </property>
-          <widget class="QWidget" name="scrollAreaWidgetContents">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>435</width>
-             <height>342</height>
-            </rect>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_7">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="MainPage" name="mainPage">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="placeholderText">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QScrollArea" name="scrollArea">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(47, 52, 55);</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignJustify|Qt::AlignTop</set>
+             </property>
+             <widget class="QWidget" name="scrollAreaWidgetContents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>432</width>
+                <height>331</height>
+               </rect>
               </property>
-              <property name="styleSheet">
-               <string notr="true">color: rgb(255, 255, 255);</string>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_6">
+              <layout class="QVBoxLayout" name="verticalLayout_7">
                <property name="spacing">
-                <number>10</number>
+                <number>0</number>
                </property>
                <property name="leftMargin">
-                <number>5</number>
+                <number>0</number>
                </property>
                <property name="topMargin">
-                <number>5</number>
+                <number>0</number>
                </property>
                <property name="rightMargin">
-                <number>5</number>
+                <number>0</number>
                </property>
                <property name="bottomMargin">
-                <number>5</number>
+                <number>0</number>
                </property>
                <item>
-                <spacer name="verticalSpacer">
-                 <property name="orientation">
-                  <enum>Qt::Vertical</enum>
+                <widget class="MainPage" name="mainPage">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::MinimumExpanding</enum>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
                  </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>20</width>
-                   <height>100</height>
-                  </size>
+                 <property name="frameShape">
+                  <enum>QFrame::NoFrame</enum>
                  </property>
-                </spacer>
+                 <property name="frameShadow">
+                  <enum>QFrame::Plain</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_6">
+                  <property name="spacing">
+                   <number>10</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <spacer name="verticalSpacer">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                     <enum>QSizePolicy::MinimumExpanding</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>100</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
                </item>
               </layout>
              </widget>
-            </item>
-           </layout>
-          </widget>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
