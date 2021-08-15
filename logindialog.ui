@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>485</width>
+    <width>512</width>
     <height>321</height>
    </rect>
   </property>
@@ -20,10 +20,25 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(47, 52, 55);
-color: rgb(255, 255, 255);</string>
+   <string notr="true">background-color: rgb(46,46,46);
+color: rgb(255, 255, 255);
+QDialog#LoginDialog {
+padding-right: 20px;
+padding-left: 20px;
+}
+QPushButton:hover{
+background-color: red;
+}
+
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>20</number>
+   </property>
+   <property name="rightMargin">
+    <number>20</number>
+   </property>
    <item>
     <spacer name="verticalSpacer_2">
      <property name="orientation">
@@ -45,6 +60,9 @@ color: rgb(255, 255, 255);</string>
        <pointsize>16</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
      <property name="text">
       <string>Welcome!</string>
      </property>
@@ -61,8 +79,11 @@ color: rgb(255, 255, 255);</string>
        <pointsize>12</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="text">
-      <string>Username:</string>
+      <string>Username</string>
      </property>
     </widget>
    </item>
@@ -75,7 +96,11 @@ color: rgb(255, 255, 255);</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">background-color: rgb(47,52,55);
+padding: 3px;</string>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -88,7 +113,7 @@ color: rgb(255, 255, 255);</string>
       </font>
      </property>
      <property name="text">
-      <string>Password:</string>
+      <string>Password</string>
      </property>
     </widget>
    </item>
@@ -100,8 +125,15 @@ color: rgb(255, 255, 255);</string>
        <pointsize>12</pointsize>
       </font>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(47,52,55);
+padding: 3px;</string>
+     </property>
      <property name="inputMethodHints">
       <set>Qt::ImhHiddenText|Qt::ImhNoAutoUppercase|Qt::ImhNoPredictiveText|Qt::ImhSensitiveData</set>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::Password</enum>
@@ -131,6 +163,13 @@ color: rgb(255, 255, 255);</string>
          <pointsize>12</pointsize>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{background-color: rgb(47,52,55);}
+
+
+QPushButton:hover 
+{ background-color: #3E3E3E; }</string>
+       </property>
        <property name="text">
         <string>Login</string>
        </property>
@@ -143,6 +182,13 @@ color: rgb(255, 255, 255);</string>
          <family>Segoe UI</family>
          <pointsize>12</pointsize>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{background-color: rgb(47,52,55);}
+
+
+QPushButton:hover 
+{ background-color: #3E3E3E; }</string>
        </property>
        <property name="text">
         <string>Register</string>
@@ -159,6 +205,13 @@ color: rgb(255, 255, 255);</string>
          <family>Segoe UI</family>
          <pointsize>12</pointsize>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{background-color: rgb(47,52,55);}
+
+
+QPushButton:hover 
+{ background-color: #3E3E3E; }</string>
        </property>
        <property name="text">
         <string>Logout</string>
@@ -186,6 +239,13 @@ color: rgb(255, 255, 255);</string>
          <pointsize>12</pointsize>
         </font>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton{background-color: rgb(47,52,55);}
+
+
+QPushButton:hover 
+{ background-color: #3E3E3E; }</string>
+       </property>
        <property name="text">
         <string>Cancel</string>
        </property>
@@ -194,6 +254,11 @@ color: rgb(255, 255, 255);</string>
     </layout>
    </item>
   </layout>
+  <zorder>usernameLabel</zorder>
+  <zorder>passwordLabel</zorder>
+  <zorder>username</zorder>
+  <zorder>password</zorder>
+  <zorder>welcomeLabel</zorder>
  </widget>
  <resources/>
  <connections/>

@@ -39,6 +39,11 @@ color: rgb(51, 51, 51);</string>
    <property name="enabled">
     <bool>true</bool>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton:hover { background-color: red; 
+border: 1px solid red;
+}</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
     <property name="spacing">
      <number>0</number>
@@ -278,7 +283,8 @@ Text-align: left;</string>
               <property name="styleSheet">
                <string notr="true">color: rgb(153, 153, 153);
 background-color: rgb(46, 46, 46);
-Text-align: left;</string>
+Text-align: left;
+</string>
               </property>
               <property name="text">
                <string>New Page</string>
@@ -598,8 +604,8 @@ border: none;
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>435</width>
-             <height>342</height>
+             <width>433</width>
+             <height>339</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -686,7 +692,7 @@ border: none;
      <x>0</x>
      <y>0</y>
      <width>733</width>
-     <height>29</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="autoFillBackground">

@@ -158,6 +158,8 @@ void MainWindow::on_externalFileButton_clicked()
 void MainWindow::on_profileButton_clicked()
 {
     LoginDialog *loginDialog = new LoginDialog();
+    loginDialog->setWindowIcon(QIcon(":/Icons/Resources/Icons/Profile.svg"));
+    loginDialog->setWindowTitle("Profile");
     loginDialog->exec();
     delete loginDialog;
 }
