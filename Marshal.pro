@@ -19,6 +19,7 @@ SOURCES += \
     filemanager.cpp \
     filesharedialog.cpp \
     handleexternalfile.cpp \
+    linkeditdialog.cpp \
     logindialog.cpp \
     main.cpp \
     mainpage.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     filemanager.h \
     filesharedialog.h \
     handleexternalfile.h \
+    linkeditdialog.h \
     logindialog.h \
     mainpage.h \
     mainwindow.h \
@@ -48,6 +50,7 @@ HEADERS += \
 FORMS += \
     error.ui \
     filesharedialog.ui \
+    linkeditdialog.ui \
     logindialog.ui \
     mainwindow.ui \
     newevent.ui

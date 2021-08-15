@@ -3,6 +3,7 @@
 #include "displaymanager.h"
 #include "error.h"
 #include "filemanager.h"
+#include "linkeditdialog.h"
 
 #include <QFile>
 #include <QTextBrowser>
@@ -79,6 +80,12 @@ void Blocks::addLinkBlock(QString link, QString name)
     linkBlock->setOpenLinks(false);
     linkBlock->setTextColor(QColor::fromRgb(102, 217, 238));
     linkBlock->connect(linkBlock, &QTextBrowser::anchorClicked, new DisplayManager(), &DisplayManager::openLink);
+
+    if (!link.endsWith(".mar"))
+    {
+        linkBlock->setContextMenuPolicy(Qt::CustomContextMenu);
+        connect(linkBlock, &QTextBrowser::customContextMenuRequested, new LinkEditDialog(), &LinkEditDialog::displayDialog);
+    }
 }
 
 /**

@@ -40,7 +40,9 @@ void DisplayManager::openLink(QUrl url)
 void DisplayManager::createUrl(QString urlFilePath)
 {
     QString filePath = FileManager::readFromFile(urlFilePath);
-    QString fileName = filePath.section("/", -1);
+    QString fileName = urlFilePath.section("/", -1);
+    fileName.replace(".url", "");
+
     // new dialog, get url
     Blocks::addLinkBlock(filePath, fileName);
     // save block as file
@@ -55,8 +57,6 @@ void DisplayManager::renameFile(QModelIndex index)
 
     if (pageTitle->text() == "")
     {
-        Error *error = new Error(nullptr, "File name cannot be empty.");
-        error->exec();
         pageTitle->setText(oldName);
         return;
     }
