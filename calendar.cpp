@@ -1,7 +1,6 @@
 #include "calendar.h"
-#include "newevent.h"
+#include "eventdialog.h"
 #include "filemanager.h"
-#include "calendarevent.h"
 #include "calendarcontrols.h"
 
 #include <QDir>
@@ -22,7 +21,7 @@ Calendar::Calendar(QString selfPath)
     insertDayNames();
     populateDates();
     heightReset();
-    connect(this, &QTableWidget::cellClicked, this, &Calendar::addNewEvent);
+    connect(this, &QTableWidget::cellClicked, this, &Calendar::newEventPrompt);
 }
 
 void Calendar::createCalendarTable(int rows, int columns)
@@ -201,7 +200,7 @@ void Calendar::populateMonthEvents()
         if (date.month() == selectedMonth && date.year() == selectedYear)
         {
             QString eventName = path.section("/", -2, -2);
-            CalendarEvent *eventWidget = new CalendarEvent(selfPath, date, eventName);
+            CalendarEvent *eventWidget = new CalendarEvent(this, date, eventName);
             addToDateCell(date, eventWidget);
         }
     }
@@ -222,20 +221,16 @@ QDate Calendar::getDateFromCell(int row, int column)
     return date;
 }
 
-void Calendar::addNewEvent(int row, int column)
+void Calendar::newEventPrompt(int row, int column)
 {
 
     QDate date = getDateFromCell(row, column);
     if (!date.isValid())    return;
 
-    CalendarEvent *newEvent = new CalendarEvent(selfPath, date);
+    CalendarEvent *newEvent = new CalendarEvent(this, date);
 
-    if (newEvent->text() != "")
-    {
-        addToDateCell(date, newEvent);
-        heightReset();
-        newEvent->saveToDisk();
-        addToEventList(date, newEvent->getEventFilePath());
-    }
-    else    delete newEvent;
+    EventDialog *eventDialog = new EventDialog();
+    QPoint position = this->cellWidget(row, column)->pos();
+    position = this->mapToGlobal(position);
+    eventDialog->displayDialog(newEvent, position);
 }

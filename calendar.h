@@ -50,7 +50,7 @@ public:
     void setCurrentDateFormat(QLineEdit *dateText);
     QWidget *createWidgetWithItems(QBoxLayout *layout, QList<QWidget*> widgets);
 public slots:
-    void addNewEvent(int row, int column);
+    void newEventPrompt(int row, int column);
 };
 
 #endif // CALENDAR_H

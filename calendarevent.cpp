@@ -1,17 +1,15 @@
 #include "calendarevent.h"
 #include "displaymanager.h"
 #include "filemanager.h"
-#include "newevent.h"
 
 #include <QDir>
 
-CalendarEvent::CalendarEvent(QString parentPath, QDate eventDate, QString eventName)
+CalendarEvent::CalendarEvent(Calendar *calendar, QDate eventDate, QString eventName)
 {
+    this->calendar = calendar;
+    parentPath = calendar->selfPath;
     parentPath.truncate(parentPath.lastIndexOf(QChar('/')));
-    this->parentPath = parentPath;
     this->eventDate = eventDate;
-
-    if (eventName == "")    eventName = getNewEventName();
     this->setText(eventName);
 
     this->setFrame(QFrame::NoFrame);
@@ -19,18 +17,6 @@ CalendarEvent::CalendarEvent(QString parentPath, QDate eventDate, QString eventN
     this->setStyleSheet("background-color: rgb(42, 202, 124); "  // green
                             "border: 1px solid rgb(47, 52, 55); "   // same as page (hidden border)
                             "border-radius: 5px;");
-}
-
-QString CalendarEvent::getNewEventName()
-{
-    QString eventName = "";
-    NewEvent *newEvent = new NewEvent();
-    newEvent->exec();
-
-    if (newEvent->accepted && newEvent->fileName != "") eventName = newEvent->fileName;
-
-    delete newEvent;
-    return eventName;
 }
 
 void CalendarEvent::setEventName(QString eventName)
@@ -66,3 +52,12 @@ void CalendarEvent::openEvent()
     QString filePath = parentPath + "/" + this->text();
     DisplayManager::openFileFromPath(filePath, this->text());
 }
+
+void CalendarEvent::addToCalendar()
+{
+    calendar->addToDateCell(this->eventDate, this);
+    calendar->heightReset();
+    saveToDisk();
+    calendar->addToEventList(eventDate, getEventFilePath());
+}
+

@@ -1,6 +1,8 @@
 #ifndef CALENDAREVENT_H
 #define CALENDAREVENT_H
 
+#include "calendar.h"
+
 #include <QLineEdit>
 #include <QObject>
 #include <QDate>
@@ -9,14 +11,15 @@ class CalendarEvent : public QLineEdit
 {
     Q_OBJECT
 public:
-    CalendarEvent(QString parentPath, QDate date, QString eventName = "");
+    CalendarEvent(Calendar *calendar, QDate date, QString eventName = "");
     void openEvent();
+    Calendar *calendar;
     QString parentPath;
     QDate eventDate;
-    QString getNewEventName();
     void saveToDisk();
     QString getEventFilePath();
     void setEventName(QString eventName);
+    void addToCalendar();
 protected:
     virtual void mousePressEvent(QMouseEvent* event) override;
 };

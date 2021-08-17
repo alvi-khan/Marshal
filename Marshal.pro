@@ -16,6 +16,7 @@ SOURCES += \
     databasemanager.cpp \
     displaymanager.cpp \
     error.cpp \
+    eventdialog.cpp \
     filemanager.cpp \
     filesharedialog.cpp \
     handleexternalfile.cpp \
@@ -24,7 +25,6 @@ SOURCES += \
     main.cpp \
     mainpage.cpp \
     mainwindow.cpp \
-    newevent.cpp \
     richtextfunctions.cpp \
     sidebarmanager.cpp
 
@@ -36,6 +36,7 @@ HEADERS += \
     databasemanager.h \
     displaymanager.h \
     error.h \
+    eventdialog.h \
     filemanager.h \
     filesharedialog.h \
     handleexternalfile.h \
@@ -43,17 +44,16 @@ HEADERS += \
     logindialog.h \
     mainpage.h \
     mainwindow.h \
-    newevent.h \
     richtextfunctions.h \
     sidebarmanager.h
 
 FORMS += \
     error.ui \
+    eventdialog.ui \
     filesharedialog.ui \
     linkeditdialog.ui \
     logindialog.ui \
-    mainwindow.ui \
-    newevent.ui
+    mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
