@@ -76,6 +76,9 @@ void Calendar::populateDates()
         int column = date.dayOfWeek() - 1;
 
         QWidget *widget = createDateText(date.day());
+
+        widget->setStyleSheet("*:hover {background: #3E3E3E; border-radius: 10px}");
+
         this->setCellWidget(row, column, widget);
 
         date = date.addDays(1);
@@ -122,6 +125,7 @@ QWidget* Calendar::createWidgetWithItems(QBoxLayout *layout, QList<QWidget *> wi
     foreach (QWidget *widget, widgets)
         layout->addWidget(widget);
     QWidget *widget = new QWidget();
+    widget->setStyleSheet("*:hover {background: #3E3E3E; border-radius: 10px}");
     widget->setLayout(layout);
     return widget;
 }
@@ -132,6 +136,7 @@ QWidget* Calendar::createDateText(int date)
     lineEdit->setText(QString::number(date));
     lineEdit->setFrame(QFrame::NoFrame);
     lineEdit->setReadOnly(true);
+    lineEdit->setStyleSheet("background-color: rgba(255, 255, 255, 0);");
 
     if (today.year() == selectedYear && today.month() == selectedMonth && date == today.day())
         setCurrentDateFormat(lineEdit);
