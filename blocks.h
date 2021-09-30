@@ -21,6 +21,7 @@ public:
     static void addSubfileBlock(QString filePath);
     static void init(QFrame *mainPage);
     static void addCalendarBlock(QString filePath);
+    static void addToolTip(QWidget *widget, QString text);
 public slots:
     void updateBlockSize();
 };

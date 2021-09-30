@@ -68,6 +68,15 @@ QTextBrowser* Blocks::addHtmlBlock(QString filePath)
     return htmlBlock;
 }
 
+void Blocks::addToolTip(QWidget *widget, QString text)
+{
+    widget->setToolTip(text);
+    widget->setStyleSheet("QToolTip {\
+                            color: #ffffff; \
+                            background-color: #000000; \
+                            border: 0px; }");
+}
+
 /**
  * @brief Blocks::addLinkBlock adds a block with a link (internal/external)
  * @param link
@@ -80,6 +89,8 @@ void Blocks::addLinkBlock(QString link, QString name)
     linkBlock->setOpenLinks(false);
     linkBlock->setTextColor(QColor::fromRgb(102, 217, 238));
     linkBlock->connect(linkBlock, &QTextBrowser::anchorClicked, new DisplayManager(), &DisplayManager::openLink);
+    addToolTip(linkBlock, link);
+
 
     if (!link.endsWith(".mar"))
     {
