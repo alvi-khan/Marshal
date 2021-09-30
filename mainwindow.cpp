@@ -29,7 +29,7 @@ void MainWindow::init()
     // initialize utility classes
     //DatabaseManager::init();
     SidebarManager::init(this->ui->sideBar);
-    DisplayManager::init(this->ui->mainPage, this->ui->pageTitle);
+    DisplayManager::init(this->ui->mainPage, this->ui->pageTitle, this->ui->filePath);
     Blocks::init(this->ui->mainPage);
     RichTextFunctions::init(this->ui->boldButton, this->ui->italicButton, this->ui->underlineButton);
 

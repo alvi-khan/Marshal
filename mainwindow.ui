@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>733</width>
+    <width>908</width>
     <height>504</height>
    </rect>
   </property>
@@ -21,7 +21,10 @@
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(51, 51, 51);</string>
+color: rgb(51, 51, 51);
+QMenuBar::item{
+    background-color: qlineargradient(x1:0,x2:0,y1:0,y2:1,stop:0 #cccccc, stop:0.4 gray)
+}</string>
   </property>
   <property name="iconSize">
    <size>
@@ -86,7 +89,9 @@ QTreeView::item:hover:!selected{background-color: #3E3E3E;}</string>
       </property>
       <widget class="QFrame" name="frame">
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">QFrame {
+	border-radius: 10px;
+}</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <property name="spacing">
@@ -337,6 +342,19 @@ Text-align: left;</string>
              <property name="bottomMargin">
               <number>5</number>
              </property>
+             <item>
+              <widget class="AddressBar" name="filePath">
+               <property name="minimumSize">
+                <size>
+                 <width>10</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">border-radius: 10px;</string>
+               </property>
+              </widget>
+             </item>
              <item>
               <spacer name="horizontalSpacer_3">
                <property name="orientation">
@@ -611,7 +629,7 @@ border: none;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>432</width>
+                <width>565</width>
                 <height>321</height>
                </rect>
               </property>
@@ -701,7 +719,7 @@ border: none;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>733</width>
+     <width>908</width>
      <height>29</height>
     </rect>
    </property>
@@ -742,6 +760,12 @@ border: none;
    <class>MainPage</class>
    <extends>QFrame</extends>
    <header>mainpage.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AddressBar</class>
+   <extends>QFrame</extends>
+   <header>addressbar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

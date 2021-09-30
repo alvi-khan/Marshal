@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QModelIndex>
 #include <QTextBrowser>
+#include "addressbar.h"
 
 
 /**
@@ -16,9 +17,10 @@ class DisplayManager : public QObject
 
 public:
     DisplayManager();
-    static void init(QFrame *mainPage, QLineEdit *pageTitle);
+    static void init(QFrame *mainPage, QLineEdit *pageTitle, AddressBar *addressBar);
     static QFrame *mainPage;
     static QLineEdit *pageTitle;
+    static AddressBar *addressBar;
     static void openFile(QModelIndex index);
     static void renameFile(QModelIndex index);
     static void openFileFromPath(QString filePath, QString title);

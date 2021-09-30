@@ -14,6 +14,7 @@
 
 QFrame * DisplayManager::mainPage;
 QLineEdit * DisplayManager::pageTitle;
+AddressBar * DisplayManager::addressBar;
 
 DisplayManager::DisplayManager()
 {
@@ -127,6 +128,7 @@ void DisplayManager::openFileFromPath(QString filePath, QString title)
     file.close();
 
     pageTitle->setText(title);
+    addressBar->update(filePath.remove(SidebarManager::homeDirectory));
 }
 
 void DisplayManager::openFile(QModelIndex index)
@@ -135,8 +137,9 @@ void DisplayManager::openFile(QModelIndex index)
     openFileFromPath(filePath, index.data().toString());
 }
 
-void DisplayManager::init(QFrame *mainPage, QLineEdit *pageTitle)
+void DisplayManager::init(QFrame *mainPage, QLineEdit *pageTitle, AddressBar *addressBar)
 {
     DisplayManager::mainPage = mainPage;
     DisplayManager::pageTitle = pageTitle;
+    DisplayManager::addressBar = addressBar;
 }
