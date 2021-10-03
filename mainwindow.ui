@@ -20,11 +20,8 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(51, 51, 51);
-QMenuBar::item{
-    background-color: qlineargradient(x1:0,x2:0,y1:0,y2:1,stop:0 #cccccc, stop:0.4 gray)
-}</string>
+   <string notr="true">background-color: rgb(47, 52, 55);
+color: rgb(255, 255, 255);</string>
   </property>
   <property name="iconSize">
    <size>
@@ -52,7 +49,16 @@ QPushButton { background-color: rgb(46, 46, 46); padding: 5px 5px 5px 5px; borde
 QPushButton:hover { background-color: #3E3E3E;  }
 
 QTreeView::item:selected{background-color: #4E4D4D; }
-QTreeView::item:hover:!selected{background-color: #3E3E3E;}</string>
+QTreeView::item:hover:!selected{background-color: #3E3E3E;}
+
+QTreeView::branch:open:has-children:!has-siblings, QTreeView::branch:open:has-children:has-siblings {
+	border-image: none;
+	image: url(:/Icons/Resources/Icons/Drop Down Open.svg);
+}
+QTreeView::branch:has-children:!has-siblings:closed, QTreeView::branch:closed:has-children:has-siblings {
+	border-image: none;
+	image: url(:/Icons/Resources/Icons/Drop Down Closed.svg);
+}</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
     <property name="spacing">
@@ -326,7 +332,7 @@ Text-align: left;</string>
             <number>10</number>
            </property>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <layout class="QHBoxLayout" name="topBar">
              <property name="spacing">
               <number>10</number>
              </property>
@@ -387,7 +393,7 @@ color: rgb(255, 255, 255);</string>
                <property name="frameShadow">
                 <enum>QFrame::Plain</enum>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0,0,0">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -403,6 +409,20 @@ color: rgb(255, 255, 255);</string>
                 <property name="bottomMargin">
                  <number>5</number>
                 </property>
+                <item>
+                 <widget class="QPushButton" name="trashButton">
+                  <property name="styleSheet">
+                   <string notr="true">padding: 10px</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Trash.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Trash.svg</iconset>
+                  </property>
+                 </widget>
+                </item>
                 <item>
                  <widget class="QPushButton" name="subpageButton">
                   <property name="styleSheet">
@@ -629,7 +649,7 @@ border: none;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>565</width>
+                <width>595</width>
                 <height>321</height>
                </rect>
               </property>

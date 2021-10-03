@@ -128,7 +128,7 @@ void DisplayManager::openFileFromPath(QString filePath, QString title)
     file.close();
 
     pageTitle->setText(title);
-    addressBar->update(filePath.remove(SidebarManager::homeDirectory));
+    addressBar->update(filePath.remove(SidebarManager::homeDirectory, Qt::CaseInsensitive));
 }
 
 void DisplayManager::openFile(QModelIndex index)

@@ -2,14 +2,19 @@
 #define SIDEBARMANAGER_H
 
 #include <QString>
+#include <QObject>
 #include <QStandardItem>
 #include <QTreeView>
+#include <QMenu>
+#include <QAction>
+#include <QSignalMapper>
 
 /**
  * @brief The SidebarManager class is a utility class that manages the sidebar of the program.
  */
-class SidebarManager
+class SidebarManager : public QObject
 {
+    Q_OBJECT
 public:
     SidebarManager();
     static QStandardItem* createItem(QString fileName, QString filePath, QStandardItem *parent = nullptr);
@@ -20,7 +25,7 @@ public:
     static QString sharedDirectory;
     static QTreeView *sidebar;
     static QStandardItemModel *model;
-    void removeItem(QModelIndex index);
+    static void removeItem(QModelIndex index);
     static QModelIndex getChild(QString data);
 
     static void setCurrentIndex(QModelIndex index);
@@ -31,6 +36,8 @@ public:
 private:
 
     static QList<QModelIndex> getItemList(QAbstractItemModel *model);
+public slots:
+    void onCustomContextMenu(const QPoint &point);
 };
 
 #endif // SIDEBARMANAGER_H

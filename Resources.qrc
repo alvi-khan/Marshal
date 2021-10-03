@@ -20,5 +20,6 @@
         <file>Resources/Toolbar Icons/Calendar.svg</file>
         <file>Resources/Toolbar Icons/Attachment.svg</file>
         <file>Resources/Toolbar Icons/Share.svg</file>
+        <file>Resources/Toolbar Icons/Trash.svg</file>
     </qresource>
 </RCC>

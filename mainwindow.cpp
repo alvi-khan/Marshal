@@ -38,25 +38,7 @@ void MainWindow::init()
     splitter->setStretchFactor(0, 0);
     splitter->setStretchFactor(1, 1);
 
-    // TODO hide from designer before final release
-    this->ui->pageTitle->setVisible(false);
-    this->ui->mainPage->setVisible(false);
-    this->ui->toolbar->setVisible(false);
-
-    this->ui->sideBar->setStyleSheet(""""
-        "QTreeView::branch:open:has-children:!has-siblings,"
-        "QTreeView::branch:open:has-children:has-siblings"
-        "{"
-            "border-image: none;"
-            "image: url(:/Icons/Resources/Icons/Drop Down Open.svg);"
-        "}"
-        "QTreeView::branch:has-children:!has-siblings:closed,"
-        "QTreeView::branch:closed:has-children:has-siblings"
-        "{"
-            "border-image: none;"
-            "image: url(:/Icons/Resources/Icons/Drop Down Closed.svg);"
-        "}"
-    """");
+    this->ui->mainPageFrame->setVisible(false);
 
     connect(QApplication::instance(), SIGNAL(focusChanged(QWidget*, QWidget*)), this, SLOT(onFocusChange(QWidget*, QWidget*)));
 
@@ -88,9 +70,12 @@ void MainWindow::onFocusChange(QWidget *oldWidget, QWidget *newWidget)
  */
 void MainWindow::revealMainPage()
 {
-    this->ui->pageTitle->setVisible(true);
-    this->ui->mainPage->setVisible(true);
-    this->ui->toolbar->setVisible(true);
+    this->ui->mainPageFrame->setVisible(true);
+}
+
+void MainWindow::hideMainPage()
+{
+    this->ui->mainPageFrame->setVisible(false);
 }
 
 /**
@@ -174,5 +159,11 @@ void MainWindow::on_shareButton_clicked()
 void MainWindow::on_searchBox_textChanged(const QString &arg1)
 {
     SidebarManager::filterItems(arg1);
+}
+
+
+void MainWindow::on_trashButton_clicked()
+{
+    FileManager::deletePage(FileManager::openFile);
 }
 

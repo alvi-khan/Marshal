@@ -191,6 +191,45 @@ void FileManager::addCalendar(QModelIndex index)
     Blocks::addCalendarBlock(dir.path() + "/files.cal");    // add calendar block to parent
 }
 
+// TODO might be more appropriate to move this to display manager
+void FileManager::deletePage(QString pagePath)
+{
+    homeDirectory = "E:/Downloads/Main Folder/Private";
+
+    QString parentPath = pagePath;
+    parentPath.truncate(pagePath.lastIndexOf(QChar('/')));
+
+    bool parentIsRoot = (parentPath == homeDirectory);
+
+    QModelIndex index = SidebarManager::getCurrentIndex();
+    if (pagePath.contains("Calendar"))  // hidden page
+    {
+        DisplayManager::openFile(index);
+        parentPath += "/files.cal";
+    }
+    else if (!openFile.startsWith(pagePath, Qt::CaseInsensitive))   // other page
+    {
+        SidebarManager::removeItem(index);
+        parentPath += "/files.mar";
+    }
+    else    // non-hidden page or parent page
+    {
+        MainWindow *window = (MainWindow *) SidebarManager::sidebar->window();
+        window->hideMainPage();
+        SidebarManager::removeItem(index);
+        parentPath += "/files.mar";
+    }
+
+    deleteDirectory(pagePath);
+
+    if(!parentIsRoot)   // TODO this leaves a blank line
+        updateFileTracker(parentPath, "/" + pagePath.section("/", -1) + "/files.mar", "");
+
+    // TODO update blocks for child page deletion
+    // TODO delete blocks/calendar event right-click
+    // TODO calendar event delete bug fix (perhaps calendar should handle this and not file manager)
+}
+
 void FileManager::deleteDirectory(QString directory)
 {
     QDir dir(directory);

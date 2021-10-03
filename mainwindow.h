@@ -39,9 +39,13 @@ private slots:
 
     void on_searchBox_textChanged(const QString &arg1);
 
+    void on_trashButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void init();
     void revealMainPage();
+public:
+    void hideMainPage();
 };
 #endif // MAINWINDOW_H
