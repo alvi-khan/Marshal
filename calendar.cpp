@@ -47,8 +47,9 @@ void Calendar::customizeCalendar()
     this->setMaximumWidth(this->width());
     this->setShowGrid(false);
 
-    this->setStyleSheet("color: #FFFFFF; "
-                        "background-color: rgb(47, 52, 55);");
+    this->setStyleSheet("QTableWidget{color: #FFFFFF; "
+                        "background-color: rgb(47, 52, 55);}"
+                        "QTableWidget::item{selection-background-color: rgb(47, 52, 55);}");
 }
 
 void Calendar::insertDayNames()

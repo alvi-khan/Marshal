@@ -14,12 +14,12 @@ void CalendarControls::createButtons()
 {
     QPushButton *prevButton = new QPushButton(QIcon(":/Icons/Resources/Icons/Left Arrow.svg"), "");
     calendar->setCellWidget(0, 0, prevButton);
-    prevButton->setStyleSheet("border: none;");
+    prevButton->setStyleSheet("QPushButton{border: none; border-radius: 10px;} QPushButton:hover{background-color: #3E3E3E;}");
     connect(prevButton, &QPushButton::clicked, this, &CalendarControls::toPrevMonth);
 
     QPushButton *nextButton = new QPushButton(QIcon(":/Icons/Resources/Icons/Right Arrow.svg"), "");
     calendar->setCellWidget(0, 6, nextButton);
-    nextButton->setStyleSheet("border: none;");
+    nextButton->setStyleSheet("QPushButton{border: none; border-radius: 10px;} QPushButton:hover{background-color: #3E3E3E;}");
     connect(nextButton, &QPushButton::clicked, this, &CalendarControls::toNextMonth);
 }
 
@@ -54,7 +54,12 @@ QComboBox * CalendarControls::newCustomComboBox(QList<QString> itemList, int cur
     connect(comboBox, &QComboBox::currentIndexChanged, this, &CalendarControls::updateComboBoxSelections);
 
     comboBox->setFrame(QFrame::NoFrame);
-    comboBox->setStyleSheet("QComboBox::drop-down {border-width: 0px;} QComboBox::down-arrow {image: url(noimg); border-width: 0px;}");
+    comboBox->setStyleSheet("QComboBox{padding: 10px; border: none; border-radius: 10px;}"
+                            "QComboBox:hover{background-color: #3E3E3E;}"
+                            "QComboBox::drop-down {border-width: 0px;} "
+                            "QComboBox::down-arrow {image: url(:/Icons/Resources/Icons/Drop Down Open.svg); "
+                                                    "width: 20px; height: 20px;"
+                                                    "border-width: 0px;}");
     comboBox->setFocusPolicy(Qt::StrongFocus);  // ignored mouse scroll when scrolling page (but not on hover)
     return comboBox;
 }
