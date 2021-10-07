@@ -8,6 +8,10 @@ FileShareDialog::FileShareDialog(QWidget *parent) :
     ui(new Ui::FileShareDialog)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setWindowIcon(QIcon(":/Toolbar Icons/Resources/Toolbar Icons/Share.svg"));
+    this->setWindowTitle("Share");
     init();
 }
 
@@ -44,7 +48,7 @@ void FileShareDialog::on_username_textChanged(const QString &arg1)
     QAbstractItemView *list = userSuggestions->popup();
     list->setStyleSheet("color: #FFFFFF; "
                         "font-size: 12px;"
-                        "background-color: rgb(47, 52, 55);");
+                        "background-color: rgb(35, 35, 35);");
     userSuggestions->setPopup(list);
     this->ui->username->setCompleter(userSuggestions);
 }

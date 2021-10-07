@@ -6,7 +6,6 @@
         <file>Resources/Icons/Search.svg</file>
         <file>Resources/Icons/Settings.svg</file>
         <file>Resources/Icons/Templates.svg</file>
-        <file>Resources/Icons/URL.svg</file>
         <file>Resources/Icons/Drop Down Closed.svg</file>
         <file>Resources/Icons/Drop Down Open.svg</file>
         <file>Resources/Icons/Left Arrow.svg</file>
@@ -20,5 +19,7 @@
         <file>Resources/Toolbar Icons/Calendar.svg</file>
         <file>Resources/Toolbar Icons/Attachment.svg</file>
         <file>Resources/Toolbar Icons/Share.svg</file>
+        <file>Resources/Toolbar Icons/Trash.svg</file>
+        <file>Resources/Toolbar Icons/URL.svg</file>
     </qresource>
 </RCC>

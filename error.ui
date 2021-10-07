@@ -14,8 +14,16 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">color: rgb(153, 153, 153);
-background-color: rgb(46, 46, 46);</string>
+   <string notr="true">QDialog{
+	border: 1.5px solid rgb(70, 70, 70);
+	border-radius: 10px;
+}
+* {
+	color: rgb(153, 153, 153);
+	background-color: rgb(47, 52, 55);
+}
+QPushButton:hover 
+{ background-color: #3E3E3E; }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

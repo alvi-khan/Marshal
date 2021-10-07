@@ -15,7 +15,7 @@ CalendarEvent::CalendarEvent(Calendar *calendar, QDate eventDate, QString eventN
     this->setFrame(QFrame::NoFrame);
     this->setReadOnly(true);
     this->setStyleSheet("background-color: rgb(42, 202, 124); "  // green
-                            "border: 1px solid rgb(47, 52, 55); "   // same as page (hidden border)
+                            "border: 1px solid rgb(42, 202, 124); "   // same as event (hidden border)
                             "border-radius: 5px;");
 }
 

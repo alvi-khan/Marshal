@@ -47,9 +47,7 @@ void Calendar::customizeCalendar()
     this->setMaximumWidth(this->width());
     this->setShowGrid(false);
 
-    this->setStyleSheet("QTableWidget{color: #FFFFFF; "
-                        "background-color: rgb(47, 52, 55);}"
-                        "QTableWidget::item{selection-background-color: rgb(47, 52, 55);}");
+    this->setStyleSheet("QTableWidget::item{selection-background-color: rgb(35, 35, 35);}");
 }
 
 void Calendar::insertDayNames()
@@ -116,7 +114,7 @@ int Calendar::weekInMonth(QDate date)
 void Calendar::setCurrentDateFormat(QLineEdit *dateText)
 {
     dateText->setStyleSheet("background-color: rgb(211, 82, 93); "  // red
-                            "border: 1px solid rgb(47, 52, 55); "   // same as page (hidden border)
+                            "border: 1px solid rgb(211, 82, 93); "   // same as circle (hidden border)
                             "border-radius: 10px; "
                             "max-width: 18px;");
 }
@@ -169,20 +167,6 @@ void Calendar::retrieveEvents()
     }
 
     file.close();
-}
-
-QLineEdit * Calendar::createTextField(QString text)
-{
-    QLineEdit *lineEdit = new QLineEdit();
-    lineEdit->setText(text);
-    lineEdit->setFrame(QFrame::NoFrame);
-    lineEdit->setReadOnly(true);
-
-    lineEdit->setStyleSheet("background-color: rgb(42, 202, 124); "  // green
-                            "border: 1px solid rgb(47, 52, 55); "   // same as page (hidden border)
-                            "border-radius: 5px;");
-
-    return lineEdit;
 }
 
 void Calendar::addToDateCell(QDate date, QLineEdit *textField)

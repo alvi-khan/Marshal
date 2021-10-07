@@ -28,7 +28,6 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
 
     // setting up style
     newBlock->setFrameStyle(QFrame::NoFrame);
-    newBlock->setTextColor(QColor::fromRgb(255, 255, 255)); // white
 
     connect(newBlock, &QTextEdit::textChanged, new Blocks(), &Blocks::updateBlockSize);
     newBlock->textChanged();    // to trigger height readjustment
@@ -71,10 +70,7 @@ QTextBrowser* Blocks::addHtmlBlock(QString filePath)
 void Blocks::addToolTip(QWidget *widget, QString text)
 {
     widget->setToolTip(text);
-    widget->setStyleSheet("QToolTip {\
-                            color: #ffffff; \
-                            background-color: #000000; \
-                            border: 0px; }");
+    widget->setStyleSheet("QToolTip {border: 1px solid rgb(70, 70, 70);}");
 }
 
 /**
@@ -89,14 +85,15 @@ void Blocks::addLinkBlock(QString link, QString name)
     linkBlock->setOpenLinks(false);
     linkBlock->setTextColor(QColor::fromRgb(102, 217, 238));
     linkBlock->connect(linkBlock, &QTextBrowser::anchorClicked, new DisplayManager(), &DisplayManager::openLink);
-    addToolTip(linkBlock, link);
 
 
     if (!link.endsWith(".mar"))
     {
         linkBlock->setContextMenuPolicy(Qt::CustomContextMenu);
         connect(linkBlock, &QTextBrowser::customContextMenuRequested, new LinkEditDialog(), &LinkEditDialog::displayDialog);
+        addToolTip(linkBlock, link);
     }
+    else    addToolTip(linkBlock, (link.remove("E:/Downloads/Main Folder/Private")).remove("/files.mar"));
 }
 
 /**

@@ -43,5 +43,6 @@ private:
     Ui::MainWindow *ui;
     void init();
     void revealMainPage();
+    void toggleBlurEffect();
 };
 #endif // MAINWINDOW_H

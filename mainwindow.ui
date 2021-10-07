@@ -20,11 +20,8 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(51, 51, 51);
-QMenuBar::item{
-    background-color: qlineargradient(x1:0,x2:0,y1:0,y2:1,stop:0 #cccccc, stop:0.4 gray)
-}</string>
+   <string notr="true">background-color: rgb(35, 35, 35);
+color: rgb(255, 255, 255);</string>
   </property>
   <property name="iconSize">
    <size>
@@ -43,14 +40,16 @@ QMenuBar::item{
     <bool>true</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">QFrame { color: rgb(153, 153, 153); background-color: rgb(46, 46, 46); }
-QSplitter { background-color: rgb(47, 52, 55); }
-QFrame#mainPageFrame { color: rgb(153, 153, 153); background-color: rgb(47, 52, 55); }
-QToolButton { background-color: rgb(46, 46, 46); padding: 5px 5px 5px 5px; }
+    <string notr="true">QFrame {color: rgb(153, 153, 153); background-color: rgb(47, 52, 55);}
+QSplitter {background-color: rgb(35, 35, 35);}
+
+QFrame#mainPageFrame { color: rgb(153, 153, 153); background-color: rgb(35, 35, 35);}
+QToolButton { padding: 5px 5px 5px 5px; background-color: rgb(47, 52, 55);}
 QToolButton:hover { background-color: #3E3E3E;  }
-QPushButton { background-color: rgb(46, 46, 46); padding: 5px 5px 5px 5px; border-radius: 0px; }
+QPushButton {padding: 5px 5px 5px 5px; border-radius: 5px; background-color: rgb(47, 52, 55);}
 QPushButton:hover { background-color: #3E3E3E;  }
 
+QTreeView::item{border-radius: 5px; padding: 3px;}
 QTreeView::item:selected{background-color: #4E4D4D; }
 QTreeView::item:hover:!selected{background-color: #3E3E3E;}</string>
    </property>
@@ -90,7 +89,9 @@ QTreeView::item:hover:!selected{background-color: #3E3E3E;}</string>
       <widget class="QFrame" name="frame">
        <property name="styleSheet">
         <string notr="true">QFrame {
-	border-radius: 10px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border: 1.5px solid rgb(70, 70, 70);
 }</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -98,10 +99,10 @@ QTreeView::item:hover:!selected{background-color: #3E3E3E;}</string>
          <number>5</number>
         </property>
         <property name="leftMargin">
-         <number>0</number>
+         <number>5</number>
         </property>
         <property name="rightMargin">
-         <number>0</number>
+         <number>5</number>
         </property>
         <property name="bottomMargin">
          <number>5</number>
@@ -119,7 +120,7 @@ QTreeView::item:hover:!selected{background-color: #3E3E3E;}</string>
           </property>
           <property name="styleSheet">
            <string notr="true">color: rgb(153, 153, 153);
-background-color: rgb(46, 46, 46);
+background-color: rgb(47, 52, 55);
 Text-align: left;</string>
           </property>
           <property name="text">
@@ -212,7 +213,8 @@ Text-align: left;</string>
           </property>
           <property name="styleSheet">
            <string notr="true">color: rgb(153, 153, 153);
-background-color: rgb(46, 46, 46);</string>
+background-color: rgb(47, 52, 55);
+border: 0px;</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
@@ -351,7 +353,11 @@ Text-align: left;</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">border-radius: 10px;</string>
+                <string notr="true">AddressBar {
+	border-radius: 10px;
+	border: 1.5px solid;
+	border-color: rgb(70, 70, 70);
+}</string>
                </property>
               </widget>
              </item>
@@ -377,9 +383,13 @@ Text-align: left;</string>
                 </sizepolicy>
                </property>
                <property name="styleSheet">
-                <string notr="true">border-radius: 10px;
-
-color: rgb(255, 255, 255);</string>
+                <string notr="true">QFrame {
+	border: 1.5px solid rgb(70, 70, 70);
+}
+* {
+	border-radius: 10px;
+	color: rgb(255, 255, 255);
+}</string>
                </property>
                <property name="frameShape">
                 <enum>QFrame::StyledPanel</enum>
@@ -405,6 +415,9 @@ color: rgb(255, 255, 255);</string>
                 </property>
                 <item>
                  <widget class="QPushButton" name="subpageButton">
+                  <property name="toolTip">
+                   <string>Add Subpage</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">padding: 10px;</string>
                   </property>
@@ -419,6 +432,9 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item>
                  <widget class="QPushButton" name="externalFileButton">
+                  <property name="toolTip">
+                   <string>Attach File</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">padding: 10px;</string>
                   </property>
@@ -439,6 +455,9 @@ color: rgb(255, 255, 255);</string>
                     <pointsize>12</pointsize>
                    </font>
                   </property>
+                  <property name="toolTip">
+                   <string>Insert Link</string>
+                  </property>
                   <property name="autoFillBackground">
                    <bool>false</bool>
                   </property>
@@ -453,7 +472,7 @@ color: rgb(255, 255, 255);</string>
                   </property>
                   <property name="icon">
                    <iconset resource="Resources.qrc">
-                    <normaloff>:/Icons/Resources/Icons/URL.svg</normaloff>:/Icons/Resources/Icons/URL.svg</iconset>
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/URL.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/URL.svg</iconset>
                   </property>
                   <property name="autoDefault">
                    <bool>false</bool>
@@ -468,6 +487,9 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item>
                  <widget class="QToolButton" name="shareButton">
+                  <property name="toolTip">
+                   <string>Share</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">padding: 10px;</string>
                   </property>
@@ -482,6 +504,9 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item>
                  <widget class="QPushButton" name="boldButton">
+                  <property name="toolTip">
+                   <string>Bold</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">padding: 10px;</string>
                   </property>
@@ -505,6 +530,9 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item>
                  <widget class="QPushButton" name="italicButton">
+                  <property name="toolTip">
+                   <string>Italic</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">padding: 10px;</string>
                   </property>
@@ -528,6 +556,9 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item>
                  <widget class="QPushButton" name="underlineButton">
+                  <property name="toolTip">
+                   <string>Underline</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">padding: 10px;</string>
                   </property>
@@ -551,6 +582,9 @@ color: rgb(255, 255, 255);</string>
                 </item>
                 <item>
                  <widget class="QToolButton" name="calendar">
+                  <property name="toolTip">
+                   <string>Add Calendar</string>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">padding: 10px;</string>
                   </property>
@@ -588,7 +622,7 @@ color: rgb(255, 255, 255);</string>
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(47, 52, 55);
+              <string notr="true">background-color: rgb(35, 35, 35);
 color: rgb(255, 255, 255);
 border: none;
 </string>
@@ -610,7 +644,7 @@ border: none;
               </sizepolicy>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(47, 52, 55);</string>
+              <string notr="true">background-color: rgb(35, 35, 35);</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
@@ -713,46 +747,6 @@ border: none;
      </widget>
     </item>
    </layout>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>908</width>
-     <height>29</height>
-    </rect>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="nativeMenuBar">
-    <bool>false</bool>
-   </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuEdit">
-    <property name="title">
-     <string>Edit</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuEdit"/>
-   <addaction name="menuView"/>
-   <addaction name="menuHelp"/>
   </widget>
  </widget>
  <customwidgets>

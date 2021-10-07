@@ -15,6 +15,7 @@ public:
     static QPushButton *italicButton;
     static QPushButton *underlineButton;
     static void init(QPushButton *boldButton, QPushButton *italicButton, QPushButton *underlineButton);
+    static void toggleButton(QPushButton *button, bool active);
 };
 
 #endif // RICHTEXTFUNCTIONS_H
