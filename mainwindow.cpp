@@ -7,6 +7,7 @@
 #include "mainpage.h"
 #include "calendar.h"
 #include <richtextfunctions.h>
+#include <QGraphicsBlurEffect>
 #include "handleexternalfile.h"
 #include "databasemanager.h"
 #include "logindialog.h"
@@ -27,7 +28,7 @@ MainWindow::~MainWindow()
 void MainWindow::init()
 {
     // initialize utility classes
-    //DatabaseManager::init();
+    DatabaseManager::init();
     SidebarManager::init(this->ui->sideBar);
     DisplayManager::init(this->ui->mainPage, this->ui->pageTitle, this->ui->filePath);
     Blocks::init(this->ui->mainPage);
@@ -139,20 +140,39 @@ void MainWindow::on_externalFileButton_clicked()
      HandleExternalFile::addExternalFile();
 }
 
+void MainWindow::toggleBlurEffect()
+{
+    if (this->graphicsEffect() != nullptr)
+    {
+        this->setGraphicsEffect(nullptr);
+        return;
+    }
+    else
+    {
+        QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
+        blurEffect->setBlurRadius(10);
+        this->setGraphicsEffect(blurEffect);
+    }
+}
+
 
 void MainWindow::on_profileButton_clicked()
 {
+    toggleBlurEffect();
     LoginDialog *loginDialog = new LoginDialog();
     loginDialog->setWindowIcon(QIcon(":/Icons/Resources/Icons/Profile.svg"));
     loginDialog->setWindowTitle("Profile");
     loginDialog->exec();
+    toggleBlurEffect();
     delete loginDialog;
 }
 
 
 void MainWindow::on_shareButton_clicked()
 {
+    toggleBlurEffect();
     DatabaseManager::shareFile();
+    toggleBlurEffect();
 }
 
 
