@@ -6,7 +6,12 @@ Error::Error(QWidget *parent, QString errorMessage) :
     ui(new Ui::Error)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setWindowIcon(QIcon::fromTheme("SP_MessageBoxWarning"));
+    this->setWindowTitle("Error");
     this->ui->errorMessage->setPlainText(errorMessage);
+
 }
 
 Error::~Error()
