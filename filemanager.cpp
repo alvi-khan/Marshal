@@ -222,12 +222,8 @@ void FileManager::deletePage(QString pagePath)
 
     deleteDirectory(pagePath);
 
-    if(!parentIsRoot)   // TODO this leaves a blank line
+    if(!parentIsRoot)
         updateFileTracker(parentPath, "/" + pagePath.section("/", -1) + "/files.mar", "");
-
-    // TODO update blocks for child page deletion
-    // TODO delete blocks/calendar event right-click
-    // TODO calendar event delete bug fix (perhaps calendar should handle this and not file manager)
 }
 
 void FileManager::deleteDirectory(QString directory)

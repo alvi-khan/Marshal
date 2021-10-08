@@ -25,9 +25,7 @@ void LoginDialog::on_loginBtn_clicked()
     QString password = this->ui->password->text();
     if (username == "" || password == "")   return;
     if (!DatabaseManager::authenticateUser(username, password))
-    {
         QMessageBox::warning(this, "Login Failed", "Incorrect username or password!");
-    }
     else
         accept();
 }
@@ -39,9 +37,7 @@ void LoginDialog::on_regBtn_clicked()
     QString password = this->ui->password->text();
     if (username == "" || password == "")   return;
     if (!DatabaseManager::createNewUser(username, password))
-    {
         QMessageBox::warning(this, "Registration Failed", "Username unavailable!");
-    }
     else
         accept();
 }

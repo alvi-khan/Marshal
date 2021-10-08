@@ -28,7 +28,7 @@ MainWindow::~MainWindow()
 void MainWindow::init()
 {
     // initialize utility classes
-    DatabaseManager::init();
+    //DatabaseManager::init();
     SidebarManager::init(this->ui->sideBar);
     DisplayManager::init(this->ui->mainPage, this->ui->pageTitle, this->ui->filePath);
     Blocks::init(this->ui->mainPage);

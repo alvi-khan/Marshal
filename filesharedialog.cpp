@@ -46,9 +46,7 @@ void FileShareDialog::on_username_textChanged(const QString &arg1)
     QCompleter *userSuggestions = new QCompleter(users, this);
     userSuggestions->setCaseSensitivity(Qt::CaseInsensitive);
     QAbstractItemView *list = userSuggestions->popup();
-    list->setStyleSheet("color: #FFFFFF; "
-                        "font-size: 12px;"
-                        "background-color: rgb(35, 35, 35);");
+    list->setStyleSheet("color: #FFFFFF; font-size: 12px; background-color: rgb(35, 35, 35);");
     userSuggestions->setPopup(list);
     this->ui->username->setCompleter(userSuggestions);
 }

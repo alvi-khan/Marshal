@@ -4,6 +4,7 @@
 
 #include <QTextBrowser>
 #include <QPainterPath>
+#include "blocks.h"
 
 LinkEditDialog::LinkEditDialog(QWidget *parent) :
     QWidget(parent),
@@ -70,5 +71,12 @@ void LinkEditDialog::on_filePath_editingFinished()
     linkBlock->setHtml(content);
 
     link = newLink;
+}
+
+
+void LinkEditDialog::on_trashButton_clicked()
+{
+    this->hide();
+    Blocks::deleteBlock(this->parentWidget());
 }
 

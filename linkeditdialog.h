@@ -24,6 +24,8 @@ private slots:
 
     void on_filePath_editingFinished();
 
+    void on_trashButton_clicked();
+
 private:
     Ui::LinkEditDialog *ui;
     QTextBrowser *linkBlock;
