@@ -163,7 +163,10 @@ void Calendar::retrieveEvents()
     {
         QDate date = QDate::fromString(data.readLine(), "dd/MM/yyyy");
         QString event = data.readLine();
-        addToEventList(date, event);
+        if (event == "" && date.isValid())
+            FileManager::updateFileTracker(selfPath, date.toString("dd/MM/yyyy"), "");  // cleanup dates of deleted events
+        if (event != "")
+            addToEventList(date, event);
     }
 
     file.close();
