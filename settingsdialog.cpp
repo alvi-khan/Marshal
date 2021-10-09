@@ -31,7 +31,7 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::on_browseButton_clicked()
 {
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Choose Directory"), oldDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Choose Directory"), oldDir.section("/", 0, -2), QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if(dir != "") this->ui->directoryTextField->setText(dir);
 }
 
@@ -39,6 +39,8 @@ void SettingsDialog::on_browseButton_clicked()
 void SettingsDialog::on_buttonBox_accepted()
 {
     QString directory = this->ui->directoryTextField->text();
+    if (directory.endsWith("/")) directory.chop(1);
+
     FileManager::homeDirectory = directory + "/Marshal User Files/Private";
     QString settingsFilePath = QCoreApplication::applicationDirPath() + "/settings.conf";
     FileManager::writeToFile(settingsFilePath, FileManager::homeDirectory);
