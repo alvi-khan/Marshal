@@ -53,13 +53,19 @@ QTreeView::item{border-radius: 5px; padding: 3px;}
 QTreeView::item:selected{background-color: #4E4D4D; }
 QTreeView::item:hover:!selected{background-color: #3E3E3E;}
 
-QTreeView::branch:open:has-children:!has-siblings, QTreeView::branch:open:has-children:has-siblings {
+QTreeView::branch {
+    border-image: none;
+	image: url(:/Icons/Resources/Icons/Drop Down Closed.svg);
+}
+ 
+QTreeView::branch:has-children:open {
 	border-image: none;
 	image: url(:/Icons/Resources/Icons/Drop Down Open.svg);
 }
-QTreeView::branch:has-children:!has-siblings:closed, QTreeView::branch:closed:has-children:has-siblings {
-	border-image: none;
-	image: url(:/Icons/Resources/Icons/Drop Down Closed.svg);
+
+QTreeView::branch:has-siblings:!adjoins-item {
+    border-image: none;
+	image: none;
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -686,8 +692,8 @@ border: none;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>595</width>
-                <height>321</height>
+                <width>585</width>
+                <height>346</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_7">

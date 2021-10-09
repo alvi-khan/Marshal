@@ -112,10 +112,10 @@ void SidebarManager::onCustomContextMenu(const QPoint &point)
 
     QMenu menu;
     menu.setStyleSheet("QMenu{background-color: rgb(46, 46, 46); color: rgb(255, 255, 255); padding: 2px;}\
-                        QMenu::item:selected{background-color: #3E3E3E; color: rgb(255, 255, 255);}");
+                        QMenu::item:selected{background-color: #3E3E3E; color: rgb(255, 255, 255); border-radius: 2px;}");
 
     QAction* del = new QAction("Delete", this);
-    del->setIcon(QIcon(":/Toolbar Icons/Resources/Toolbar Icons/Trash.svg"));
+    del->setIcon(QIcon(":/Toolbar Icons/Resources/Toolbar Icons/Trash (Context Menu).svg"));
 
     connect(del, &QAction::triggered, [=] { FileManager::deletePage(index.siblingAtColumn(1).data().toString()); });
     menu.addAction(del);
