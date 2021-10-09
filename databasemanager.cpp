@@ -148,7 +148,7 @@ void DatabaseManager::init()
 {
     databaseSetup();
 
-    homeDirectory = "E:/Downloads/Main Folder";
+    homeDirectory = FileManager::homeDirectory.section("/", 0, -2);
     privateDirectory = homeDirectory + "/Private";
     sharedDirectory = homeDirectory + "/Shared";
     username = FileManager::readFromFile(QDir::currentPath() + "/user.dat");

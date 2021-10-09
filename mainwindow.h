@@ -40,6 +40,8 @@ private slots:
 
     void on_searchBox_textChanged(const QString &arg1);
 
+    void on_settingsButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     void init();
