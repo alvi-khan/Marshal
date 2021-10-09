@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>510</width>
-    <height>300</height>
+    <width>499</width>
+    <height>256</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -94,6 +94,9 @@ QPushButton:hover
       </item>
       <item>
        <widget class="QFrame" name="frame_2">
+        <property name="styleSheet">
+         <string notr="true">border: 0px;</string>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -114,7 +117,16 @@ QPushButton:hover
           <number>10</number>
          </property>
          <item>
-          <widget class="QLineEdit" name="directoryTextField"/>
+          <widget class="QLineEdit" name="directoryTextField">
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {
+	border: 1.5px solid rgb(70, 70, 70);
+	border-radius: 5px;
+	background-color: rgb(35, 35, 35);
+	padding: 2px;
+}</string>
+           </property>
+          </widget>
          </item>
          <item>
           <widget class="QPushButton" name="browseButton">
