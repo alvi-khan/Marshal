@@ -183,12 +183,10 @@ void MainWindow::on_searchBox_textChanged(const QString &arg1)
 
 void MainWindow::on_settingsButton_clicked()
 {
-    toggleBlurEffect();
     SettingsDialog *settingsDialog = new SettingsDialog();
     //settingsDialog->setWindowIcon(QIcon(":/Icons/Resources/Icons/Profile.svg"));
     settingsDialog->setWindowTitle("Settings");
     settingsDialog->exec();
-    toggleBlurEffect();
     delete settingsDialog;
 }
 
