@@ -20,6 +20,9 @@ public:
     QString getEventFilePath();
     void setEventName(QString eventName);
     void addToCalendar();
+    void deleteEvent(CalendarEvent *event);
+public slots:
+    void onCustomContextMenu(const QPoint &);
 protected:
     virtual void mousePressEvent(QMouseEvent* event) override;
 };

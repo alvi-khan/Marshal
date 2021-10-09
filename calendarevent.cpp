@@ -3,6 +3,8 @@
 #include "filemanager.h"
 
 #include <QDir>
+#include <QMenu>
+#include <QAction>
 #include <QMouseEvent>
 
 CalendarEvent::CalendarEvent(Calendar *calendar, QDate eventDate, QString eventName)
@@ -12,6 +14,9 @@ CalendarEvent::CalendarEvent(Calendar *calendar, QDate eventDate, QString eventN
     parentPath.truncate(parentPath.lastIndexOf(QChar('/')));
     this->eventDate = eventDate;
     this->setText(eventName);
+
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
 
     this->setFrame(QFrame::NoFrame);
     this->setReadOnly(true);
@@ -61,5 +66,30 @@ void CalendarEvent::addToCalendar()
     calendar->heightReset();
     saveToDisk();
     calendar->addToEventList(eventDate, getEventFilePath());
+}
+
+void CalendarEvent::onCustomContextMenu(const QPoint &)
+{
+    QMenu menu;
+    menu.setStyleSheet("QMenu{background-color: rgb(46, 46, 46); color: rgb(255, 255, 255); padding: 2px;}\
+                        QMenu::item:selected{background-color: #3E3E3E; color: rgb(255, 255, 255); border-radius: 2px;}");
+
+    QAction* del = new QAction("Delete", this);
+    del->setIcon(QIcon(":/Toolbar Icons/Resources/Toolbar Icons/Trash (Context Menu).svg"));
+
+    connect(del, &QAction::triggered, [=] {deleteEvent(this);});
+    menu.addAction(del);
+
+    menu.exec(QCursor::pos());
+    del->deleteLater();
+}
+
+void CalendarEvent::deleteEvent(CalendarEvent *event)
+{
+    event->hide();
+    FileManager::updateFileTracker(parentPath + "/files.cal", eventDate.toString("dd/MM/yyyy"), "");
+    FileManager::updateFileTracker(parentPath + "/files.cal", "/" + text() + "/files.mar", "");
+    FileManager::deleteDirectory(parentPath + "/" + text());
+    calendar->heightReset();
 }
 
