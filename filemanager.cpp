@@ -224,6 +224,9 @@ void FileManager::deletePage(QString pagePath)
 
     if(!parentIsRoot)
         updateFileTracker(parentPath, "/" + pagePath.section("/", -1) + "/files.mar", "");
+
+    if (pagePath.startsWith(openFile))
+        DisplayManager::openFileFromPath(openFile, DisplayManager::pageTitle->text());
 }
 
 void FileManager::deleteDirectory(QString directory)
