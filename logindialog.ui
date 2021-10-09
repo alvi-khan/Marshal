@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
-    <height>353</height>
+    <width>494</width>
+    <height>376</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>494</width>
+    <height>376</height>
+   </size>
   </property>
   <property name="font">
    <font>
@@ -24,9 +36,13 @@
 	background-color: rgb(30, 30, 30);
 	color: rgb(255, 255, 255);
 }
-QPushButton:hover{
-	background-color: red;
+QPushButton{
+	background-color: rgb(47, 52, 55);
+	border-radius: 5px;
+	padding: 5px 10px 5px 10px;
 }
+QPushButton:hover 
+{ background-color: #3E3E3E; }
 
 </string>
   </property>
@@ -48,10 +64,16 @@ QPushButton:hover{
    </property>
    <item>
     <widget class="QFrame" name="frame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="styleSheet">
       <string notr="true">QFrame#frame {
-	padding-right: 20px;
-	padding-left: 20px;
+	padding-right: 35px;
+	padding-left: 35px;
 	border: 1.5px solid rgb(70, 70, 70);
 	border-radius: 10px;
 }</string>
@@ -64,16 +86,16 @@ QPushButton:hover{
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="spacing">
-       <number>10</number>
+       <number>15</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <item>
        <spacer name="verticalSpacer_2">
@@ -83,7 +105,7 @@ QPushButton:hover{
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>40</height>
+          <height>0</height>
          </size>
         </property>
        </spacer>
@@ -182,6 +204,31 @@ border-radius: 5px;</string>
       </item>
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <property name="leftMargin">
+         <number>5</number>
+        </property>
+        <property name="topMargin">
+         <number>50</number>
+        </property>
+        <property name="rightMargin">
+         <number>5</number>
+        </property>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
         <item>
          <widget class="QPushButton" name="loginBtn">
           <property name="font">
@@ -191,11 +238,7 @@ border-radius: 5px;</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{background-color: rgb(35, 35, 35);}
-
-
-QPushButton:hover 
-{ background-color: #3E3E3E; }</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Login</string>
@@ -211,11 +254,7 @@ QPushButton:hover
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{background-color: rgb(35, 35, 35);}
-
-
-QPushButton:hover 
-{ background-color: #3E3E3E; }</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Register</string>
@@ -234,11 +273,7 @@ QPushButton:hover
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{background-color: rgb(35, 35, 35);}
-
-
-QPushButton:hover 
-{ background-color: #3E3E3E; }</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Logout</string>
@@ -267,16 +302,25 @@ QPushButton:hover
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{background-color: rgb(35, 35, 35);}
-
-
-QPushButton:hover 
-{ background-color: #3E3E3E; }</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Cancel</string>
           </property>
          </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>0</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -288,7 +332,7 @@ QPushButton:hover
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>40</height>
+          <height>0</height>
          </size>
         </property>
        </spacer>

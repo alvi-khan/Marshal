@@ -20,10 +20,10 @@ void RichTextFunctions::init(QPushButton *boldButton, QPushButton *italicButton,
 void RichTextFunctions::toggleButton(QPushButton *button, bool active)
 {
     if(active)
-        button->setStyleSheet("background-color: #4E4D4D; padding: 10px;");
+        button->setStyleSheet("background-color: #4E4D4D; padding: 8px;");
     else
         button->setStyleSheet("QPushButton:hover{background-color: #3E3E3E;}"
-                              "*{background-color: rgb(47, 52, 55); padding: 10px;}");
+                              "*{background-color: rgb(47, 52, 55); padding: 8px;}");
 }
 
 void RichTextFunctions::boldText(QTextBrowser *block)

@@ -26,6 +26,7 @@ private slots:
 private:
     Ui::FileShareDialog *ui;
     void init();
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // FILESHAREDIALOG_H

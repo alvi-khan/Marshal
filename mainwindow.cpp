@@ -7,16 +7,18 @@
 #include "mainpage.h"
 #include "calendar.h"
 #include <richtextfunctions.h>
-#include <QGraphicsBlurEffect>
 #include "handleexternalfile.h"
 #include "databasemanager.h"
 #include "logindialog.h"
 #include "settingsdialog.h"
 
+MainWindow * MainWindow::window;
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    window = this;
     init();
 }
 
@@ -159,39 +161,17 @@ void MainWindow::on_externalFileButton_clicked()
      HandleExternalFile::addExternalFile();
 }
 
-void MainWindow::toggleBlurEffect()
-{
-    if (this->graphicsEffect() != nullptr)
-    {
-        this->setGraphicsEffect(nullptr);
-        return;
-    }
-    else
-    {
-        QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
-        blurEffect->setBlurRadius(10);
-        this->setGraphicsEffect(blurEffect);
-    }
-}
-
-
 void MainWindow::on_profileButton_clicked()
 {
-    toggleBlurEffect();
     LoginDialog *loginDialog = new LoginDialog();
-    loginDialog->setWindowIcon(QIcon(":/Icons/Resources/Icons/Profile.svg"));
-    loginDialog->setWindowTitle("Profile");
     loginDialog->exec();
-    toggleBlurEffect();
     delete loginDialog;
 }
 
 
 void MainWindow::on_shareButton_clicked()
 {
-    toggleBlurEffect();
     DatabaseManager::shareFile();
-    toggleBlurEffect();
 }
 
 
@@ -203,12 +183,10 @@ void MainWindow::on_searchBox_textChanged(const QString &arg1)
 
 void MainWindow::on_settingsButton_clicked()
 {
-    toggleBlurEffect();
     SettingsDialog *settingsDialog = new SettingsDialog();
     //settingsDialog->setWindowIcon(QIcon(":/Icons/Resources/Icons/Profile.svg"));
     settingsDialog->setWindowTitle("Settings");
     settingsDialog->exec();
-    toggleBlurEffect();
     delete settingsDialog;
 }
 

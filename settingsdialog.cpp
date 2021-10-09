@@ -3,6 +3,8 @@
 #include "filemanager.h"
 #include <QDir>
 #include <QFileDialog>
+#include <QGraphicsBlurEffect>
+#include "mainwindow.h"
 
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
@@ -10,6 +12,14 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     ui(new Ui::SettingsDialog)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setWindowIcon(QIcon(":/Icons/Resources/Icons/Settings.svg"));
+    this->setWindowTitle("Settings");
+    QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
+    blurEffect->setBlurRadius(10);
+    MainWindow::window->setGraphicsEffect(blurEffect);
+
     this->ui->directoryTextField->setText(FileManager::homeDirectory.section("/", 0, -3));
     oldDir = FileManager::homeDirectory.section("/", 0, -2);
 }
@@ -36,5 +46,20 @@ void SettingsDialog::on_buttonBox_accepted()
     QDir dir;
     dir.mkpath(directory);
     dir.rename(oldDir, newDir);
+    MainWindow::window->setGraphicsEffect(nullptr);
+    accept();
+}
+
+
+void SettingsDialog::on_buttonBox_rejected()
+{
+    MainWindow::window->setGraphicsEffect(nullptr);
+    reject();
+}
+
+void SettingsDialog::closeEvent(QCloseEvent *event)
+{
+    MainWindow::window->setGraphicsEffect(nullptr);
+    this->accept();
 }
 

@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    static MainWindow *window;
     ~MainWindow();
 
 private slots:
@@ -45,6 +46,5 @@ private:
     Ui::MainWindow *ui;
     void init();
     void revealMainPage();
-    void toggleBlurEffect();
 };
 #endif // MAINWINDOW_H
