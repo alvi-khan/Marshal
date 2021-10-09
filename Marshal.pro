@@ -27,8 +27,9 @@ SOURCES += \
     mainpage.cpp \
     mainwindow.cpp \
     richtextfunctions.cpp \
-    sidebarmanager.cpp \
-    textblock.cpp
+    textblock.cpp \
+    settingsdialog.cpp \
+    sidebarmanager.cpp
 
 HEADERS += \
     addressbar.h \
@@ -48,8 +49,9 @@ HEADERS += \
     mainpage.h \
     mainwindow.h \
     richtextfunctions.h \
-    sidebarmanager.h \
-    textblock.h
+    textblock.h \
+    settingsdialog.h \
+    sidebarmanager.h
 
 FORMS += \
     addressbar.ui \
@@ -58,7 +60,8 @@ FORMS += \
     filesharedialog.ui \
     linkeditdialog.ui \
     logindialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    settingsdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

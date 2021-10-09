@@ -10,6 +10,7 @@
         <file>Resources/Icons/Drop Down Open.svg</file>
         <file>Resources/Icons/Left Arrow.svg</file>
         <file>Resources/Icons/Right Arrow.svg</file>
+        <file>Resources/Icons/Error.svg</file>
     </qresource>
     <qresource prefix="/Toolbar Icons">
         <file>Resources/Toolbar Icons/Bold.svg</file>

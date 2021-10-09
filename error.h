@@ -19,13 +19,14 @@ public:
     ~Error();
     static void showError();
 
-
+    void closeEvent(QCloseEvent *event);
     bool errorAccepted() const;
 
 private slots:
-    void on_buttonBox_accepted();
 
-    void on_buttonBox_rejected();
+    void on_okButton_clicked();
+
+    void on_cancelButton_clicked();
 
 private:
     Ui::Error *ui;

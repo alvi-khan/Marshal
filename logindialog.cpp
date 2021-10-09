@@ -1,8 +1,10 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
 #include "databasemanager.h"
+#include "mainwindow.h"
 
 #include <QPushButton>
+#include <QGraphicsBlurEffect>
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -11,6 +13,11 @@ LoginDialog::LoginDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setWindowIcon(QIcon(":/Icons/Resources/Icons/Profile.svg"));
+    this->setWindowTitle("Profile");
+    QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
+    blurEffect->setBlurRadius(10);
+    MainWindow::window->setGraphicsEffect(blurEffect);
     init();
 }
 
@@ -27,7 +34,10 @@ void LoginDialog::on_loginBtn_clicked()
     if (!DatabaseManager::authenticateUser(username, password))
         QMessageBox::warning(this, "Login Failed", "Incorrect username or password!");
     else
+    {
+        MainWindow::window->setGraphicsEffect(nullptr);
         accept();
+    }
 }
 
 
@@ -39,13 +49,23 @@ void LoginDialog::on_regBtn_clicked()
     if (!DatabaseManager::createNewUser(username, password))
         QMessageBox::warning(this, "Registration Failed", "Username unavailable!");
     else
+    {
+        MainWindow::window->setGraphicsEffect(nullptr);
         accept();
+    }
 }
 
 
 void LoginDialog::on_cancelBtn_clicked()
 {
+    MainWindow::window->setGraphicsEffect(nullptr);
     reject();
+}
+
+void LoginDialog::closeEvent(QCloseEvent *event)
+{
+    MainWindow::window->setGraphicsEffect(nullptr);
+    this->accept();
 }
 
 

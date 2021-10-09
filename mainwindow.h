@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    static MainWindow *window;
     ~MainWindow();
 
 private slots:
@@ -40,12 +41,14 @@ private slots:
     void on_searchBox_textChanged(const QString &arg1);
 
     void on_trashButton_clicked();
+    
+    void on_settingsButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     void init();
     void revealMainPage();
-    void toggleBlurEffect();
+
 public:
     void hideMainPage();
 };

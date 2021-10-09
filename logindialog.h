@@ -27,6 +27,7 @@ private slots:
 
 private:
     Ui::LoginDialog *ui;
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // LOGINDIALOG_H

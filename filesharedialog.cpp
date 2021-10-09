@@ -2,6 +2,8 @@
 #include "ui_filesharedialog.h"
 #include "databasemanager.h"
 #include <QCompleter>
+#include <QGraphicsBlurEffect>
+#include "mainwindow.h"
 
 FileShareDialog::FileShareDialog(QWidget *parent) :
     QDialog(parent),
@@ -12,6 +14,9 @@ FileShareDialog::FileShareDialog(QWidget *parent) :
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowIcon(QIcon(":/Toolbar Icons/Resources/Toolbar Icons/Share.svg"));
     this->setWindowTitle("Share");
+    QGraphicsBlurEffect *blurEffect = new QGraphicsBlurEffect();
+    blurEffect->setBlurRadius(10);
+    MainWindow::window->setGraphicsEffect(blurEffect);
     init();
 }
 
@@ -23,13 +28,21 @@ FileShareDialog::~FileShareDialog()
 void FileShareDialog::on_buttonBox_accepted()
 {
     username = this->ui->username->text();
+    MainWindow::window->setGraphicsEffect(nullptr);
     accept();
 }
 
 
 void FileShareDialog::on_buttonBox_rejected()
 {
+    MainWindow::window->setGraphicsEffect(nullptr);
     reject();
+}
+
+void FileShareDialog::closeEvent(QCloseEvent *event)
+{
+    MainWindow::window->setGraphicsEffect(nullptr);
+    this->accept();
 }
 
 void FileShareDialog::init()
