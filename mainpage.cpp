@@ -1,6 +1,7 @@
 #include "mainpage.h"
 #include "filemanager.h"
 #include "sidebarmanager.h"
+#include <QMouseEvent>
 
 MainPage::MainPage()
 {
@@ -19,7 +20,8 @@ MainPage::MainPage(QWidget *&)
 void MainPage::mousePressEvent(QMouseEvent *event)
 {
     // create an empty block in the currently open page
-    FileManager::createBlock(SidebarManager::getCurrentIndex());
+    if (event->button() == Qt::LeftButton)
+        FileManager::createBlock(SidebarManager::getCurrentIndex());
 
     // perform default functionality
     QFrame::mousePressEvent(event);
