@@ -11,6 +11,7 @@
 #include "handleexternalfile.h"
 #include "databasemanager.h"
 #include "logindialog.h"
+#include "settingsdialog.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
@@ -27,8 +28,11 @@ MainWindow::~MainWindow()
 
 void MainWindow::init()
 {
+    QString settingsFilePath = QCoreApplication::applicationDirPath() + "/settings.conf";
+    FileManager::homeDirectory = FileManager::readFromFile(settingsFilePath);
+
     // initialize utility classes
-    DatabaseManager::init();
+    //DatabaseManager::init();
     SidebarManager::init(this->ui->sideBar);
     DisplayManager::init(this->ui->mainPage, this->ui->pageTitle, this->ui->filePath);
     Blocks::init(this->ui->mainPage);
@@ -194,5 +198,17 @@ void MainWindow::on_shareButton_clicked()
 void MainWindow::on_searchBox_textChanged(const QString &arg1)
 {
     SidebarManager::filterItems(arg1);
+}
+
+
+void MainWindow::on_settingsButton_clicked()
+{
+    toggleBlurEffect();
+    SettingsDialog *settingsDialog = new SettingsDialog();
+    //settingsDialog->setWindowIcon(QIcon(":/Icons/Resources/Icons/Profile.svg"));
+    settingsDialog->setWindowTitle("Settings");
+    settingsDialog->exec();
+    toggleBlurEffect();
+    delete settingsDialog;
 }
 

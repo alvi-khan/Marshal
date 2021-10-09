@@ -3,6 +3,7 @@
 #include <QDirIterator>
 #include <QSortFilterProxyModel>
 #include <QStack>
+#include "filemanager.h"
 
 QString SidebarManager::homeDirectory;
 QString SidebarManager::sharedDirectory;
@@ -92,8 +93,8 @@ void SidebarManager::addChildren(QString directory, QStandardItem *parent)
  */
 void SidebarManager::init(QTreeView *sidebar)
 {
-    homeDirectory = "E:/Downloads/Main Folder/Private";
-    sharedDirectory = "E:/Downloads/Main Folder/Shared";
+    homeDirectory = FileManager::homeDirectory;
+    sharedDirectory = homeDirectory.section("/", 0, -2) + "/Shared";
     SidebarManager::sidebar = sidebar;
     model = new QStandardItemModel();
     addChildren(homeDirectory, model->invisibleRootItem());
