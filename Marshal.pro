@@ -27,7 +27,8 @@ SOURCES += \
     mainpage.cpp \
     mainwindow.cpp \
     richtextfunctions.cpp \
-    sidebarmanager.cpp
+    sidebarmanager.cpp \
+    textblock.cpp
 
 HEADERS += \
     addressbar.h \
@@ -47,7 +48,8 @@ HEADERS += \
     mainpage.h \
     mainwindow.h \
     richtextfunctions.h \
-    sidebarmanager.h
+    sidebarmanager.h \
+    textblock.h
 
 FORMS += \
     addressbar.ui \

@@ -5,6 +5,7 @@
 #include "filemanager.h"
 #include "linkeditdialog.h"
 #include "sidebarmanager.h"
+#include "textblock.h"
 
 #include <QFile>
 #include <QTextBrowser>
@@ -89,7 +90,7 @@ void Blocks::deleteBlock(QWidget *block)
  */
 QTextBrowser* Blocks::createTextBrowser(QString content)
 {
-    QTextBrowser *newBlock = new QTextBrowser();
+    TextBlock *newBlock = new TextBlock();
     newBlock->insertHtml(content);
 
     // setting up style
