@@ -44,8 +44,7 @@ void SidebarManager::removeItem(QModelIndex index)
 {
     if (!index.isValid())  return;
 
-    QStandardItem *item = model->itemFromIndex(index);
-    model->removeRow(item->row(), item->parent()->index());
+    model->removeRow(index.row(), index.parent());
 }
 
 QStandardItem* SidebarManager::createItem(QString fileName, QString filePath, QStandardItem *parent)
@@ -101,6 +100,28 @@ void SidebarManager::init(QTreeView *sidebar)
     addChildren(sharedDirectory, model->invisibleRootItem());
     sidebar->setModel(model);
     sidebar->setColumnHidden(1, true);
+    sidebar->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    sidebar->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(sidebar, SIGNAL(customContextMenuRequested(const QPoint &)), new SidebarManager(), SLOT(onCustomContextMenu(const QPoint &)));
+}
+
+void SidebarManager::onCustomContextMenu(const QPoint &point)
+{
+    QModelIndex index = sidebar->indexAt(point);
+    if (!index.isValid())   return;
+
+    QMenu menu;
+    menu.setStyleSheet("QMenu{background-color: rgb(46, 46, 46); color: rgb(255, 255, 255); padding: 2px;}\
+                        QMenu::item:selected{background-color: #3E3E3E; color: rgb(255, 255, 255); border-radius: 2px;}");
+
+    QAction* del = new QAction("Delete", this);
+    del->setIcon(QIcon(":/Toolbar Icons/Resources/Toolbar Icons/Trash (Context Menu).svg"));
+
+    connect(del, &QAction::triggered, [=] { FileManager::deletePage(index.siblingAtColumn(1).data().toString()); });
+    menu.addAction(del);
+
+    menu.exec(QCursor::pos());
+    del->deleteLater();
 }
 
 void SidebarManager::reloadSidebar()

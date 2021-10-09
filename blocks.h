@@ -4,6 +4,8 @@
 #include <QFrame>
 #include <QObject>
 #include <QTextBrowser>
+#include <QMenu>
+#include <QAction>
 
 
 /**
@@ -17,13 +19,15 @@ public:
     static QTextBrowser* createTextBrowser(QString content);
     static QFrame *mainPage;
     static QTextBrowser* addHtmlBlock(QString filePath);
-    static void addLinkBlock(QString link, QString name);
+    static QTextBrowser* addLinkBlock(QString link, QString name);
     static void addSubfileBlock(QString filePath);
     static void init(QFrame *mainPage);
     static void addCalendarBlock(QString filePath);
     static void addToolTip(QWidget *widget, QString text);
+    static void deleteBlock(QWidget *block);
 public slots:
     void updateBlockSize();
+    void onCustomContextMenu(const QPoint &point);
 };
 
 #endif // BLOCKS_H

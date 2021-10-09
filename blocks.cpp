@@ -4,6 +4,8 @@
 #include "error.h"
 #include "filemanager.h"
 #include "linkeditdialog.h"
+#include "sidebarmanager.h"
+#include "textblock.h"
 
 #include <QFile>
 #include <QTextBrowser>
@@ -16,6 +18,71 @@ Blocks::Blocks()
 
 }
 
+void Blocks::onCustomContextMenu(const QPoint &point)
+{
+    QWidget *block = (QWidget *) sender();
+
+    QMenu menu;
+    menu.setStyleSheet("QMenu{background-color: rgb(46, 46, 46); color: rgb(255, 255, 255); padding: 2px;}\
+                        QMenu::item:selected{background-color: #3E3E3E; color: rgb(255, 255, 255); border-radius: 2px;}");
+
+    QAction* del = new QAction("Delete", this);
+    del->setIcon(QIcon(":/Toolbar Icons/Resources/Toolbar Icons/Trash (Context Menu).svg"));
+
+    connect(del, &QAction::triggered, [=] {deleteBlock(block);});
+    menu.addAction(del);
+
+    menu.exec(QCursor::pos());
+    del->deleteLater();
+}
+
+void Blocks::deleteBlock(QWidget *block)
+{
+    block->hide();
+
+    if (QLatin1String(block->metaObject()->className()) == "Calendar")
+    {
+        Calendar *calendar = (Calendar *) block;
+        QString calendarPath = calendar->selfPath;
+        QString parentPath = calendarPath.section("/", 0, -3);
+
+        FileManager::deleteDirectory(calendarPath.section("/", 0, -2));
+        FileManager::updateFileTracker(parentPath + "/files.mar", calendarPath.remove(parentPath), "");
+        return;
+    }
+
+
+    QTextBrowser *htmlBlock = (QTextBrowser *) block;
+    QString blockPath = htmlBlock->documentTitle();
+    if (blockPath.endsWith("/files.mar"))       // subpage blocks
+    {
+        //cant use filemanager's delete page (removes wrong index problem)
+        QString directory = blockPath.section("/", 0, -2);
+        FileManager::deleteDirectory(directory);
+
+        QModelIndex index = SidebarManager::getChild(directory);
+        SidebarManager::removeItem(index);
+
+        QString parentPage = blockPath.section("/", 0, -3);
+        FileManager::updateFileTracker(parentPage + "/files.mar", blockPath.remove(parentPage), "");
+    }
+    else if (blockPath.endsWith(".html"))       // normal text blocks
+    {
+        QFile::remove(blockPath);
+
+        QString parentPage = blockPath.section("/", 0, -2);
+        FileManager::updateFileTracker(parentPage + "/files.mar", blockPath.remove(parentPage), "");
+    }
+    else if (blockPath.endsWith(".url"))
+    {
+        QFile::remove(blockPath);
+
+        QString parentPage = blockPath.section("/", 0, -2);
+        FileManager::updateFileTracker(parentPage + "/files.mar", blockPath.remove(parentPage), "");
+    }
+    // TODO delete calendar events
+}
+
 /**
  * @brief Blocks::createTextBrowser generates a basic text browser widget with custom formatting
  * @param content is the content to put in the widget
@@ -23,7 +90,7 @@ Blocks::Blocks()
  */
 QTextBrowser* Blocks::createTextBrowser(QString content)
 {
-    QTextBrowser *newBlock = new QTextBrowser();
+    TextBlock *newBlock = new TextBlock();
     newBlock->insertHtml(content);
 
     // setting up style
@@ -64,6 +131,9 @@ QTextBrowser* Blocks::addHtmlBlock(QString filePath)
     QTextBrowser *htmlBlock = createTextBrowser(data);
     htmlBlock->setDocumentTitle(filePath);  // storing filepath in hidden title; needed to save block
     htmlBlock->setReadOnly(false);          // TODO check if this is necessary
+    htmlBlock->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(htmlBlock, SIGNAL(customContextMenuRequested(const QPoint &)), new Blocks(), SLOT(onCustomContextMenu(const QPoint &)));
+
     return htmlBlock;
 }
 
@@ -78,22 +148,27 @@ void Blocks::addToolTip(QWidget *widget, QString text)
  * @param link
  * @param name is the text displayed for the link
  */
-void Blocks::addLinkBlock(QString link, QString name)
+QTextBrowser* Blocks::addLinkBlock(QString link, QString name)
 {
     QString content = "<a style=\"color: #66d9ee\" href=\"" + link + "\">" + name + "</a>";
     QTextBrowser *linkBlock = createTextBrowser(content);
     linkBlock->setOpenLinks(false);
     linkBlock->setTextColor(QColor::fromRgb(102, 217, 238));
     linkBlock->connect(linkBlock, &QTextBrowser::anchorClicked, new DisplayManager(), &DisplayManager::openLink);
+    linkBlock->setContextMenuPolicy(Qt::CustomContextMenu);
 
 
     if (!link.endsWith(".mar"))
     {
-        linkBlock->setContextMenuPolicy(Qt::CustomContextMenu);
-        connect(linkBlock, &QTextBrowser::customContextMenuRequested, new LinkEditDialog(), &LinkEditDialog::displayDialog);
+        connect(linkBlock, &QTextBrowser::customContextMenuRequested, new LinkEditDialog(linkBlock), &LinkEditDialog::displayDialog);
         addToolTip(linkBlock, link);
     }
-    else    addToolTip(linkBlock, (link.remove("E:/Downloads/Main Folder/Private")).remove("/files.mar"));
+    else
+    {
+        connect(linkBlock, SIGNAL(customContextMenuRequested(const QPoint &)), new Blocks(), SLOT(onCustomContextMenu(const QPoint &)));
+        addToolTip(linkBlock, (link.remove("E:/Downloads/Main Folder/Private")).remove("/files.mar"));
+    }
+    return linkBlock;
 }
 
 /**
@@ -103,7 +178,8 @@ void Blocks::addLinkBlock(QString link, QString name)
 void Blocks::addSubfileBlock(QString filePath)
 {
     QString fileName = filePath.section("/", -2, -2);
-    addLinkBlock(filePath, fileName);
+    QTextBrowser *subFileBlock = addLinkBlock(filePath, fileName);
+    subFileBlock->setDocumentTitle(filePath);
 }
 
 void Blocks::addCalendarBlock(QString filePath)
@@ -116,6 +192,9 @@ void Blocks::addCalendarBlock(QString filePath)
     widget->setLayout(layout1);
     QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
     layout->insertWidget(layout->count() - 1, widget);
+
+    calendar->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(calendar, SIGNAL(customContextMenuRequested(const QPoint &)), new Blocks(), SLOT(onCustomContextMenu(const QPoint &)));
 }
 
 void Blocks::init(QFrame *mainPage)

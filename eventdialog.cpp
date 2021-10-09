@@ -8,6 +8,7 @@ EventDialog::EventDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    this->ui->eventName->setFocus();
 }
 
 EventDialog::~EventDialog()
@@ -32,5 +33,6 @@ void EventDialog::on_eventName_editingFinished()
         event->setText(newText);
         event->addToCalendar();
     }
+    this->hide();
 }
 

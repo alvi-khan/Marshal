@@ -22,5 +22,6 @@
         <file>Resources/Toolbar Icons/Share.svg</file>
         <file>Resources/Toolbar Icons/Trash.svg</file>
         <file>Resources/Toolbar Icons/URL.svg</file>
+        <file>Resources/Toolbar Icons/Trash (Context Menu).svg</file>
     </qresource>
 </RCC>

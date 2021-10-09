@@ -2,6 +2,7 @@
 #define FILEMANAGER_H
 
 #include <QModelIndex>
+#include <mainwindow.h>
 
 
 /**
@@ -28,6 +29,7 @@ public:
     static void deleteDirectory(QString directory);
 public slots:
     void saveBlock();
+    static void deletePage(QString pagePath);
 };
 
 #endif // FILEMANAGER_H

@@ -50,7 +50,22 @@ QPushButton:hover { background-color: #3E3E3E;  }
 
 QTreeView::item{border-radius: 5px; padding: 3px;}
 QTreeView::item:selected{background-color: #4E4D4D; }
-QTreeView::item:hover:!selected{background-color: #3E3E3E;}</string>
+QTreeView::item:hover:!selected{background-color: #3E3E3E;}
+
+QTreeView::branch {
+    border-image: none;
+	image: url(:/Icons/Resources/Icons/Drop Down Closed.svg);
+}
+ 
+QTreeView::branch:has-children:open {
+	border-image: none;
+	image: url(:/Icons/Resources/Icons/Drop Down Open.svg);
+}
+
+QTreeView::branch:has-siblings:!adjoins-item {
+    border-image: none;
+	image: none;
+}</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
     <property name="spacing">
@@ -327,7 +342,7 @@ Text-align: left;</string>
             <number>10</number>
            </property>
            <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <layout class="QHBoxLayout" name="topBar">
              <property name="spacing">
               <number>10</number>
              </property>
@@ -404,7 +419,7 @@ QToolTip {
                <property name="frameShadow">
                 <enum>QFrame::Plain</enum>
                </property>
-               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0,0">
+               <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0,0,0,0,0,0,0">
                 <property name="spacing">
                  <number>4</number>
                 </property>
@@ -420,6 +435,20 @@ QToolTip {
                 <property name="bottomMargin">
                  <number>7</number>
                 </property>
+                <item>
+                 <widget class="QPushButton" name="trashButton">
+                  <property name="styleSheet">
+                   <string notr="true">padding: 10px</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Trash.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Trash.svg</iconset>
+                  </property>
+                 </widget>
+                </item>
                 <item>
                  <widget class="QPushButton" name="subpageButton">
                   <property name="toolTip">

@@ -40,12 +40,13 @@ void DisplayManager::openLink(QUrl url)
 
 void DisplayManager::createUrl(QString urlFilePath)
 {
-    QString filePath = FileManager::readFromFile(urlFilePath);
+    QString link = FileManager::readFromFile(urlFilePath);
     QString fileName = urlFilePath.section("/", -1);
     fileName.replace(".url", "");
 
     // new dialog, get url
-    Blocks::addLinkBlock(filePath, fileName);
+    QTextBrowser *linkBlock = Blocks::addLinkBlock(link, fileName);
+    linkBlock->setDocumentTitle(urlFilePath);
     // save block as file
     // update file tracker
 }
@@ -128,7 +129,7 @@ void DisplayManager::openFileFromPath(QString filePath, QString title)
     file.close();
 
     pageTitle->setText(title);
-    addressBar->update(filePath.remove(SidebarManager::homeDirectory));
+    addressBar->update(filePath.remove(SidebarManager::homeDirectory, Qt::CaseInsensitive));
 }
 
 void DisplayManager::openFile(QModelIndex index)

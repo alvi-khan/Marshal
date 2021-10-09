@@ -27,6 +27,7 @@ SOURCES += \
     mainpage.cpp \
     mainwindow.cpp \
     richtextfunctions.cpp \
+    textblock.cpp \
     settingsdialog.cpp \
     sidebarmanager.cpp
 
@@ -48,6 +49,7 @@ HEADERS += \
     mainpage.h \
     mainwindow.h \
     richtextfunctions.h \
+    textblock.h \
     settingsdialog.h \
     sidebarmanager.h
 
