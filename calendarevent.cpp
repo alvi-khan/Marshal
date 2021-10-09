@@ -3,6 +3,7 @@
 #include "filemanager.h"
 
 #include <QDir>
+#include <QMouseEvent>
 
 CalendarEvent::CalendarEvent(Calendar *calendar, QDate eventDate, QString eventName)
 {
@@ -42,7 +43,8 @@ QString CalendarEvent::getEventFilePath()
 
 void CalendarEvent::mousePressEvent(QMouseEvent *event)
 {
-    CalendarEvent::openEvent();
+    if (event->button() == Qt::LeftButton)
+            CalendarEvent::openEvent();
     // perform default functionality
     QLineEdit::mousePressEvent(event);
 }
