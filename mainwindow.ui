@@ -53,19 +53,16 @@ QTreeView::item:selected{background-color: #4E4D4D;}
 QTreeView::item:hover:!selected{background-color: #3E3E3E;}
 QTreeView{outline:none;}
 
-QTreeView::branch {
+QTreeView::branch:has-siblings:adjoins-item, 
+QTreeView::branch:!has-children:!has-siblings:adjoins-item, 
+QTreeView::branch:closed:has-children {
     border-image: none;
 	image: url(:/Icons/Resources/Icons/Drop Down Closed.svg);
 }
- 
-QTreeView::branch:has-children:open {
-	border-image: none;
-	image: url(:/Icons/Resources/Icons/Drop Down Open.svg);
-}
 
-QTreeView::branch:has-siblings:!adjoins-item {
+QTreeView::branch:open:has-children {
     border-image: none;
-	image: none;
+	image: url(:/Icons/Resources/Icons/Drop Down Open.svg);
 }</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_5">
