@@ -11,7 +11,7 @@ LinkEditDialog::LinkEditDialog(QWidget *parent) :
     ui(new Ui::LinkEditDialog)
 {
     ui->setupUi(this);
-    this->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
 }
 
