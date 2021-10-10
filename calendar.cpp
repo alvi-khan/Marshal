@@ -142,6 +142,8 @@ QWidget* Calendar::createDateText(int date)
     if (today.year() == selectedYear && today.month() == selectedMonth && date == today.day())
         setCurrentDateFormat(lineEdit);
 
+    lineEdit->setAttribute(Qt::WA_TransparentForMouseEvents);
+
     QWidget *widget = createWidgetWithItems(new QVBoxLayout(), {lineEdit});
     widget->layout()->setAlignment(Qt::AlignTop);
     return widget;
