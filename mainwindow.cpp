@@ -38,6 +38,8 @@ void MainWindow::init()
     loadingGIF = new QMovie(":/Icons/Resources/Icons/Loading.gif");
     connect(loadingGIF, &QMovie::frameChanged, [=]{this->ui->profileButton->setIcon(loadingGIF->currentPixmap());});
 
+    mainPage = this->ui->mainPage;
+
     // initialize utility classes
     //DatabaseManager::init();
     SidebarManager::init(this->ui->sideBar);

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "mainpage.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -53,5 +54,6 @@ private:
 public:
     void hideMainPage();
     void toggleLoadingGIF();
+    MainPage *mainPage;
 };
 #endif // MAINWINDOW_H

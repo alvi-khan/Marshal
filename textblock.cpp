@@ -1,6 +1,7 @@
 #include "textblock.h"
 #include <QKeyEvent>
 #include "blocks.h"
+#include "mainwindow.h"
 
 TextBlock::TextBlock()
 {
@@ -15,14 +16,21 @@ void TextBlock::keyPressEvent(QKeyEvent *ev)
         QTextBrowser::keyPressEvent(ev);
 }
 
-void TextBlock::focusOutEvent(QFocusEvent *e)
+void TextBlock::focusInEvent(QFocusEvent *e)
 {
-    if (e->lostFocus())
+    if (e->gotFocus())
     {
-        QTextCursor cursor = textCursor();
-        cursor.clearSelection();
-        setTextCursor(cursor);
+        QList<QObject *> objects = MainWindow::window->mainPage->children();
+        foreach (QObject *object, objects)
+        {
+            if (QLatin1String(object->metaObject()->className()) != "QTextBrowser")    continue;
+            QTextBrowser *block = (QTextBrowser *) object;
+            if (block == this)  continue;
+            QTextCursor cursor = block->textCursor();
+            cursor.clearSelection();
+            block->setTextCursor(cursor);
+        }
     }
 
-   QTextEdit::focusOutEvent(e);
+   QTextBrowser::focusInEvent(e);
 }

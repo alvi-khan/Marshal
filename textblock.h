@@ -8,7 +8,7 @@ class TextBlock : public QTextBrowser
 public:
     TextBlock();
     void keyPressEvent(QKeyEvent *ev);
-    void focusOutEvent(QFocusEvent *e);
+    void focusInEvent(QFocusEvent *e);
 };
 
 #endif // TEXTBLOCK_H
