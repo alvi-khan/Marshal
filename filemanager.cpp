@@ -173,7 +173,10 @@ QString FileManager::renameFile(QString oldPath, QString newName)
 void FileManager::updateFileTracker(QString parent, QString oldPath, QString newPath)
 {
     QString data = readFromFile(parent);
-    data.replace(oldPath, newPath);
+    if (newPath == "")
+        data.remove(oldPath + "\n");
+    else
+        data.replace(oldPath, newPath);
     writeToFile(parent, data);
 }
 
