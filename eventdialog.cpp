@@ -1,5 +1,6 @@
 #include "eventdialog.h"
 #include "ui_eventdialog.h"
+#include "mainwindow.h"
 
 EventDialog::EventDialog(QWidget *parent) :
     QWidget(parent),
@@ -19,8 +20,22 @@ EventDialog::~EventDialog()
 void EventDialog::displayDialog(CalendarEvent *event, QPoint point)
 {
     EventDialog::event = event;
-    QPoint position = event->mapToGlobal(point);
-    this->move(position.x() + 50, position.y() + 10);
+
+    QPoint topLeft, topRight, bottomRight;
+    topLeft.setX(point.x() + 50);
+    topLeft.setY(point.y() + 10);
+
+    topRight.setX(topLeft.x() + width());
+    topRight.setY(topLeft.y());
+    if (!MainWindow::window->visibleRegion().contains(topRight))
+        topLeft.setX(point.x() - width());
+
+    bottomRight.setX(topLeft.x() + width());
+    bottomRight.setY(topLeft.y() + height());
+    if (!MainWindow::window->visibleRegion().contains(bottomRight))
+        topLeft.setY(point.y() - height());
+
+    this->move(topLeft);
     this->show();
 }
 
