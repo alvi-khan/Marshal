@@ -49,7 +49,10 @@ void LinkEditDialog::on_fileName_editingFinished()
 
     FileManager::renameFile(parentFile + "/" + oldPath, newPath);
     FileManager::updateFileTracker(parentFile + "/files.mar", "/" + oldPath, "/" + newPath);
-    linkBlock->setText(newText);
+
+    QString content = "<a style=\"color: #66d9ee\" href=\"" + link + "\">" + newText + "</a>";
+    linkBlock->setHtml(content);
+    linkBlock->setToolTip(link);
 
     text = newText;
 }
@@ -69,6 +72,7 @@ void LinkEditDialog::on_filePath_editingFinished()
 
     QString content = "<a style=\"color: #66d9ee\" href=\"" + newLink + "\">" + text + "</a>";
     linkBlock->setHtml(content);
+    linkBlock->setToolTip(newLink);
 
     link = newLink;
 }
