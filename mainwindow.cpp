@@ -155,7 +155,6 @@ void MainWindow::on_profileButton_clicked()
 {
     LoginDialog *loginDialog = new LoginDialog();
     loginDialog->exec();
-    delete loginDialog;
 }
 
 
