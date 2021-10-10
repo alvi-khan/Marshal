@@ -14,3 +14,15 @@ void TextBlock::keyPressEvent(QKeyEvent *ev)
     else
         QTextBrowser::keyPressEvent(ev);
 }
+
+void TextBlock::focusOutEvent(QFocusEvent *e)
+{
+    if (e->lostFocus())
+    {
+        QTextCursor cursor = textCursor();
+        cursor.clearSelection();
+        setTextCursor(cursor);
+    }
+
+   QTextEdit::focusOutEvent(e);
+}

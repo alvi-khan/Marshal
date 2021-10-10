@@ -1,5 +1,6 @@
 #include "richtextfunctions.h"
 #include <QPushButton>
+#include <QTextDocumentFragment>
 
 QPushButton * RichTextFunctions::boldButton;
 QPushButton * RichTextFunctions::italicButton;
@@ -60,4 +61,19 @@ void RichTextFunctions::underlineText(QTextBrowser *block)
 
     block->setCurrentFont(font);
     block->setFocus();
+}
+
+void RichTextFunctions::selectionChange(QTextBrowser *block)
+{
+    QFont font = block->currentFont();
+    QString selection = block->textCursor().selection().toHtml();
+    if (selection.contains("font-weight:700") || font.bold())
+            toggleButton(boldButton, true);
+    else    toggleButton(boldButton, false);
+    if (selection.contains("font-style:italic") || font.italic())
+            toggleButton(italicButton, true);
+    else    toggleButton(italicButton, false);
+    if (selection.contains("text-decoration: underline") || font.underline())
+            toggleButton(underlineButton, true);
+    else    toggleButton(underlineButton, false);
 }

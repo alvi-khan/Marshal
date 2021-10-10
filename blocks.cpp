@@ -6,6 +6,7 @@
 #include "linkeditdialog.h"
 #include "sidebarmanager.h"
 #include "textblock.h"
+#include "richtextfunctions.h"
 
 #include <QFile>
 #include <QTextBrowser>
@@ -99,6 +100,8 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     connect(newBlock, &QTextEdit::textChanged, new Blocks(), &Blocks::updateBlockSize);
     newBlock->textChanged();    // to trigger height readjustment
     connect(newBlock, &QTextEdit::textChanged, new FileManager(), &FileManager::saveBlock);
+    connect(newBlock, &TextBlock::selectionChanged, [=] { RichTextFunctions::selectionChange(newBlock); });
+    connect(newBlock, &QTextEdit::cursorPositionChanged, [=] { RichTextFunctions::selectionChange(newBlock); });
 
     // add block to main page
     QVBoxLayout *layout = (QVBoxLayout *) mainPage->layout();
