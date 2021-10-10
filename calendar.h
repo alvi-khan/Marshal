@@ -50,6 +50,7 @@ public:
     QWidget *createWidgetWithItems(QBoxLayout *layout, QList<QWidget*> widgets);
 public slots:
     void newEventPrompt(int row, int column);
+    void clearSelectedCell(QWidget *cellWidget);
 };
 
 #endif // CALENDAR_H

@@ -34,5 +34,6 @@ void EventDialog::on_eventName_editingFinished()
         event->addToCalendar();
     }
     this->hide();
+    emit hidden();
 }
 

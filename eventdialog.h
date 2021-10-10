@@ -23,6 +23,8 @@ private slots:
 private:
     Ui::EventDialog *ui;
     CalendarEvent *event;
+signals:
+    void hidden();
 };
 
 #endif // EVENTDIALOG_H

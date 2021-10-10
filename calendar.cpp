@@ -48,6 +48,8 @@ void Calendar::customizeCalendar()
     this->setShowGrid(false);
 
     this->setStyleSheet("QTableWidget::item{selection-background-color: rgb(35, 35, 35);}");
+    this->setFocusPolicy(Qt::NoFocus);
+    this->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 void Calendar::insertDayNames()
@@ -140,7 +142,6 @@ QWidget* Calendar::createDateText(int date)
     if (today.year() == selectedYear && today.month() == selectedMonth && date == today.day())
         setCurrentDateFormat(lineEdit);
 
-
     QWidget *widget = createWidgetWithItems(new QVBoxLayout(), {lineEdit});
     widget->layout()->setAlignment(Qt::AlignTop);
     return widget;
@@ -216,9 +217,10 @@ QDate Calendar::getDateFromCell(int row, int column)
 
 void Calendar::newEventPrompt(int row, int column)
 {
-
     QDate date = getDateFromCell(row, column);
     if (!date.isValid())    return;
+
+    this->cellWidget(row, column)->setStyleSheet("* {background: #4D4D4D; border-radius: 10px}");
 
     CalendarEvent *newEvent = new CalendarEvent(this, date);
 
@@ -226,4 +228,10 @@ void Calendar::newEventPrompt(int row, int column)
     QPoint position = this->cellWidget(row, column)->pos();
     position = this->mapToGlobal(position);
     eventDialog->displayDialog(newEvent, position);
+    connect(eventDialog, &EventDialog::hidden, [=] { clearSelectedCell(this->cellWidget(row, column)); });
+}
+
+void Calendar::clearSelectedCell(QWidget *cellWidget)
+{
+    cellWidget->setStyleSheet("*:hover {background: #3E3E3E; border-radius: 10px}");
 }
