@@ -4,6 +4,7 @@
 
 #include <QTextBrowser>
 #include <QPainterPath>
+#include <QGraphicsDropShadowEffect>
 #include "blocks.h"
 
 LinkEditDialog::LinkEditDialog(QWidget *parent) :
@@ -13,6 +14,13 @@ LinkEditDialog::LinkEditDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+
+    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect();
+    effect->setBlurRadius(5);
+    effect->setXOffset(5);
+    effect->setYOffset(5);
+    effect->setColor(QColor("#1E1E1E"));
+    this->ui->frame->setGraphicsEffect(effect);
 }
 
 LinkEditDialog::~LinkEditDialog()

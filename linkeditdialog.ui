@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>272</width>
-    <height>200</height>
+    <width>277</width>
+    <height>205</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>272</width>
-    <height>200</height>
+    <width>277</width>
+    <height>205</height>
    </size>
   </property>
   <property name="font">
@@ -56,10 +56,10 @@ QFrame#frame
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>5</number>
    </property>
    <item>
     <widget class="QFrame" name="frame">

@@ -1,6 +1,7 @@
 #include "eventdialog.h"
 #include "ui_eventdialog.h"
 #include "mainwindow.h"
+#include <QGraphicsDropShadowEffect>
 
 EventDialog::EventDialog(QWidget *parent) :
     QWidget(parent),
@@ -9,6 +10,14 @@ EventDialog::EventDialog(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+
+    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect();
+    effect->setBlurRadius(5);
+    effect->setXOffset(5);
+    effect->setYOffset(5);
+    effect->setColor(QColor("#1E1E1E"));
+    this->ui->frame->setGraphicsEffect(effect);
+
     this->ui->eventName->setFocus();
 }
 
