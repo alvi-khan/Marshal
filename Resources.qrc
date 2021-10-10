@@ -11,6 +11,7 @@
         <file>Resources/Icons/Left Arrow.svg</file>
         <file>Resources/Icons/Right Arrow.svg</file>
         <file>Resources/Icons/Error.svg</file>
+        <file>Resources/Icons/Loading.gif</file>
     </qresource>
     <qresource prefix="/Toolbar Icons">
         <file>Resources/Toolbar Icons/Bold.svg</file>

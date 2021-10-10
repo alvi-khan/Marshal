@@ -48,8 +48,10 @@ private:
     Ui::MainWindow *ui;
     void init();
     void revealMainPage();
+    QMovie *loadingGIF;
 
 public:
     void hideMainPage();
+    void toggleLoadingGIF();
 };
 #endif // MAINWINDOW_H

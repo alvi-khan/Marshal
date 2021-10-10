@@ -28,6 +28,7 @@ private slots:
 private:
     Ui::LoginDialog *ui;
     void closeEvent(QCloseEvent *event);
+    QMovie *loadingMovie;
 };
 
 #endif // LOGINDIALOG_H

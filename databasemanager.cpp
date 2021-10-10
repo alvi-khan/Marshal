@@ -15,6 +15,7 @@ QString DatabaseManager::sharedTable;
 QString DatabaseManager::homeDirectory;
 QString DatabaseManager::privateDirectory;
 QString DatabaseManager::sharedDirectory;
+bool DatabaseManager::syncing;
 
 DatabaseManager::DatabaseManager()
 {
@@ -159,6 +160,7 @@ void DatabaseManager::init()
     username = FileManager::readFromFile(QDir::currentPath() + "/user.dat");
     privateTable = "";
     sharedTable = "";
+    syncing = false;
 
     if (username != "")
         loginUser(username);
@@ -172,10 +174,16 @@ void DatabaseManager::loginUser(QString username)
 
     FileManager::writeToFile(QDir::currentPath() + "/user.dat", username);
 
+    MainWindow::window->toggleLoadingGIF();
+    syncing = true;
     QFuture<void> task = QtConcurrent::run(syncFiles);
     QFutureWatcher<void> *taskWatcher = new QFutureWatcher<void>();
     taskWatcher->setFuture(task);
-    connect(taskWatcher, &QFutureWatcher<void>::finished, [=] {SidebarManager::reloadSidebar();});
+    connect(taskWatcher, &QFutureWatcher<void>::finished, [=] {
+        SidebarManager::reloadSidebar();
+        MainWindow::window->toggleLoadingGIF();
+        syncing = false;
+    });
 }
 
 void DatabaseManager::logoutUser()

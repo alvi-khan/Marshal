@@ -12,6 +12,8 @@
 #include "logindialog.h"
 #include "settingsdialog.h"
 
+#include <QMovie>
+
 MainWindow * MainWindow::window;
 
 
@@ -32,6 +34,9 @@ void MainWindow::init()
 {
     QString settingsFilePath = QCoreApplication::applicationDirPath() + "/settings.conf";
     FileManager::homeDirectory = FileManager::readFromFile(settingsFilePath);
+
+    loadingGIF = new QMovie(":/Icons/Resources/Icons/Loading.gif");
+    connect(loadingGIF, &QMovie::frameChanged, [=]{this->ui->profileButton->setIcon(loadingGIF->currentPixmap());});
 
     // initialize utility classes
     //DatabaseManager::init();
@@ -170,10 +175,21 @@ void MainWindow::on_trashButton_clicked()
 {
     FileManager::deletePage(FileManager::openFile);
 }
+
 void MainWindow::on_settingsButton_clicked()
 {
     SettingsDialog *settingsDialog = new SettingsDialog();
     settingsDialog->exec();
     delete settingsDialog;
+}
+
+void MainWindow::toggleLoadingGIF()
+{
+    if (loadingGIF->state() == QMovie::Running)
+    {
+        loadingGIF->stop();
+        this->ui->profileButton->setIcon(QIcon(":/Icons/Resources/Icons/Profile.svg"));
+    }
+    else    loadingGIF->start();
 }
 

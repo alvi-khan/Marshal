@@ -5,6 +5,7 @@
 
 #include <QPushButton>
 #include <QGraphicsBlurEffect>
+#include <QMovie>
 
 LoginDialog::LoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -75,6 +76,7 @@ void LoginDialog::on_logoutBtn_clicked()
 
     this->ui->logoutBtn->hide();
     this->ui->welcomeLabel->hide();
+    this->ui->loadingText->hide();
 
     this->ui->usernameLabel->show();
     this->ui->username->show();
@@ -82,14 +84,26 @@ void LoginDialog::on_logoutBtn_clicked()
     this->ui->password->show();
     this->ui->loginBtn->show();
     this->ui->regBtn->show();
+
+    adjustSize();
+    move(MainWindow::window->geometry().center() - rect().center());
 }
 
 void LoginDialog::init()
 {
+    loadingMovie = new QMovie(":/Icons/Resources/Icons/Loading.gif");
+    connect(loadingMovie, &QMovie::frameChanged, [=] {
+        if (!DatabaseManager::syncing)  this->ui->loadingText->hide();
+        else                            this->ui->loadingText->show();
+        this->ui->loadingGIF->setIcon(loadingMovie->currentPixmap());
+    });
+
     if (DatabaseManager::username == "")
     {
         this->ui->logoutBtn->hide();
         this->ui->welcomeLabel->hide();
+        this->ui->loadingText->hide();
+        loadingMovie->stop();
     }
     else
     {
@@ -99,8 +113,12 @@ void LoginDialog::init()
         this->ui->password->hide();
         this->ui->loginBtn->hide();
         this->ui->regBtn->hide();
+        if (!DatabaseManager::syncing)  this->ui->loadingText->hide();
+        loadingMovie->start();
 
         this->ui->welcomeLabel->setText("Welcome " + DatabaseManager::username + "!");
     }
+
+    adjustSize();
 }
 
