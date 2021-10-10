@@ -3,6 +3,11 @@
 #include "filemanager.h"
 #include "filesharedialog.h"
 
+#include <QtConcurrent/QtConcurrent>
+#include <qtconcurrentrun.h>
+#include <QThread>
+#include <QtConcurrentRun>
+
 QSqlDatabase DatabaseManager::db;
 QString DatabaseManager::username;
 QString DatabaseManager::privateTable;
@@ -16,18 +21,20 @@ DatabaseManager::DatabaseManager()
 
 }
 
-void DatabaseManager::databaseSetup()
+QSqlDatabase DatabaseManager::databaseSetup()
 {
-    db = QSqlDatabase::addDatabase("QMYSQL");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
     db.setUserName("root");
     db.setPassword("");
     db.setDatabaseName("marshal_user_files");
     db.setPort(3306);
+    return db;
 }
 
 QSqlQuery DatabaseManager::executeQuery(QString queryString)
 {
+    QSqlDatabase db = databaseSetup();
     if (!db.open()) QMessageBox::warning(nullptr, "Error Connecting", "Unable to connect to database.");
     QSqlQuery query(queryString);
     query.exec();
@@ -146,8 +153,6 @@ bool DatabaseManager::authenticateUser(QString username, QString password)
 
 void DatabaseManager::init()
 {
-    databaseSetup();
-
     homeDirectory = FileManager::homeDirectory.section("/", 0, -2);
     privateDirectory = homeDirectory + "/Private";
     sharedDirectory = homeDirectory + "/Shared";
@@ -156,16 +161,7 @@ void DatabaseManager::init()
     sharedTable = "";
 
     if (username != "")
-    {
-        privateTable = username + "_private";
-        sharedTable = username + "_shared";
-        createTable(privateTable);
-        createTable(sharedTable);
-        uploadTo(privateTable, privateDirectory);
-        uploadTo(sharedTable, sharedDirectory);
-        downloadTo(homeDirectory, privateTable);
-        downloadTo(homeDirectory, sharedTable);
-    }
+        loginUser(username);
 }
 
 void DatabaseManager::loginUser(QString username)
@@ -176,15 +172,10 @@ void DatabaseManager::loginUser(QString username)
 
     FileManager::writeToFile(QDir::currentPath() + "/user.dat", username);
 
-    createTable(privateTable);
-    createTable(sharedTable);
-    uploadTo(privateTable, privateDirectory);
-    uploadTo(sharedTable, sharedDirectory);
-    downloadTo(homeDirectory, privateTable);
-    downloadTo(homeDirectory, sharedTable);
-
-    SidebarManager::reloadSidebar();
-    // TODO refactor to init method?
+    QFuture<void> task = QtConcurrent::run(syncFiles);
+    QFutureWatcher<void> *taskWatcher = new QFutureWatcher<void>();
+    taskWatcher->setFuture(task);
+    connect(taskWatcher, &QFutureWatcher<void>::finished, [=] {SidebarManager::reloadSidebar();});
 }
 
 void DatabaseManager::logoutUser()
@@ -221,6 +212,7 @@ void DatabaseManager::shareFile()
         QMessageBox::warning(nullptr, "Login", "Please log in before sharing files.");
         return;
     }
+
     QString sharedUser = getSharedUsername();
 
     if (sharedUser == "")   return;
@@ -237,9 +229,10 @@ void DatabaseManager::shareFile()
 
     QString sharedTable = sharedUser + "_shared";
     QString sharedFile = FileManager::openFile;
+    QString sharedFilePath = sharedFile.section("/", 0, -2);
 
     createTable(sharedTable);
-    uploadTo(sharedTable, sharedFile, sharedFile.section("/", 0, -2));
+    uploadTo(sharedTable, sharedFile, sharedFilePath);
 }
 
 QList<QString> DatabaseManager::getUserList()
@@ -253,4 +246,14 @@ QList<QString> DatabaseManager::getUserList()
         if (user != username)   userList.append(user);
     }
     return userList;
+}
+
+void DatabaseManager::syncFiles()
+{
+    createTable(privateTable);
+    createTable(sharedTable);
+    uploadTo(privateTable, privateDirectory);
+    uploadTo(sharedTable, sharedDirectory);
+    downloadTo(homeDirectory, privateTable);
+    downloadTo(homeDirectory, sharedTable);
 }
