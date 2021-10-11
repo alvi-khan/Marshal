@@ -11,6 +11,7 @@
 #include "databasemanager.h"
 #include "logindialog.h"
 #include "settingsdialog.h"
+#include "reminderscontainer.h"
 
 #include <QMovie>
 
@@ -192,5 +193,12 @@ void MainWindow::toggleLoadingGIF()
         this->ui->profileButton->setIcon(QIcon(":/Icons/Resources/Icons/Profile.svg"));
     }
     else    loadingGIF->start();
+}
+
+
+void MainWindow::on_remindersButton_clicked()
+{
+    RemindersContainer *reminders = new RemindersContainer();
+    reminders->exec();
 }
 

@@ -45,13 +45,15 @@ private slots:
     
     void on_settingsButton_clicked();
 
+    void on_remindersButton_clicked();
+
 private:
-    Ui::MainWindow *ui;
     void init();
     void revealMainPage();
     QMovie *loadingGIF;
 
 public:
+    Ui::MainWindow *ui;
     void hideMainPage();
     void toggleLoadingGIF();
     MainPage *mainPage;
