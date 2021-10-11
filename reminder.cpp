@@ -1,6 +1,8 @@
 #include "reminder.h"
 #include "ui_reminder.h"
-#include "filemanager.h"
+#include "displaymanager.h"
+#include "mainwindow.h"
+#include "reminderscontainer.h"
 
 #include <QTimer>
 
@@ -14,6 +16,7 @@ Reminder::Reminder(QWidget *parent, QString eventPath, QDateTime reminderTime) :
     this->ui->time->setText(reminderTime.time().toString("hh:mm"));
     Reminder::eventPath = eventPath;
     Reminder::reminderTime = reminderTime;
+    expired = false;
     setTimer();
 }
 
@@ -22,11 +25,33 @@ Reminder::~Reminder()
     delete ui;
 }
 
+void Reminder::expire()
+{
+    expired = true;
+    RemindersContainer::updateExpiredReminderCount(1);  // decreases count
+    setStyleSheet("QFrame#container{\
+                    border: 1.5px solid #772C2C;\
+                    background-color: #50772C2C;\
+                   }\
+                   QFrame#container:hover{background-color: #90732434}");
+}
+
 void Reminder::setTimer()
 {
-    QTimer *timer = new QTimer();
     int millisecondsDiff = QDateTime::currentDateTime().msecsTo(reminderTime);
-    timer->singleShot(millisecondsDiff, [=]{
-        this->setStyleSheet("QFrame#container{border: 1.5px solid #772C2C;background-color: rgb(35, 35, 35);}");
-    });
+    if (millisecondsDiff < 0)   expire();
+    else
+    {
+        QTimer *timer = new QTimer();
+        timer->singleShot(millisecondsDiff, [=]{expire();});
+    }
+}
+
+void Reminder::mouseReleaseEvent(QMouseEvent *event)
+{
+    MainWindow::window->revealMainPage();
+    DisplayManager::openFileFromPath(eventPath.section("/", 0, -2), this->ui->eventName->text());
+    if (expired)    RemindersContainer::removeReminder(this);
+    RemindersContainer::hideContainer();
+    QWidget::mouseReleaseEvent(event);
 }

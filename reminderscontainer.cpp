@@ -5,9 +5,12 @@
 
 #include <QFile>
 #include <QGraphicsDropShadowEffect>
+#include <QTimer>
 #include <filemanager.h>
 
 QList<Reminder *> RemindersContainer::reminders;
+RemindersContainer * RemindersContainer::activeContainer;
+int RemindersContainer::expiredReminders = 0;
 
 RemindersContainer::RemindersContainer(QWidget *parent) :
     QDialog(parent),
@@ -34,6 +37,7 @@ RemindersContainer::~RemindersContainer()
 
 void RemindersContainer::init()
 {
+    activeContainer = this;
     foreach(Reminder *reminder, reminders)
     {
         this->ui->mainArea->layout()->addWidget(reminder);
@@ -47,11 +51,35 @@ void RemindersContainer::init()
     this->adjustSize();
 }
 
+void RemindersContainer::hideContainer()
+{
+    if (activeContainer != nullptr)
+    {
+        activeContainer->hide();
+        activeContainer = nullptr;
+    }
+}
+
 void RemindersContainer::addReminder(QString eventPath, QDateTime dateTime)
 {
     Reminder *reminder = new Reminder(MainWindow::window, eventPath, dateTime);
     reminders.append(reminder);
     reminder->hide();
+}
+
+void RemindersContainer::removeReminder(Reminder *reminder)
+{
+    reminders.removeOne(reminder);
+    deleteReminder(reminder->eventPath, reminder->reminderTime);
+    updateExpiredReminderCount(-1);
+}
+
+void RemindersContainer::deleteReminder(QString eventPath, QDateTime dateTime)
+{
+    QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
+    QString data = FileManager::readFromFile(remindersStorage);
+    data.remove(dateTime.toString() + "\n" + eventPath + "\n");
+    FileManager::writeToFile(remindersStorage, data);
 }
 
 void RemindersContainer::createNewReminder(QString eventPath, QDateTime dateTime)
@@ -76,4 +104,22 @@ void RemindersContainer::retrieveReminders()
     }
 
     file.close();
+}
+
+void RemindersContainer::updateExpiredReminderCount(int count)
+{
+    expiredReminders += count;
+
+    QPushButton *remindersButton = MainWindow::window->ui->remindersButton;
+
+    if (expiredReminders > 0)
+    {
+        remindersButton->setStyleSheet("QPushButton{background-color: #50772C2C} QPushButton:hover{background-color: #90732434}");
+        remindersButton->setIcon(QIcon(":/Icons/Resources/Icons/Expired Reminder.svg"));
+    }
+    else
+    {
+        remindersButton->setIcon(QIcon(":/Icons/Resources/Icons/Reminder.svg"));
+        remindersButton->setStyleSheet("");
+    }
 }

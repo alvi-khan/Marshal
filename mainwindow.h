@@ -49,13 +49,13 @@ private slots:
 
 private:
     void init();
-    void revealMainPage();
     QMovie *loadingGIF;
 
 public:
     Ui::MainWindow *ui;
     void hideMainPage();
     void toggleLoadingGIF();
+    void revealMainPage();
     MainPage *mainPage;
 };
 #endif // MAINWINDOW_H

@@ -45,7 +45,7 @@ QSplitter {background-color: rgb(35, 35, 35);}
 
 QFrame#mainPageFrame { color: rgb(153, 153, 153); background-color: rgb(35, 35, 35);}
 
-QPushButton {padding: 5px 5px 5px 5px; border-radius: 5px; background-color: rgb(47, 52, 55);}
+QPushButton {padding: 5px 5px 5px 5px; border-radius: 5px; background-color: rgb(47, 52, 55); color: rgb(153, 153, 153); Text-align: left;}
 QPushButton:hover { background-color: #3E3E3E;  }
 
 QTreeView::item{border-radius: 5px; padding: 3px;}
@@ -230,8 +230,7 @@ Text-align: left;</string>
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(153, 153, 153);
-Text-align: left;</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Reminders</string>
@@ -730,7 +729,7 @@ border: none;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>586</width>
+                <width>632</width>
                 <height>345</height>
                </rect>
               </property>

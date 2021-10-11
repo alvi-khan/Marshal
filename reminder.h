@@ -15,12 +15,15 @@ class Reminder : public QWidget
 public:
     explicit Reminder(QWidget *parent = nullptr, QString eventPath = "", QDateTime reminderTime = QDateTime::currentDateTime());
     ~Reminder();
+    QString eventPath;
+    QDateTime reminderTime;
 
 private:
     Ui::Reminder *ui;
-    QString eventPath;
-    QDateTime reminderTime;
     void setTimer();
+    void expire();
+    bool expired;
+    void mouseReleaseEvent(QMouseEvent *event);
 };
 
 #endif // REMINDER_H
