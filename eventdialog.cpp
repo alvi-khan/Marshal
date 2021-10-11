@@ -1,7 +1,11 @@
 #include "eventdialog.h"
 #include "ui_eventdialog.h"
 #include "mainwindow.h"
+#include "reminderscontainer.h"
+#include "reminder.h"
 #include <QGraphicsDropShadowEffect>
+#include <QDateTime>
+#include <QTimer>
 
 EventDialog::EventDialog(QWidget *parent) :
     QWidget(parent),
@@ -56,8 +60,15 @@ void EventDialog::on_eventName_editingFinished()
     {
         event->setText(newText);
         event->addToCalendar();
+        setReminder();
     }
     this->hide();
     emit hidden();
 }
 
+void EventDialog::setReminder()
+{
+    QDateTime reminderTime(QDate(2021, 10, 12), QTime(00, 21));
+    QString eventPath = event->parentPath + "/" + event->text() + "/files.mar";
+    RemindersContainer::createNewReminder(eventPath, reminderTime);
+}

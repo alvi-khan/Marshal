@@ -41,6 +41,8 @@ void MainWindow::init()
 
     mainPage = this->ui->mainPage;
 
+    RemindersContainer::retrieveReminders();
+
     // initialize utility classes
     //DatabaseManager::init();
     SidebarManager::init(this->ui->sideBar);

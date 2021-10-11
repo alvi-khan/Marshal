@@ -2,9 +2,12 @@
 #include "ui_reminderscontainer.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "reminder.h"
 
+#include <QFile>
 #include <QGraphicsDropShadowEffect>
+#include <filemanager.h>
+
+QList<Reminder *> RemindersContainer::reminders;
 
 RemindersContainer::RemindersContainer(QWidget *parent) :
     QDialog(parent),
@@ -31,24 +34,46 @@ RemindersContainer::~RemindersContainer()
 
 void RemindersContainer::init()
 {
-    Reminder *reminder1 = new Reminder();
-    Reminder *reminder2 = new Reminder();
-    Reminder *reminder3 = new Reminder();
-    Reminder *reminder4 = new Reminder();
-    Reminder *reminder5 = new Reminder();
-    Reminder *reminder6 = new Reminder();
+    foreach(Reminder *reminder, reminders)
+    {
+        this->ui->mainArea->layout()->addWidget(reminder);
+        reminder->show();
+    }
 
-    QLayout *layout = this->ui->mainArea->layout();
-    layout->addWidget(reminder1);
-    layout->addWidget(reminder2);
-    layout->addWidget(reminder3);
-    layout->addWidget(reminder4);
-    layout->addWidget(reminder5);
-    layout->addWidget(reminder6);
-    //QPushButton *remindersButton = MainWindow::window->ui->remindersButton;
     QPoint point = MainWindow::window->ui->remindersButton->mapToGlobal(MainWindow::window->ui->remindersButton->rect().topRight());
 
     this->move(point.x() + 20, point.y());
     this->show();
     this->adjustSize();
+}
+
+void RemindersContainer::addReminder(QString eventPath, QDateTime dateTime)
+{
+    Reminder *reminder = new Reminder(MainWindow::window, eventPath, dateTime);
+    reminders.append(reminder);
+    reminder->hide();
+}
+
+void RemindersContainer::createNewReminder(QString eventPath, QDateTime dateTime)
+{
+    QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
+    FileManager::appendToFile(remindersStorage, dateTime.toString() + "\n");
+    FileManager::appendToFile(remindersStorage, eventPath + "\n");
+    addReminder(eventPath, dateTime);
+}
+
+void RemindersContainer::retrieveReminders()
+{
+    QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
+    QFile file(remindersStorage);
+    file.open(QIODevice::ReadOnly);
+    QTextStream data(&file);
+    while (!data.atEnd())
+    {
+        QDateTime dateTime = QDateTime::fromString(data.readLine());
+        QString eventPath = data.readLine();
+        addReminder(eventPath, dateTime);
+    }
+
+    file.close();
 }
