@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>277</width>
-    <height>126</height>
+    <height>187</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="maximumSize">
    <size>
     <width>277</width>
-    <height>126</height>
+    <height>187</height>
    </size>
   </property>
   <property name="font">
@@ -153,6 +153,181 @@ color: rgb(255, 255, 255);</string>
         <property name="placeholderText">
          <string/>
         </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QFrame" name="frame_2">
+        <property name="maximumSize">
+         <size>
+          <width>231</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QFrame
+{
+	border: none;
+}</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>100</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QCheckBox:enabled
+{
+	color: rgb(255, 255, 255);
+}
+
+QCheckBox:disabled
+{
+	color: rgb(70, 70, 70);
+}
+
+QCheckBox::indicator {
+	height: 14px;
+	width: 14px;
+}
+
+QCheckBox::indicator:checked {
+    border-image : url(:/Icons/Resources/Icons/CheckBox Checked.svg);
+}
+
+QCheckBox::indicator:unchecked {
+    border-image : url(:/Icons/Resources/Icons/CheckBox Unchecked.svg);
+}
+</string>
+           </property>
+           <property name="text">
+            <string>Reminder</string>
+           </property>
+           <property name="checked">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTimeEdit" name="timeEdit">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>70</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Segoe UI</family>
+             <pointsize>10</pointsize>
+             <weight>50</weight>
+             <italic>false</italic>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QTimeEdit {
+	font: 10pt &quot;Segoe UI&quot;;
+	border: 1.5px solid rgb(70, 70, 70);
+	border-radius: 5px;
+	padding: 5px;
+}
+
+QTimeEdit:enabled
+{
+	background-color: rgb(35, 35, 35);
+	color: rgb(255, 255, 255);
+}
+
+QTimeEdit:disabled
+{
+	background-color: #90464646;
+	color: rgb(90, 90, 90);
+}
+
+QTimeEdit::up-button {
+    width: 12px;
+    border-image: url(:/Icons/Resources/Icons/Spinbox Up.svg);
+	margin-right: 5px;
+}
+
+QTimeEdit::down-button {
+    width: 12px;
+    border-image: url(:/Icons/Resources/Icons/Spinbox Down.svg);
+	margin-right: 5px;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>

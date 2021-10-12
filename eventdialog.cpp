@@ -23,6 +23,7 @@ EventDialog::EventDialog(QWidget *parent) :
     this->ui->frame->setGraphicsEffect(effect);
 
     this->ui->eventName->setFocus();
+    this->ui->timeEdit->setEnabled(false);
 }
 
 EventDialog::~EventDialog()
@@ -33,6 +34,15 @@ EventDialog::~EventDialog()
 void EventDialog::displayDialog(CalendarEvent *event, QPoint point)
 {
     EventDialog::event = event;
+
+    if (event->eventDate < QDate::currentDate())
+    {
+        this->ui->checkBox->setEnabled(false);
+        this->ui->checkBox->setStyleSheet("QCheckBox:disabled{color: rgb(70, 70, 70);}\
+                                           QCheckBox::indicator {height: 16px; width: 16px;\
+                                                border-image : url(:/Icons/Resources/Icons/CheckBox Disabled.svg);}");
+    }
+    else if (event->eventDate == QDate::currentDate()) (this->ui->timeEdit->setMinimumTime(QTime::currentTime()));
 
     QPoint topLeft, topRight, bottomRight;
     topLeft.setX(point.x() + 50);
@@ -52,7 +62,7 @@ void EventDialog::displayDialog(CalendarEvent *event, QPoint point)
     this->show();
 }
 
-void EventDialog::on_eventName_editingFinished()
+void EventDialog::closeEvent(QCloseEvent *closeEvent)
 {
     QString newText = this->ui->eventName->text();
     if (newText == "")  delete  event;
@@ -60,15 +70,24 @@ void EventDialog::on_eventName_editingFinished()
     {
         event->setText(newText);
         event->addToCalendar();
-        setReminder();
+        if (this->ui->checkBox->isChecked())    setReminder();
     }
-    this->hide();
     emit hidden();
+    QWidget::closeEvent(closeEvent);
 }
 
 void EventDialog::setReminder()
 {
-    QDateTime reminderTime(QDate(2021, 10, 12), QTime(00, 21));
+    QDate date = event->eventDate;
+    QTime time = this->ui->timeEdit->time();
+    QDateTime reminderTime(date, time);
     QString eventPath = event->parentPath + "/" + event->text() + "/files.mar";
     RemindersContainer::createNewReminder(eventPath, reminderTime);
 }
+
+void EventDialog::on_checkBox_toggled(bool checked)
+{
+    if (checked)    this->ui->timeEdit->setEnabled(true);
+    else            this->ui->timeEdit->setEnabled(false);
+}
+
