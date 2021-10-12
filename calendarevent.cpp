@@ -70,7 +70,6 @@ void CalendarEvent::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
             CalendarEvent::openEvent();
-    // perform default functionality
 }
 
 void CalendarEvent::openEvent()
@@ -81,6 +80,9 @@ void CalendarEvent::openEvent()
 
 void CalendarEvent::addToCalendar()
 {
+    //QtConcurrent::run(this, &CalendarEvent::retrieveReminderTime);
+    retrieveReminderTime();
+
     calendar->addToDateCell(this->eventDate, this);
     calendar->heightReset();
     saveToDisk();

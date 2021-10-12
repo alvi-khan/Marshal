@@ -69,8 +69,8 @@ void EventDialog::closeEvent(QCloseEvent *closeEvent)
     else
     {
         event->setEventName(newText);
-        event->addToCalendar();
         if (this->ui->checkBox->isChecked())    setReminder();
+        event->addToCalendar();
     }
     emit hidden();
     QWidget::closeEvent(closeEvent);
