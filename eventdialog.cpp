@@ -42,7 +42,8 @@ void EventDialog::displayDialog(CalendarEvent *event, QPoint point)
                                            QCheckBox::indicator {height: 16px; width: 16px;\
                                                 border-image : url(:/Icons/Resources/Icons/CheckBox Disabled.svg);}");
     }
-    else if (event->eventDate == QDate::currentDate()) (this->ui->timeEdit->setMinimumTime(QTime::currentTime()));
+    else if (event->eventDate == QDate::currentDate())
+        this->ui->timeEdit->setMinimumTime(QTime(QTime::currentTime().hour(), QTime::currentTime().minute()));
 
     QPoint topLeft, topRight, bottomRight;
     topLeft.setX(point.x() + 50);
