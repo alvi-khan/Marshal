@@ -17,6 +17,7 @@ public:
     ~Reminder();
     QString eventPath;
     QDateTime reminderTime;
+    void setEventPath(QString eventPath);
 
 private:
     Ui::Reminder *ui;

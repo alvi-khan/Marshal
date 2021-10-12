@@ -22,6 +22,7 @@ public:
     static void hideContainer();
     static void updateExpiredReminderCount(int count);
     static void refreshReminderList();
+    static void eventRenamed(QString oldPath, QString newPath);
     ~RemindersContainer();
 
 private:

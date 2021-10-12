@@ -135,3 +135,15 @@ void RemindersContainer::updateExpiredReminderCount(int count)
         remindersButton->setStyleSheet("");
     }
 }
+
+void RemindersContainer::eventRenamed(QString oldPath, QString newPath)
+{
+    foreach (Reminder *reminder, reminders)
+    {
+        if (reminder->eventPath == oldPath)
+        {
+            reminder->setEventPath(newPath);
+            return;
+        }
+    }
+}

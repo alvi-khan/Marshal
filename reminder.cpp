@@ -3,6 +3,7 @@
 #include "displaymanager.h"
 #include "mainwindow.h"
 #include "reminderscontainer.h"
+#include "filemanager.h"
 
 #include <QTimer>
 
@@ -54,4 +55,12 @@ void Reminder::mouseReleaseEvent(QMouseEvent *event)
     if (expired)    RemindersContainer::removeReminder(this);
     RemindersContainer::hideContainer();
     QWidget::mouseReleaseEvent(event);
+}
+
+void Reminder::setEventPath(QString eventPath)
+{
+    QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
+    FileManager::updateFileTracker(remindersStorage, Reminder::eventPath, eventPath);
+    Reminder::eventPath = eventPath;
+    this->ui->eventName->setText(eventPath.section("/", -2, -2));
 }
