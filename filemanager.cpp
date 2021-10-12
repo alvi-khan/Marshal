@@ -3,6 +3,7 @@
 #include "error.h"
 #include "displaymanager.h"
 #include "blocks.h"
+#include "reminderscontainer.h"
 
 #include <QDir>
 
@@ -229,6 +230,8 @@ void FileManager::deletePage(QString pagePath)
 
     if (pagePath.startsWith(openFile) && pagePath != openFile)  // subpage deleted; refresh page
         DisplayManager::openFileFromPath(openFile, DisplayManager::pageTitle->text());
+
+    RemindersContainer::refreshReminderList();
 }
 
 void FileManager::deleteDirectory(QString directory)

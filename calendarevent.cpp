@@ -2,6 +2,7 @@
 #include "ui_calendarevent.h"
 #include "displaymanager.h"
 #include "filemanager.h"
+#include "reminderscontainer.h"
 
 #include <QDir>
 #include <QMenu>
@@ -112,6 +113,7 @@ void CalendarEvent::deleteEvent(CalendarEvent *event)
     FileManager::updateFileTracker(parentPath + "/files.cal", "/" + this->ui->eventName->text() + "/files.mar", "");
     FileManager::deleteDirectory(parentPath + "/" + this->ui->eventName->text());
     calendar->heightReset();
+    RemindersContainer::refreshReminderList();
 }
 
 void CalendarEvent::retrieveReminderTime()

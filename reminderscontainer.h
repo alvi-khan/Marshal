@@ -21,6 +21,7 @@ public:
     static void retrieveReminders();
     static void hideContainer();
     static void updateExpiredReminderCount(int count);
+    static void refreshReminderList();
     ~RemindersContainer();
 
 private:

@@ -82,6 +82,18 @@ void RemindersContainer::deleteReminder(QString eventPath, QDateTime dateTime)
     FileManager::writeToFile(remindersStorage, data);
 }
 
+void RemindersContainer::refreshReminderList()
+{
+    int expiryCount = 0;
+    foreach (Reminder *reminder, reminders)
+    {
+        if (!QFile::exists(reminder->eventPath))    removeReminder(reminder);
+        else if (reminder->reminderTime <= QDateTime::currentDateTime())    expiryCount++;
+    }
+
+    updateExpiredReminderCount(-(expiredReminders - expiryCount));
+}
+
 void RemindersContainer::createNewReminder(QString eventPath, QDateTime dateTime)
 {
     QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
