@@ -1,4 +1,5 @@
 #include "calendarevent.h"
+#include "ui_calendarevent.h"
 #include "displaymanager.h"
 #include "filemanager.h"
 
@@ -7,32 +8,51 @@
 #include <QAction>
 #include <QMouseEvent>
 
-CalendarEvent::CalendarEvent(Calendar *calendar, QDate eventDate, QString eventName)
+#include <QtConcurrent/QtConcurrent>
+#include <qtconcurrentrun.h>
+#include <QThread>
+#include <QtConcurrentRun>
+
+CalendarEvent::CalendarEvent(QWidget *parent, QDate eventDate, QString eventName) :
+    QFrame(parent),
+    ui(new Ui::CalendarEvent)
 {
+    ui->setupUi(this);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+
+    Calendar *calendar = (Calendar *) parent;
     this->calendar = calendar;
     parentPath = calendar->selfPath;
     parentPath.truncate(parentPath.lastIndexOf(QChar('/')));
     this->eventDate = eventDate;
-    this->setText(eventName);
+    this->ui->eventName->setText(eventName);
+
+    //QtConcurrent::run(this, &CalendarEvent::retrieveReminderTime);
+    retrieveReminderTime();
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+}
 
-    this->setFrame(QFrame::NoFrame);
-    this->setReadOnly(true);
-    this->setStyleSheet("background-color: rgb(42, 202, 124); "  // green
-                            "border: 1px solid rgb(42, 202, 124); "   // same as event (hidden border)
-                            "border-radius: 5px;");
+CalendarEvent::~CalendarEvent()
+{
+    delete ui;
 }
 
 void CalendarEvent::setEventName(QString eventName)
 {
-    this->setText(eventName);
+    this->ui->eventName->setText(eventName);
+}
+
+QString CalendarEvent::getEventName()
+{
+    return this->ui->eventName->text();
 }
 
 void CalendarEvent::saveToDisk()
 {
-    QString filePath = "/" + this->text();
+    QString filePath = "/" + this->ui->eventName->text();
     QDir dir(parentPath + filePath);
     dir.mkpath(dir.path());
     FileManager::readFromFile(dir.path() + "/files.mar");
@@ -42,7 +62,7 @@ void CalendarEvent::saveToDisk()
 
 QString CalendarEvent::getEventFilePath()
 {
-    QString filePath = "/" + this->text() + "/files.mar";
+    QString filePath = "/" + this->ui->eventName->text() + "/files.mar";
     return filePath;
 }
 
@@ -51,13 +71,12 @@ void CalendarEvent::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton)
             CalendarEvent::openEvent();
     // perform default functionality
-    QLineEdit::mousePressEvent(event);
 }
 
 void CalendarEvent::openEvent()
 {
-    QString filePath = parentPath + "/" + this->text();
-    DisplayManager::openFileFromPath(filePath, this->text());
+    QString filePath = parentPath + "/" + this->ui->eventName->text();
+    DisplayManager::openFileFromPath(filePath, this->ui->eventName->text());
 }
 
 void CalendarEvent::addToCalendar()
@@ -88,8 +107,28 @@ void CalendarEvent::deleteEvent(CalendarEvent *event)
 {
     event->hide();
     FileManager::updateFileTracker(parentPath + "/files.cal", eventDate.toString("dd/MM/yyyy"), "");
-    FileManager::updateFileTracker(parentPath + "/files.cal", "/" + text() + "/files.mar", "");
-    FileManager::deleteDirectory(parentPath + "/" + text());
+    FileManager::updateFileTracker(parentPath + "/files.cal", "/" + this->ui->eventName->text() + "/files.mar", "");
+    FileManager::deleteDirectory(parentPath + "/" + this->ui->eventName->text());
     calendar->heightReset();
 }
 
+void CalendarEvent::retrieveReminderTime()
+{
+    QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
+    QFile file(remindersStorage);
+    file.open(QIODevice::ReadOnly);
+    QTextStream data(&file);
+    while (!data.atEnd())
+    {
+        QDateTime dateTime = QDateTime::fromString(data.readLine());
+        QString eventPath = data.readLine();
+        if (eventPath == (parentPath + "/" + this->ui->eventName->text() + "/files.mar"))
+        {
+            file.close();
+            this->ui->reminderTime->setText(dateTime.toString("hh:mm"));
+            return;
+        }
+    }
+
+    file.close();
+}

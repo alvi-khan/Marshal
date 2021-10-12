@@ -6,12 +6,19 @@
 #include <QLineEdit>
 #include <QObject>
 #include <QDate>
+#include <QFrame>
 
-class CalendarEvent : public QLineEdit
+namespace Ui {
+class CalendarEvent;
+}
+
+class CalendarEvent : public QFrame
 {
     Q_OBJECT
+
 public:
-    CalendarEvent(Calendar *calendar, QDate date, QString eventName = "");
+    explicit CalendarEvent(QWidget *parent, QDate eventDate, QString eventName);
+    ~CalendarEvent();
     void openEvent();
     Calendar *calendar;
     QString parentPath;
@@ -19,12 +26,17 @@ public:
     void saveToDisk();
     QString getEventFilePath();
     void setEventName(QString eventName);
+    QString getEventName();
     void addToCalendar();
     void deleteEvent(CalendarEvent *event);
 public slots:
     void onCustomContextMenu(const QPoint &);
 protected:
     virtual void mousePressEvent(QMouseEvent* event) override;
+
+private:
+    Ui::CalendarEvent *ui;
+    void retrieveReminderTime();
 };
 
 #endif // CALENDAREVENT_H

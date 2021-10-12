@@ -68,7 +68,7 @@ void EventDialog::closeEvent(QCloseEvent *closeEvent)
     if (newText == "")  delete  event;
     else
     {
-        event->setText(newText);
+        event->setEventName(newText);
         event->addToCalendar();
         if (this->ui->checkBox->isChecked())    setReminder();
     }
@@ -81,7 +81,7 @@ void EventDialog::setReminder()
     QDate date = event->eventDate;
     QTime time = this->ui->timeEdit->time();
     QDateTime reminderTime(date, time);
-    QString eventPath = event->parentPath + "/" + event->text() + "/files.mar";
+    QString eventPath = event->parentPath + "/" + event->getEventName() + "/files.mar";
     RemindersContainer::createNewReminder(eventPath, reminderTime);
 }
 

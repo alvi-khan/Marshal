@@ -59,6 +59,7 @@ HEADERS += \
 
 FORMS += \
     addressbar.ui \
+    calendarevent.ui \
     error.ui \
     eventdialog.ui \
     filesharedialog.ui \
