@@ -32,7 +32,7 @@ public:
 public slots:
     void onCustomContextMenu(const QPoint &);
 protected:
-    virtual void mousePressEvent(QMouseEvent* event) override;
+    virtual void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
     Ui::CalendarEvent *ui;

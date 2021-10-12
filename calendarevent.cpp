@@ -67,7 +67,7 @@ QString CalendarEvent::getEventFilePath()
     return filePath;
 }
 
-void CalendarEvent::mousePressEvent(QMouseEvent *event)
+void CalendarEvent::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
             CalendarEvent::openEvent();
