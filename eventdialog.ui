@@ -244,6 +244,10 @@ QCheckBox::indicator:checked {
 QCheckBox::indicator:unchecked {
     border-image : url(:/Icons/Resources/Icons/CheckBox Unchecked.svg);
 }
+
+QCheckBox::indicator:unchecked:disabled {
+	border-image : url(:/Icons/Resources/Icons/CheckBox Disabled.svg);
+}
 </string>
            </property>
            <property name="text">
