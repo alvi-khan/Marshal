@@ -169,7 +169,7 @@ QTextBrowser* Blocks::addLinkBlock(QString link, QString name)
     else
     {
         connect(linkBlock, SIGNAL(customContextMenuRequested(const QPoint &)), new Blocks(), SLOT(onCustomContextMenu(const QPoint &)));
-        addToolTip(linkBlock, (link.remove("E:/Downloads/Main Folder/Private")).remove("/files.mar"));
+        addToolTip(linkBlock, (link.remove(FileManager::homeDirectory)).remove("/files.mar"));
     }
     return linkBlock;
 }

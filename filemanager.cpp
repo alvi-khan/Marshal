@@ -196,8 +196,6 @@ void FileManager::addCalendar(QModelIndex index)
 // TODO might be more appropriate to move this to display manager
 void FileManager::deletePage(QString pagePath)
 {
-    homeDirectory = "E:/Downloads/Main Folder/Private";
-
     QString parentPath = pagePath;
     parentPath.truncate(pagePath.lastIndexOf(QChar('/')));
 
