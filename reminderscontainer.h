@@ -16,6 +16,7 @@ public:
     explicit RemindersContainer(QWidget *parent = nullptr);
     static void addReminder(QString eventPath, QDateTime dateTime);
     static void removeReminder(Reminder *reminder);
+    static void removeReminder(QString eventPath);
     static void deleteReminder(QString eventPath, QDateTime dateTime);
     static void createNewReminder(QString eventPath, QDateTime dateTime);
     static void retrieveReminders();
@@ -23,6 +24,7 @@ public:
     static void updateExpiredReminderCount(int count);
     static void refreshReminderList();
     static void eventRenamed(QString oldPath, QString newPath);
+    static void updateReminderTime(QString eventPath, QDateTime reminderTime);
     ~RemindersContainer();
 
 private:

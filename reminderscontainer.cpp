@@ -71,7 +71,20 @@ void RemindersContainer::removeReminder(Reminder *reminder)
 {
     reminders.removeOne(reminder);
     deleteReminder(reminder->eventPath, reminder->reminderTime);
-    updateExpiredReminderCount(-1);
+    if (reminder->reminderTime <= QDateTime::currentDateTime())
+        updateExpiredReminderCount(-1);
+}
+
+void RemindersContainer::removeReminder(QString eventPath)
+{
+    foreach(Reminder *reminder, reminders)
+    {
+        if (reminder->eventPath == eventPath)
+        {
+            removeReminder(reminder);
+            return;
+        }
+    }
 }
 
 void RemindersContainer::deleteReminder(QString eventPath, QDateTime dateTime)
@@ -143,6 +156,20 @@ void RemindersContainer::eventRenamed(QString oldPath, QString newPath)
         if (reminder->eventPath == oldPath)
         {
             reminder->setEventPath(newPath);
+            return;
+        }
+    }
+}
+
+void RemindersContainer::updateReminderTime(QString eventPath, QDateTime reminderTime)
+{
+    foreach(Reminder *reminder, reminders)
+    {
+        if (reminder->eventPath == eventPath)
+        {
+            qDebug()<<"Here";
+            reminder->setEventTime(reminderTime);
+            qDebug()<<"Here";
             return;
         }
     }

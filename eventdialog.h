@@ -26,6 +26,10 @@ private:
     Ui::EventDialog *ui;
     CalendarEvent *event;
     void setReminder();
+    QPoint calculatePosition(QPoint point);
+    bool newEvent;
+    void createEvent();
+    void updateEvent();
 signals:
     void hidden();
 };

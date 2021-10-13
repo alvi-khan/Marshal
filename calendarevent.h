@@ -22,13 +22,19 @@ public:
     void openEvent();
     Calendar *calendar;
     QString parentPath;
+    QString selfPath;
+    QString eventName;
     QDate eventDate;
+    QTime reminderTime;
     void saveToDisk();
     QString getEventFilePath();
     void setEventName(QString eventName);
     QString getEventName();
     void addToCalendar();
     void deleteEvent(CalendarEvent *event);
+    void modifyEvent(CalendarEvent *event);
+    void updateEvent();
+    void retrieveReminderTime();
 public slots:
     void onCustomContextMenu(const QPoint &);
 protected:
@@ -36,7 +42,6 @@ protected:
 
 private:
     Ui::CalendarEvent *ui;
-    void retrieveReminderTime();
 };
 
 #endif // CALENDAREVENT_H

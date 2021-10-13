@@ -12,6 +12,7 @@ Reminder::Reminder(QWidget *parent, QString eventPath, QDateTime reminderTime) :
     ui(new Ui::Reminder)
 {
     ui->setupUi(this);
+    timer = new QTimer();
     this->ui->eventName->setText(eventPath.section("/", -2, -2));
     this->ui->date->setText(reminderTime.date().toString("dd/MM/yyyy"));
     this->ui->time->setText(reminderTime.time().toString("hh:mm"));
@@ -29,12 +30,23 @@ Reminder::~Reminder()
 void Reminder::expire()
 {
     expired = true;
-    RemindersContainer::updateExpiredReminderCount(1);  // decreases count
+    RemindersContainer::updateExpiredReminderCount(1);
     setStyleSheet("QFrame#container{\
                     border: 1.5px solid #772C2C;\
                     background-color: #50772C2C;\
                    }\
                    QFrame#container:hover{background-color: #90732434}");
+}
+
+void Reminder::unexpire()
+{
+   expired = false;
+   RemindersContainer::updateExpiredReminderCount(-1);
+   setStyleSheet("QFrame#container{\
+                   border: 1.5px solid rgb(70, 70, 70);\
+                   background-color: #B0232323;\
+                  }\
+                  QFrame#container:hover{background-color: #903E3E3E}");
 }
 
 void Reminder::setTimer()
@@ -43,8 +55,9 @@ void Reminder::setTimer()
     if (millisecondsDiff < 0)   expire();
     else
     {
-        QTimer *timer = new QTimer();
-        timer->singleShot(millisecondsDiff, [=]{expire();});
+        connect(timer, &QTimer::timeout, [=]{expire();});
+        timer->setSingleShot(true);
+        timer->start(millisecondsDiff);
     }
 }
 
@@ -63,4 +76,19 @@ void Reminder::setEventPath(QString eventPath)
     FileManager::updateFileTracker(remindersStorage, Reminder::eventPath, eventPath);
     Reminder::eventPath = eventPath;
     this->ui->eventName->setText(eventPath.section("/", -2, -2));
+}
+
+void Reminder::setEventTime(QDateTime dateTime)
+{
+    QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
+    QString data = FileManager::readFromFile(remindersStorage);
+    data.replace(reminderTime.toString() + "\n" + eventPath, dateTime.toString() + "\n" + eventPath);
+    FileManager::writeToFile(remindersStorage, data);
+    reminderTime = dateTime;
+    this->ui->date->setText(reminderTime.date().toString("dd/MM/yyyy"));
+    this->ui->time->setText(reminderTime.time().toString("hh:mm"));
+    if (expired && dateTime > QDateTime::currentDateTime()) unexpire();
+
+    if (timer)  timer->stop();
+    setTimer();
 }

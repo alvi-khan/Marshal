@@ -3,6 +3,7 @@
 #include "displaymanager.h"
 #include "filemanager.h"
 #include "reminderscontainer.h"
+#include "eventdialog.h"
 
 #include <QDir>
 #include <QMenu>
@@ -26,8 +27,10 @@ CalendarEvent::CalendarEvent(QWidget *parent, QDate eventDate, QString eventName
     this->calendar = calendar;
     parentPath = calendar->selfPath;
     parentPath.truncate(parentPath.lastIndexOf(QChar('/')));
+    selfPath = parentPath + "/" + eventName + "/files.mar";
     this->eventDate = eventDate;
     this->ui->eventName->setText(eventName);
+    this->eventName = eventName;
 
     //QtConcurrent::run(this, &CalendarEvent::retrieveReminderTime);
     retrieveReminderTime();
@@ -44,6 +47,7 @@ CalendarEvent::~CalendarEvent()
 void CalendarEvent::setEventName(QString eventName)
 {
     this->ui->eventName->setText(eventName);
+    this->eventName = eventName;
 }
 
 QString CalendarEvent::getEventName()
@@ -99,8 +103,14 @@ void CalendarEvent::onCustomContextMenu(const QPoint &)
     QAction* del = new QAction("Delete", this);
     del->setIcon(QIcon(":/Toolbar Icons/Resources/Toolbar Icons/Trash (Context Menu).svg"));
 
+    QAction* modify = new QAction("Modify", this);
+    modify->setIcon(QIcon(":/Icons/Resources/Icons/Modify.svg"));
+
     connect(del, &QAction::triggered, [=] {deleteEvent(this);});
     menu.addAction(del);
+
+    connect(modify, &QAction::triggered, [=] {modifyEvent(this);});
+    menu.addAction(modify);
 
     menu.exec(QCursor::pos());
     del->deleteLater();
@@ -114,6 +124,23 @@ void CalendarEvent::deleteEvent(CalendarEvent *event)
     FileManager::deleteDirectory(parentPath + "/" + this->ui->eventName->text());
     calendar->heightReset();
     RemindersContainer::refreshReminderList();
+}
+
+void CalendarEvent::modifyEvent(CalendarEvent *event)
+{
+    EventDialog *eventDialog = new EventDialog();
+    QPoint position = this->pos();
+    position = this->mapToGlobal(position);
+    eventDialog->displayDialog(this, position);
+    connect(eventDialog, &EventDialog::hidden, [=] { updateEvent();});
+}
+
+void CalendarEvent::updateEvent()
+{
+    FileManager::updateFileTracker(parentPath + "/files.cal", "/" + selfPath.section("/", -2, -1), "/" + eventName + "/files.mar");
+    QDir dir(selfPath.section("/", 0, -2));
+    dir.rename(selfPath.section("/", 0, -2), selfPath.section("/", 0, -3) + "/" + eventName);
+    selfPath = selfPath.section("/", 0, -3) + "/" + eventName + "/files.mar";
 }
 
 void CalendarEvent::retrieveReminderTime()
@@ -130,9 +157,11 @@ void CalendarEvent::retrieveReminderTime()
         {
             file.close();
             this->ui->reminderTime->setText(dateTime.toString("hh:mm"));
+            this->reminderTime = dateTime.time();
             return;
         }
     }
 
     file.close();
+    this->ui->reminderTime->setText("");
 }

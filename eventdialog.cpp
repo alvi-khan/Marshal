@@ -3,9 +3,11 @@
 #include "mainwindow.h"
 #include "reminderscontainer.h"
 #include "reminder.h"
+#include "filemanager.h"
 #include <QGraphicsDropShadowEffect>
 #include <QDateTime>
 #include <QTimer>
+#include <QDir>
 
 EventDialog::EventDialog(QWidget *parent) :
     QWidget(parent),
@@ -24,6 +26,7 @@ EventDialog::EventDialog(QWidget *parent) :
 
     this->ui->eventName->setFocus();
     this->ui->timeEdit->setEnabled(false);
+    newEvent = false;
 }
 
 EventDialog::~EventDialog()
@@ -35,11 +38,29 @@ void EventDialog::displayDialog(CalendarEvent *event, QPoint point)
 {
     EventDialog::event = event;
 
-    if (event->eventDate < QDate::currentDate())
-        this->ui->checkBox->setEnabled(false);
-    else if (event->eventDate == QDate::currentDate())
-        this->ui->timeEdit->setMinimumTime(QTime(QTime::currentTime().hour(), QTime::currentTime().minute()));
+    if (event->eventName != "")
+    {
+        this->ui->eventName->setText(event->eventName);
+        if (event->reminderTime.isValid())
+        {
+            this->ui->checkBox->setChecked(true);
+            this->ui->timeEdit->setTime(event->reminderTime);
+        }
+    }
+    else
+    {
+        newEvent = true;
+        if (event->eventDate < QDate::currentDate())    this->ui->checkBox->setEnabled(false);
+        else if (event->eventDate == QDate::currentDate())
+            this->ui->timeEdit->setMinimumTime(QTime(QTime::currentTime().hour(), QTime::currentTime().minute()));
+    }
 
+    this->move(calculatePosition(point));
+    this->show();
+}
+
+QPoint EventDialog::calculatePosition(QPoint point)
+{
     QPoint topLeft, topRight, bottomRight;
     topLeft.setX(point.x() + 50);
     topLeft.setY(point.y() + 10);
@@ -53,12 +74,18 @@ void EventDialog::displayDialog(CalendarEvent *event, QPoint point)
     bottomRight.setY(topLeft.y() + height());
     if (!MainWindow::window->visibleRegion().contains(bottomRight))
         topLeft.setY(point.y() - height());
-
-    this->move(topLeft);
-    this->show();
+    return topLeft;
 }
 
 void EventDialog::closeEvent(QCloseEvent *closeEvent)
+{
+    if (newEvent)   createEvent();
+    else            updateEvent();
+    emit hidden();
+    QWidget::closeEvent(closeEvent);
+}
+
+void EventDialog::createEvent()
 {
     QString newText = this->ui->eventName->text();
     if (newText == "")  delete  event;
@@ -68,8 +95,44 @@ void EventDialog::closeEvent(QCloseEvent *closeEvent)
         if (this->ui->checkBox->isChecked())    setReminder();
         event->addToCalendar();
     }
-    emit hidden();
-    QWidget::closeEvent(closeEvent);
+}
+
+void EventDialog::updateEvent()
+{
+    QString newText = this->ui->eventName->text();
+    if (newText != "")
+    {
+        QString oldEventPath = event->parentPath + "/" + event->eventName + "/files.mar";
+        QString newEventPath = event->parentPath + "/" + newText + "/files.mar";
+        FileManager::updateFileTracker(event->parentPath + "/files.cal", "/" + event->eventName + "/files.mar", "/"+ newText + "/files.mar");
+        QDir dir(oldEventPath.section("/", 0, -2));
+        dir.rename(oldEventPath.section("/", 0, -2), newEventPath.section("/", 0, -2));
+        event->setEventName(newText);
+        if (event->reminderTime.isValid())
+            RemindersContainer::eventRenamed(oldEventPath, newEventPath);
+    }
+
+    if (event->reminderTime.isValid())
+    {
+        QString eventPath = event->parentPath.section("/", 0, -1) + "/" + event->eventName + "/files.mar";
+        if (this->ui->checkBox->isChecked())
+        {
+            QDate date = event->eventDate;
+            QTime time = this->ui->timeEdit->time();
+            QDateTime reminderTime(date, time);
+            RemindersContainer::updateReminderTime(eventPath, reminderTime);
+        }
+        else
+        {
+            RemindersContainer::removeReminder(eventPath);
+            event->reminderTime = QTime(-1, 0);
+        }
+    }
+    else
+    {
+        if (this->ui->checkBox->isChecked())    setReminder();
+    }
+    event->retrieveReminderTime();
 }
 
 void EventDialog::setReminder()

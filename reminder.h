@@ -18,12 +18,15 @@ public:
     QString eventPath;
     QDateTime reminderTime;
     void setEventPath(QString eventPath);
+    void setEventTime(QDateTime dateTime);
 
 private:
     Ui::Reminder *ui;
     void setTimer();
     void expire();
+    void unexpire();
     bool expired;
+    QTimer *timer;
     void mouseReleaseEvent(QMouseEvent *event);
 };
 

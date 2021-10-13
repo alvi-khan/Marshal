@@ -19,6 +19,7 @@
         <file>Resources/Icons/CheckBox Checked.svg</file>
         <file>Resources/Icons/CheckBox Disabled.svg</file>
         <file>Resources/Icons/CheckBox Unchecked.svg</file>
+        <file>Resources/Icons/Modify.svg</file>
     </qresource>
     <qresource prefix="/Toolbar Icons">
         <file>Resources/Toolbar Icons/Bold.svg</file>
