@@ -42,7 +42,7 @@ public:
     QDate getDateFromCell(int row, int column);
 public:
     Calendar(QString selfPath);
-
+    void cleanupReminders();
     void populateMonthEvents();
     void addToDateCell(QDate date, QWidget *textField);
     void addToEventList(QDate date, QString eventName);

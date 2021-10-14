@@ -49,6 +49,7 @@ void Blocks::deleteBlock(QWidget *block)
 
         FileManager::deleteDirectory(calendarPath.section("/", 0, -2));
         FileManager::updateFileTracker(parentPath + "/files.mar", calendarPath.remove(parentPath), "");
+        calendar->cleanupReminders();
         return;
     }
 

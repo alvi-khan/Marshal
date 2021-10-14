@@ -2,7 +2,9 @@
 #include "eventdialog.h"
 #include "filemanager.h"
 #include "calendarcontrols.h"
+#include "reminderscontainer.h"
 
+#include <QCoreApplication>
 #include <QDir>
 #include <QFile>
 
@@ -236,4 +238,23 @@ void Calendar::newEventPrompt(int row, int column)
 void Calendar::clearSelectedCell(QWidget *cellWidget)
 {
     cellWidget->setStyleSheet("*:hover {background: #3E3E3E; border-radius: 10px}");
+}
+
+void Calendar::cleanupReminders()
+{
+    QString newData = "";
+    QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
+    QFile file(remindersStorage);
+    file.open(QIODevice::ReadOnly);
+    QTextStream data(&file);
+    while (!data.atEnd())
+    {
+        QDateTime dateTime = QDateTime::fromString(data.readLine());
+        QString eventPath = data.readLine();
+        if (!eventPath.startsWith(selfPath.section("/", 0, -2)))
+            newData.append(dateTime.toString() + "\n" + eventPath + "\n");
+    }
+    file.close();
+    FileManager::writeToFile(remindersStorage, newData);
+    RemindersContainer::refreshReminderList();
 }
