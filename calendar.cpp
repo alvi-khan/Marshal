@@ -126,7 +126,7 @@ QWidget* Calendar::createWidgetWithItems(QBoxLayout *layout, QList<QWidget *> wi
     foreach (QWidget *widget, widgets)
         layout->addWidget(widget);
     QWidget *widget = new QWidget();
-    widget->setStyleSheet("*:hover {background: #3E3E3E; border-radius: 10px}");
+    widget->setStyleSheet("*:hover {background: #3E3E3E; border-radius: 10px;}");
     widget->setLayout(layout);
     return widget;
 }
@@ -175,7 +175,7 @@ void Calendar::retrieveEvents()
     file.close();
 }
 
-void Calendar::addToDateCell(QDate date, QLineEdit *textField)
+void Calendar::addToDateCell(QDate date, QWidget *textField)
 {
     int row = weekInMonth(date) + 2;
     int column = date.dayOfWeek() - 1;
@@ -224,7 +224,7 @@ void Calendar::newEventPrompt(int row, int column)
 
     this->cellWidget(row, column)->setStyleSheet("* {background: #4D4D4D; border-radius: 10px}");
 
-    CalendarEvent *newEvent = new CalendarEvent(this, date);
+    CalendarEvent *newEvent = new CalendarEvent(this, date, "");
 
     EventDialog *eventDialog = new EventDialog();
     QPoint position = this->cellWidget(row, column)->pos();

@@ -18,11 +18,18 @@ public:
     ~EventDialog();
     void displayDialog(CalendarEvent *event, QPoint point);
 private slots:
-    void on_eventName_editingFinished();
+    void closeEvent(QCloseEvent *closeEvent);
+
+    void on_checkBox_toggled(bool checked);
 
 private:
     Ui::EventDialog *ui;
     CalendarEvent *event;
+    void setReminder();
+    QPoint calculatePosition(QPoint point);
+    bool newEvent;
+    void createEvent();
+    void updateEvent();
 signals:
     void hidden();
 };

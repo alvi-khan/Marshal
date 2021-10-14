@@ -12,6 +12,14 @@
         <file>Resources/Icons/Right Arrow.svg</file>
         <file>Resources/Icons/Error.svg</file>
         <file>Resources/Icons/Loading.gif</file>
+        <file>Resources/Icons/Reminder.svg</file>
+        <file>Resources/Icons/Expired Reminder.svg</file>
+        <file>Resources/Icons/Spinbox Down.svg</file>
+        <file>Resources/Icons/Spinbox Up.svg</file>
+        <file>Resources/Icons/CheckBox Checked.svg</file>
+        <file>Resources/Icons/CheckBox Disabled.svg</file>
+        <file>Resources/Icons/CheckBox Unchecked.svg</file>
+        <file>Resources/Icons/Modify.svg</file>
     </qresource>
     <qresource prefix="/Toolbar Icons">
         <file>Resources/Toolbar Icons/Bold.svg</file>

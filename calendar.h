@@ -44,7 +44,7 @@ public:
     Calendar(QString selfPath);
 
     void populateMonthEvents();
-    void addToDateCell(QDate date, QLineEdit *textField);
+    void addToDateCell(QDate date, QWidget *textField);
     void addToEventList(QDate date, QString eventName);
     void setCurrentDateFormat(QLineEdit *dateText);
     QWidget *createWidgetWithItems(QBoxLayout *layout, QList<QWidget*> widgets);

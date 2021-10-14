@@ -26,6 +26,8 @@ SOURCES += \
     main.cpp \
     mainpage.cpp \
     mainwindow.cpp \
+    reminder.cpp \
+    reminderscontainer.cpp \
     richtextfunctions.cpp \
     textblock.cpp \
     settingsdialog.cpp \
@@ -48,6 +50,8 @@ HEADERS += \
     logindialog.h \
     mainpage.h \
     mainwindow.h \
+    reminder.h \
+    reminderscontainer.h \
     richtextfunctions.h \
     textblock.h \
     settingsdialog.h \
@@ -55,12 +59,15 @@ HEADERS += \
 
 FORMS += \
     addressbar.ui \
+    calendarevent.ui \
     error.ui \
     eventdialog.ui \
     filesharedialog.ui \
     linkeditdialog.ui \
     logindialog.ui \
     mainwindow.ui \
+    reminder.ui \
+    reminderscontainer.ui \
     settingsdialog.ui
 
 # Default rules for deployment.

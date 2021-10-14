@@ -11,6 +11,7 @@
 #include "error.h"
 #include "filemanager.h"
 #include "sidebarmanager.h"
+#include "reminderscontainer.h"
 
 QFrame * DisplayManager::mainPage;
 QLineEdit * DisplayManager::pageTitle;
@@ -77,6 +78,13 @@ void DisplayManager::renameFile(QModelIndex index)
             parentPath = parentPath + "/files.mar";
 
         FileManager::updateFileTracker(parentPath, "/" + oldName + "/files.mar", "/" + newName + "/files.mar");
+
+        if (parentPath.endsWith("/files.cal"))
+        {
+            QString oldEventPath = parentPath.section("/", 0, -2) + "/" + oldName + "/files.mar";
+            QString newEventPath = parentPath.section("/", 0, -2) + "/" + newName + "/files.mar";
+            RemindersContainer::eventRenamed(oldEventPath, newEventPath);
+        }
     }
 
 
