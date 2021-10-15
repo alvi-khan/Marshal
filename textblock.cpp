@@ -5,7 +5,7 @@
 
 TextBlock::TextBlock()
 {
-
+    connect(this, &QTextEdit::textChanged, new Blocks(), &Blocks::updateBlockSize);
 }
 
 void TextBlock::keyPressEvent(QKeyEvent *ev)
@@ -33,4 +33,10 @@ void TextBlock::focusInEvent(QFocusEvent *e)
     }
 
    QTextBrowser::focusInEvent(e);
+}
+
+void TextBlock::resizeEvent(QResizeEvent *event)
+{
+    this->textChanged();
+    QTextBrowser::resizeEvent(event);
 }

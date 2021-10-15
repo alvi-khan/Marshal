@@ -11,6 +11,8 @@
 #include <QFile>
 #include <QTextBrowser>
 #include <QVBoxLayout>
+#include <QAbstractTextDocumentLayout>
+#include <QApplication>
 
 QFrame* Blocks::mainPage;
 
@@ -97,8 +99,6 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     // setting up style
     newBlock->setFrameStyle(QFrame::NoFrame);
 
-    connect(newBlock, &QTextEdit::textChanged, new Blocks(), &Blocks::updateBlockSize);
-    newBlock->textChanged();    // to trigger height readjustment
     connect(newBlock, &QTextEdit::textChanged, new FileManager(), &FileManager::saveBlock);
     connect(newBlock, &TextBlock::selectionChanged, [=] { RichTextFunctions::selectionChange(newBlock); });
     connect(newBlock, &QTextEdit::cursorPositionChanged, [=] { RichTextFunctions::selectionChange(newBlock); });
@@ -109,17 +109,20 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     layout->setAlignment(Qt::AlignTop);
     mainPage->setLayout(layout);
 
+    QApplication::processEvents();
+    newBlock->textChanged();    // to trigger height readjustment
+
     return newBlock;
 }
 
 void Blocks::updateBlockSize()
 {
     QTextBrowser *htmlBlock = qobject_cast<QTextBrowser*>(sender());
-    QFontMetrics m(htmlBlock->font());
-    int rowHeight = m.lineSpacing();
-    int lineCount = htmlBlock->document()->lineCount() + 1;
-    htmlBlock->setMaximumHeight(rowHeight * lineCount);
-    htmlBlock->setMinimumHeight(rowHeight * lineCount);
+
+    int blockHeight = htmlBlock->document()->documentLayout()->documentSize().height();
+
+    htmlBlock->setMaximumHeight(blockHeight + 2);
+    htmlBlock->setMinimumHeight(blockHeight + 2);
 }
 
 /**

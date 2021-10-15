@@ -9,6 +9,7 @@ public:
     TextBlock();
     void keyPressEvent(QKeyEvent *ev);
     void focusInEvent(QFocusEvent *e);
+    void resizeEvent(QResizeEvent *event);
 };
 
 #endif // TEXTBLOCK_H
