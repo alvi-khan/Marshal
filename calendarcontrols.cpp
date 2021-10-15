@@ -40,8 +40,6 @@ void CalendarControls::createMonthPicker()
     QWidget *comboBoxes = new QWidget();
     comboBoxes->setLayout(layout);
 
-    //QWidget *comboBoxes = createWidgetWithItems(new QHBoxLayout(), {new QSpacerItem(), monthList, yearList, })
-
     calendar->setCellWidget(0, 1, comboBoxes);
     calendar->setSpan(0, 1, 1, 5);
 }

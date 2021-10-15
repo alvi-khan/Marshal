@@ -131,7 +131,7 @@ void MainWindow::on_pageTitle_editingFinished()
  */
 void MainWindow::on_urlButton_clicked()
 {
-    //DisplayManager::createUrl("www.google.com", "Google");
+    // TODO implement URL attachment
 }
 
 /**
@@ -139,7 +139,7 @@ void MainWindow::on_urlButton_clicked()
  */
 void MainWindow::on_subpageButton_clicked()
 {
-    // TODO first line should be unnecessary in final release; subpage cannot be created without page already open
+    // TODO first line should be unnecessary; subpage cannot be created without page already open
     revealMainPage();
     FileManager::addFile(this->ui->sideBar->currentIndex());
 }

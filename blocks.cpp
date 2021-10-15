@@ -82,7 +82,6 @@ void Blocks::deleteBlock(QWidget *block)
         QString parentPage = blockPath.section("/", 0, -2);
         FileManager::updateFileTracker(parentPage + "/files.mar", blockPath.remove(parentPage), "");
     }
-    // TODO delete calendar events
 }
 
 /**

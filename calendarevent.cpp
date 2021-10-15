@@ -32,7 +32,6 @@ CalendarEvent::CalendarEvent(QWidget *parent, QDate eventDate, QString eventName
     this->ui->eventName->setText(eventName);
     this->eventName = eventName;
 
-    //QtConcurrent::run(this, &CalendarEvent::retrieveReminderTime);
     retrieveReminderTime();
 
     this->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -85,7 +84,6 @@ void CalendarEvent::openEvent()
 
 void CalendarEvent::addToCalendar()
 {
-    //QtConcurrent::run(this, &CalendarEvent::retrieveReminderTime);
     retrieveReminderTime();
 
     calendar->addToDateCell(this->eventDate, this);

@@ -19,7 +19,6 @@ Calendar::Calendar(QString selfPath)
 
     createCalendarTable(7, 7);  // 5 weeks + 2 hears and 7 days
     CalendarControls *controls = new CalendarControls(this);
-    //delete controls;
     insertDayNames();
     populateDates();
     heightReset();
@@ -79,11 +78,8 @@ void Calendar::populateDates()
         int column = date.dayOfWeek() - 1;
 
         QWidget *widget = createDateText(date.day());
-
         widget->setStyleSheet("*:hover {background: #3E3E3E; border-radius: 10px}");
-
         this->setCellWidget(row, column, widget);
-
         date = date.addDays(1);
     }
     populateMonthEvents();
