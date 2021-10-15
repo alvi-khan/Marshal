@@ -239,8 +239,20 @@ void DatabaseManager::shareFile()
     QString sharedFile = FileManager::openFile;
     QString sharedFilePath = sharedFile.section("/", 0, -2);
 
-    createTable(sharedTable);
-    uploadTo(sharedTable, sharedFile, sharedFilePath);
+    MainWindow::window->toggleLoadingGIF();
+    syncing = true;
+    QFuture<void> task1 = QtConcurrent::run(createTable, sharedTable);
+    QFutureWatcher<void> *task1Watcher = new QFutureWatcher<void>();
+    task1Watcher->setFuture(task1);
+    connect(task1Watcher, &QFutureWatcher<void>::finished, [=] {
+        QFuture<void> task2 = QtConcurrent::run(uploadTo, sharedTable, sharedFile, sharedFilePath);
+        QFutureWatcher<void> *task2Watcher = new QFutureWatcher<void>();
+        task2Watcher->setFuture(task2);
+        connect(task2Watcher, &QFutureWatcher<void>::finished, [=] {
+            MainWindow::window->toggleLoadingGIF();
+            syncing = false;
+        });
+    });
 }
 
 QList<QString> DatabaseManager::getUserList()
