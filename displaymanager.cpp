@@ -54,7 +54,7 @@ void DisplayManager::createUrl(QString urlFilePath)
 
 void DisplayManager::renameFile(QModelIndex index)
 {
-    QString selectedItem = FileManager::homeDirectory + index.siblingAtColumn(1).data().toString();
+    QString selectedItem = FileManager::homeDirectory.section("/", 0, -2) + index.siblingAtColumn(1).data().toString();
     QString oldPath = FileManager::openFile;
     QString oldName = oldPath.section("/", -1);
 
@@ -90,7 +90,7 @@ void DisplayManager::renameFile(QModelIndex index)
 
     if (index.parent().isValid())
     {
-        QString parentPath = FileManager::homeDirectory + index.parent().siblingAtColumn(1).data().toString();
+        QString parentPath = FileManager::homeDirectory.section("/", 0, -2) + index.parent().siblingAtColumn(1).data().toString();
         FileManager::updateFileTracker(parentPath + "/files.mar", "/" + oldName + "/files.mar", "/" + newName + "/files.mar");
     }
 
@@ -137,12 +137,12 @@ void DisplayManager::openFileFromPath(QString filePath, QString title)
     file.close();
 
     pageTitle->setText(title);
-    addressBar->update(filePath.remove(SidebarManager::homeDirectory, Qt::CaseInsensitive));
+    addressBar->update(filePath.remove(SidebarManager::homeDirectory.section("/", 0, -2), Qt::CaseInsensitive));
 }
 
 void DisplayManager::openFile(QModelIndex index)
 {
-    QString filePath = FileManager::homeDirectory + index.siblingAtColumn(1).data().toString();
+    QString filePath = FileManager::homeDirectory.section("/", 0, -2) + index.siblingAtColumn(1).data().toString();
     openFileFromPath(filePath, index.data().toString());
 }
 

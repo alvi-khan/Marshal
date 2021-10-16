@@ -30,7 +30,7 @@ void FileManager::saveBlock()
  */
 void FileManager::createBlock(QModelIndex index)
 {
-    QString page = FileManager::homeDirectory + index.siblingAtColumn(1).data().toString();  // path to parent file
+    QString page = FileManager::homeDirectory.section("/", 0, -2) + index.siblingAtColumn(1).data().toString();  // path to parent file
     QString block = getValidFileName(openFile, "/Block ", ".html");
 
     // creating file for block
@@ -122,7 +122,7 @@ QString FileManager::getValidFileName(QString parent, QString prefix, QString su
 void FileManager::addFile(QModelIndex index)
 {
     QString parent;
-    QString selectedItem = FileManager::homeDirectory + index.siblingAtColumn(1).data().toString();
+    QString selectedItem = FileManager::homeDirectory.section("/", 0, -2) + index.siblingAtColumn(1).data().toString();
 
     if (!index.isValid())   parent = homeDirectory; // root level item
     else                    parent = openFile;
@@ -184,7 +184,7 @@ void FileManager::updateFileTracker(QString parent, QString oldPath, QString new
 
 void FileManager::addCalendar(QModelIndex index)
 {
-    QString parent = FileManager::homeDirectory + index.siblingAtColumn(1).data().toString();
+    QString parent = FileManager::homeDirectory.section("/", 0, -2) + index.siblingAtColumn(1).data().toString();
     parent = openFile;
 
     QDir dir(getValidFileName(parent, "/Calendar ")); // create tracker for calendar

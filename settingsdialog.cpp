@@ -4,7 +4,9 @@
 #include <QDir>
 #include <QFileDialog>
 #include <QGraphicsBlurEffect>
+#include "databasemanager.h"
 #include "mainwindow.h"
+#include "sidebarmanager.h"
 
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
@@ -42,6 +44,11 @@ void SettingsDialog::on_buttonBox_accepted()
     if (directory.endsWith("/")) directory.chop(1);
 
     FileManager::homeDirectory = directory + "/Marshal User Files/Private";
+    SidebarManager::homeDirectory = FileManager::homeDirectory;
+    SidebarManager::sharedDirectory = directory + "/Marshal User Files/Shared";
+    DatabaseManager::homeDirectory = FileManager::homeDirectory.section("/", 0, -2);
+    DatabaseManager::privateDirectory = DatabaseManager::homeDirectory + "/Private";
+    DatabaseManager::sharedDirectory = DatabaseManager::homeDirectory + "/Shared";
     QString settingsFilePath = QCoreApplication::applicationDirPath() + "/settings.conf";
     FileManager::writeToFile(settingsFilePath, FileManager::homeDirectory);
     QString newDir = directory + "/Marshal User Files";

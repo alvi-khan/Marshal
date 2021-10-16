@@ -29,12 +29,12 @@ public:
     static bool verifyUsername(QString username);
     static QList<QString> getUserList();
     static bool syncing;
-private:
-    static QSqlDatabase db;
-    static void loginUser(QString username);
     static QString homeDirectory;
     static QString privateDirectory;
     static QString sharedDirectory;
+private:
+    static QSqlDatabase db;
+    static void loginUser(QString username);
     static QSqlDatabase databaseSetup();
     static QSqlQuery executeQuery(QString queryString);
     static void createTable(QString table);

@@ -31,7 +31,7 @@ QModelIndex SidebarManager::getChild(QString path)    // opens sub file
     for (int row=0; row < parent->rowCount(); row++)
     {
         child = parent->child(row, 0);
-        childPath = FileManager::homeDirectory + child->index().siblingAtColumn(1).data().toString();
+        childPath = FileManager::homeDirectory.section("/", 0, -2) + child->index().siblingAtColumn(1).data().toString();
         // if child has require path, return its index
         if (QString::compare(childPath, path, Qt::CaseInsensitive) == 0)
             return child->index();
@@ -60,7 +60,7 @@ QStandardItem* SidebarManager::createItem(QString fileName, QString filePath, QS
 
     QList<QStandardItem *> data;
     data.append(childItem);
-    data.append(new QStandardItem(filePath.remove(FileManager::homeDirectory)));
+    data.append(new QStandardItem(filePath.remove(FileManager::homeDirectory.section("/", 0, -2))));
 
     parent->appendRow(data);
     return childItem;
@@ -117,7 +117,7 @@ void SidebarManager::onCustomContextMenu(const QPoint &point)
     QAction* del = new QAction("Delete", this);
     del->setIcon(QIcon(":/Toolbar Icons/Resources/Toolbar Icons/Trash (Context Menu).svg"));
 
-    connect(del, &QAction::triggered, [=] { FileManager::deletePage(FileManager::homeDirectory + index.siblingAtColumn(1).data().toString()); });
+    connect(del, &QAction::triggered, [=] { FileManager::deletePage(FileManager::homeDirectory.section("/", 0, -2) + index.siblingAtColumn(1).data().toString()); });
     menu.addAction(del);
 
     menu.exec(QCursor::pos());

@@ -56,9 +56,9 @@ void DatabaseManager::uploadFile(QString filePath, QString tableName, QString sh
 
     if (tableName.endsWith("_shared"))
     {
-        relativePath = filePath;
         relativePath.replace(shareFilePath, "");
-        relativePath = "/Shared/" + relativePath;
+        if (relativePath.section("/", 0, 1) == "/Private")
+            relativePath = "/Shared/" + relativePath.section("/", 2, -1);
     }
 
     QString query("INSERT INTO " + tableName + " VALUES ('" + relativePath + "', LOAD_FILE('" + filePath + "'));");
