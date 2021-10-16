@@ -19,6 +19,7 @@ void FileManager::saveBlock()
 {
     QTextBrowser *htmlBlock = qobject_cast<QTextBrowser*>(sender());    // retrieve block that emitted signal
     QString filePath = htmlBlock->documentTitle();  // retrieve file path stored in hidden title
+    if (filePath.endsWith("url"))   return;
     if (filePath != "")
         writeToFile(filePath, htmlBlock->document()->toHtml());
 }
