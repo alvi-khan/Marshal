@@ -227,7 +227,7 @@ void FileManager::deletePage(QString pagePath)
     if(!parentIsRoot)
         updateFileTracker(parentPath, "/" + pagePath.section("/", -1) + "/files.mar", "");
 
-    if (pagePath.startsWith(openFile) && pagePath != openFile)  // subpage deleted; refresh page
+    if (pagePath.startsWith(openFile) && pagePath != openFile && openFile != "")  // subpage deleted; refresh page
         DisplayManager::openFileFromPath(openFile, DisplayManager::pageTitle->text());
 
     RemindersContainer::refreshReminderList();
