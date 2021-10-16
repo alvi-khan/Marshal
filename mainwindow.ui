@@ -487,23 +487,6 @@ QToolTip {
                  <number>7</number>
                 </property>
                 <item>
-                 <widget class="QPushButton" name="trashButton">
-                  <property name="toolTip">
-                   <string>Delete Page</string>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <property name="text">
-                   <string/>
-                  </property>
-                  <property name="icon">
-                   <iconset resource="Resources.qrc">
-                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Trash.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Trash.svg</iconset>
-                  </property>
-                 </widget>
-                </item>
-                <item>
                  <widget class="QPushButton" name="subpageButton">
                   <property name="toolTip">
                    <string>Add Subpage</string>
@@ -690,6 +673,23 @@ QToolTip {
                   <property name="icon">
                    <iconset resource="Resources.qrc">
                     <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Calendar.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Calendar.svg</iconset>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="trashButton">
+                  <property name="toolTip">
+                   <string>Delete Page</string>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="icon">
+                   <iconset resource="Resources.qrc">
+                    <normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Trash.svg</normaloff>:/Toolbar Icons/Resources/Toolbar Icons/Trash.svg</iconset>
                   </property>
                  </widget>
                 </item>
