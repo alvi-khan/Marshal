@@ -65,6 +65,7 @@ void RichTextFunctions::underlineText(QTextBrowser *block)
 
 void RichTextFunctions::selectionChange(QTextBrowser *block)
 {
+    if (block->isReadOnly())    return;
     QFont font = block->currentFont();
     QString selection = block->textCursor().selection().toHtml();
     if (selection.contains("font-weight:700") || font.bold())

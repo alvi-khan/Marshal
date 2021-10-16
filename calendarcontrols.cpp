@@ -12,14 +12,19 @@ CalendarControls::CalendarControls(Calendar *calendar)
 
 void CalendarControls::createButtons()
 {
+    QString buttonStyle = "QPushButton{margin: 10px 15px 10px 15px; text-align: center; border: none;"
+                            "border-radius: 10px;}"
+                          "QPushButton:hover{background-color: #3E3E3E;}";
+
+
     QPushButton *prevButton = new QPushButton(QIcon(":/Icons/Resources/Icons/Left Arrow.svg"), "");
     calendar->setCellWidget(0, 0, prevButton);
-    prevButton->setStyleSheet("QPushButton{border: none; border-radius: 10px;} QPushButton:hover{background-color: #3E3E3E;}");
+    prevButton->setStyleSheet(buttonStyle);
     connect(prevButton, &QPushButton::clicked, this, &CalendarControls::toPrevMonth);
 
     QPushButton *nextButton = new QPushButton(QIcon(":/Icons/Resources/Icons/Right Arrow.svg"), "");
     calendar->setCellWidget(0, 6, nextButton);
-    nextButton->setStyleSheet("QPushButton{border: none; border-radius: 10px;} QPushButton:hover{background-color: #3E3E3E;}");
+    nextButton->setStyleSheet(buttonStyle);
     connect(nextButton, &QPushButton::clicked, this, &CalendarControls::toNextMonth);
 }
 
@@ -52,12 +57,16 @@ QComboBox * CalendarControls::newCustomComboBox(QList<QString> itemList, int cur
     connect(comboBox, &QComboBox::currentIndexChanged, this, &CalendarControls::updateComboBoxSelections);
 
     comboBox->setFrame(QFrame::NoFrame);
-    comboBox->setStyleSheet("QComboBox{padding: 10px; border: none; border-radius: 10px;}"
+    QString comboBoxStyle = "QComboBox{padding: 10px; border: none; border-radius: 10px;}"
                             "QComboBox:hover{background-color: #3E3E3E;}"
                             "QComboBox::drop-down {border-width: 0px;} "
                             "QComboBox::down-arrow {image: url(:/Icons/Resources/Icons/Drop Down Open.svg); "
-                                                    "width: 20px; height: 20px;"
-                                                    "border-width: 0px;}");
+                                                    "width: 20px; height: 20px; border-width: 0px;}"
+                            "QScrollBar:vertical {border: 0px; background:transparent; width: 5px; margin: 5px 0px 5px 0px;}\
+                             QScrollBar::handle:vertical {background: rgb(47, 52, 55); min-height: 0px; border-radius: 2px;}\
+                             QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {background: none;}\
+                             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {height: 0 px;}";
+    comboBox->setStyleSheet(comboBoxStyle);
     comboBox->setFocusPolicy(Qt::StrongFocus);  // ignored mouse scroll when scrolling page (but not on hover)
     return comboBox;
 }
