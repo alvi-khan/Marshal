@@ -54,7 +54,7 @@ void DisplayManager::createUrl(QString urlFilePath)
 
 void DisplayManager::renameFile(QModelIndex index)
 {
-    QString selectedItem = index.siblingAtColumn(1).data().toString();
+    QString selectedItem = FileManager::homeDirectory + index.siblingAtColumn(1).data().toString();
     QString oldPath = FileManager::openFile;
     QString oldName = oldPath.section("/", -1);
 
@@ -90,7 +90,7 @@ void DisplayManager::renameFile(QModelIndex index)
 
     if (index.parent().isValid())
     {
-        QString parentPath = index.parent().siblingAtColumn(1).data().toString();
+        QString parentPath = FileManager::homeDirectory + index.parent().siblingAtColumn(1).data().toString();
         FileManager::updateFileTracker(parentPath + "/files.mar", "/" + oldName + "/files.mar", "/" + newName + "/files.mar");
     }
 
@@ -142,7 +142,7 @@ void DisplayManager::openFileFromPath(QString filePath, QString title)
 
 void DisplayManager::openFile(QModelIndex index)
 {
-    QString filePath = index.siblingAtColumn(1).data().toString();
+    QString filePath = FileManager::homeDirectory + index.siblingAtColumn(1).data().toString();
     openFileFromPath(filePath, index.data().toString());
 }
 
