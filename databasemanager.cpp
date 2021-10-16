@@ -36,7 +36,7 @@ QSqlDatabase DatabaseManager::databaseSetup()
 QSqlQuery DatabaseManager::executeQuery(QString queryString)
 {
     QSqlDatabase db = databaseSetup();
-    if (!db.open()) QMessageBox::warning(nullptr, "Error Connecting", "Unable to connect to database.");
+    if (!db.open()) QMessageBox::warning(MainWindow::window, "Error Connecting", "Unable to connect to database.");
     QSqlQuery query(queryString);
     query.exec();
     db.close();
@@ -217,7 +217,7 @@ void DatabaseManager::shareFile()
 {
     if (username == "")
     {
-        QMessageBox::warning(nullptr, "Login", "Please log in before sharing files.");
+        QMessageBox::warning(MainWindow::window, "Login", "Please log in before sharing files.");
         return;
     }
 
@@ -226,12 +226,12 @@ void DatabaseManager::shareFile()
     if (sharedUser == "")   return;
     else if (!verifyUsername(sharedUser))
     {
-        QMessageBox::warning(nullptr, "User Not Found", "The user could not be found.");
+        QMessageBox::warning(MainWindow::window, "User Not Found", "The user could not be found.");
         return;
     }
     else if (sharedUser == username)
     {
-        QMessageBox::warning(nullptr, "Invalid User", "You cannot share files with yourself.");
+        QMessageBox::warning(MainWindow::window, "Invalid User", "You cannot share files with yourself.");
         return;
     }
 
