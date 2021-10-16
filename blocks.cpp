@@ -96,7 +96,7 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     TextBlock *newBlock = new TextBlock();
     newBlock->insertHtml(content);
     newBlock->setFontFamily("Segoe UI");
-    newBlock->setFontPointSize(10);
+    newBlock->setFontPointSize(11);
 
     // setting up style
     newBlock->setFrameStyle(QFrame::NoFrame);
@@ -158,7 +158,7 @@ void Blocks::addToolTip(QWidget *widget, QString text)
  */
 QTextBrowser* Blocks::addLinkBlock(QString link, QString name)
 {
-    QString content = "<a style=\"color: #66d9ee\" href=\"" + link + "\">" + name + "</a>";
+    QString content = "<a style=\"color: #66d9ee; font-size: 11pt\" href=\"" + link + "\">" + name + "</a>";
     QTextBrowser *linkBlock = createTextBrowser(content);
     linkBlock->setOpenLinks(false);
     linkBlock->setTextColor(QColor::fromRgb(102, 217, 238));
