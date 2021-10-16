@@ -95,6 +95,8 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
 {
     TextBlock *newBlock = new TextBlock();
     newBlock->insertHtml(content);
+    newBlock->setFontFamily("Segoe UI");
+    newBlock->setFontPointSize(10);
 
     // setting up style
     newBlock->setFrameStyle(QFrame::NoFrame);
