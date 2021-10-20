@@ -34,6 +34,8 @@ MainWindow::~MainWindow()
 void MainWindow::init()
 {
     QString settingsFilePath = QCoreApplication::applicationDirPath() + "/settings.conf";
+    if(!QFile::exists(settingsFilePath))
+            FileManager::writeToFile(settingsFilePath, QCoreApplication::applicationDirPath() + "/Marshal User Files/Private");
     FileManager::homeDirectory = FileManager::readFromFile(settingsFilePath);
 
     loadingGIF = new QMovie(":/Icons/Resources/Icons/Loading.gif");
