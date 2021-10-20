@@ -1,5 +1,7 @@
 QT       += core gui sql concurrent
 
+RC_ICONS = Logo.ico
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
