@@ -7,6 +7,9 @@ namespace Ui {
 class SettingsDialog;
 }
 
+/**
+ * @brief The SettingsDialog class handles the contents of the settings dialog.
+ */
 class SettingsDialog : public QDialog
 {
     Q_OBJECT

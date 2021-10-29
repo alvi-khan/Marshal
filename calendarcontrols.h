@@ -3,7 +3,9 @@
 
 #include "calendar.h"
 
-
+/**
+ * @brief The CalendarControls class contains methods and properties used in the controls of calendar blocks
+ */
 class CalendarControls : public QObject
 {
     Q_OBJECT

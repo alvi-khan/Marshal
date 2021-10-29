@@ -34,22 +34,22 @@ void DisplayManager::openLink(QUrl url)
         link.truncate(link.lastIndexOf(QChar('/')));
         QString fileName = link.section("/", -1);
         QModelIndex index = SidebarManager::getChild(link); // get index of subfile
-        SidebarManager::setCurrentIndex(index);
+        SidebarManager::setCurrentIndex(index);             // if valid
         openFileFromPath(link, fileName);
     }
 }
 
+/**
+ * @brief DisplayManager::createUrl creates a link to a subpage/external document
+ */
 void DisplayManager::createUrl(QString urlFilePath)
 {
     QString link = FileManager::readFromFile(urlFilePath);
     QString fileName = urlFilePath.section("/", -1);
     fileName.replace(".url", "");
 
-    // new dialog, get url
     QTextBrowser *linkBlock = Blocks::addLinkBlock(link, fileName);
     linkBlock->setDocumentTitle(urlFilePath);
-    // save block as file
-    // update file tracker
 }
 
 void DisplayManager::renameFile(QModelIndex index)

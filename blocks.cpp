@@ -43,6 +43,7 @@ void Blocks::deleteBlock(QWidget *block)
 {
     block->hide();
 
+    // Calendar blocks contain extra information
     if (QLatin1String(block->metaObject()->className()) == "Calendar")
     {
         Calendar *calendar = (Calendar *) block;
@@ -58,29 +59,29 @@ void Blocks::deleteBlock(QWidget *block)
 
     QTextBrowser *htmlBlock = (QTextBrowser *) block;
     QString blockPath = htmlBlock->documentTitle();
-    if (blockPath.endsWith("/files.mar"))       // subpage blocks
+    if (blockPath.endsWith("/files.mar"))       // subpage blocks (cant use filemanager's delete page since that deletes current page)
     {
-        //cant use filemanager's delete page (removes wrong index problem)
+        // delete subpage directory
         QString directory = blockPath.section("/", 0, -2);
         FileManager::deleteDirectory(directory);
-
+        // remove from sidebar
         QModelIndex index = SidebarManager::getChild(directory);
-        SidebarManager::removeItem(index);
-
+        SidebarManager::removeItem(index);  // only if it exists
+        // remove from parent's tracker
         QString parentPage = blockPath.section("/", 0, -3);
         FileManager::updateFileTracker(parentPage + "/files.mar", blockPath.remove(parentPage), "");
     }
     else if (blockPath.endsWith(".html"))       // normal text blocks
     {
-        QFile::remove(blockPath);
-
+        QFile::remove(blockPath);   // delete file
+        // remove from parent's tracker
         QString parentPage = blockPath.section("/", 0, -2);
         FileManager::updateFileTracker(parentPage + "/files.mar", blockPath.remove(parentPage), "");
     }
     else if (blockPath.endsWith(".url"))
     {
-        QFile::remove(blockPath);
-
+        QFile::remove(blockPath);   // delete file
+        // remove from parent's tracker
         QString parentPage = blockPath.section("/", 0, -2);
         FileManager::updateFileTracker(parentPage + "/files.mar", blockPath.remove(parentPage), "");
     }
@@ -117,6 +118,9 @@ QTextBrowser* Blocks::createTextBrowser(QString content)
     return newBlock;
 }
 
+/**
+ * @brief Blocks::updateBlockSize re-adjusts block size depending on current content
+ */
 void Blocks::updateBlockSize()
 {
     QTextBrowser *htmlBlock = qobject_cast<QTextBrowser*>(sender());
@@ -155,6 +159,7 @@ void Blocks::addToolTip(QWidget *widget, QString text)
  * @brief Blocks::addLinkBlock adds a block with a link (internal/external)
  * @param link
  * @param name is the text displayed for the link
+ * @return the created link block
  */
 QTextBrowser* Blocks::addLinkBlock(QString link, QString name)
 {
@@ -166,12 +171,12 @@ QTextBrowser* Blocks::addLinkBlock(QString link, QString name)
     linkBlock->setContextMenuPolicy(Qt::CustomContextMenu);
 
 
-    if (!link.endsWith(".mar"))
+    if (!link.endsWith(".mar")) // external link
     {
         connect(linkBlock, &QTextBrowser::customContextMenuRequested, new LinkEditDialog(linkBlock), &LinkEditDialog::displayDialog);
         addToolTip(linkBlock, link);
     }
-    else
+    else    // sub-file link
     {
         connect(linkBlock, SIGNAL(customContextMenuRequested(const QPoint &)), new Blocks(), SLOT(onCustomContextMenu(const QPoint &)));
         addToolTip(linkBlock, (link.remove(FileManager::homeDirectory)).remove("/files.mar"));
@@ -187,7 +192,7 @@ void Blocks::addSubfileBlock(QString filePath)
 {
     QString fileName = filePath.section("/", -2, -2);
     QTextBrowser *subFileBlock = addLinkBlock(filePath, fileName);
-    subFileBlock->setDocumentTitle(filePath);
+    subFileBlock->setDocumentTitle(filePath);   // needed to save modifications to link
 }
 
 void Blocks::addCalendarBlock(QString filePath)

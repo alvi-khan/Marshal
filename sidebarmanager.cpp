@@ -105,6 +105,10 @@ void SidebarManager::init(QTreeView *sidebar)
     connect(sidebar, SIGNAL(customContextMenuRequested(const QPoint &)), new SidebarManager(), SLOT(onCustomContextMenu(const QPoint &)));
 }
 
+/**
+ * @brief SidebarManager::onCustomContextMenu reveal sidebar item's custom context menu
+ * @param point
+ */
 void SidebarManager::onCustomContextMenu(const QPoint &point)
 {
     QModelIndex index = sidebar->indexAt(point);

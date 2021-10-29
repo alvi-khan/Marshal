@@ -42,6 +42,9 @@ void LinkEditDialog::displayDialog(QPoint point)
     this->show();
 }
 
+/**
+ * @brief LinkEditDialog::on_fileName_editingFinished updates file name on local storage
+ */
 void LinkEditDialog::on_fileName_editingFinished()
 {
     QString newText = this->ui->fileName->text();
@@ -55,6 +58,7 @@ void LinkEditDialog::on_fileName_editingFinished()
     QString oldPath = text + ".url";
     QString newPath = newText + ".url";
 
+    // update file and parent's tracker
     FileManager::renameFile(parentFile + "/" + oldPath, newPath);
     FileManager::updateFileTracker(parentFile + "/files.mar", "/" + oldPath, "/" + newPath);
 
@@ -65,7 +69,9 @@ void LinkEditDialog::on_fileName_editingFinished()
     text = newText;
 }
 
-
+/**
+ * @brief LinkEditDialog::on_filePath_editingFinished updates link on locally stored file
+ */
 void LinkEditDialog::on_filePath_editingFinished()
 {
     QString newLink = this->ui->filePath->text();
@@ -75,6 +81,7 @@ void LinkEditDialog::on_filePath_editingFinished()
         return;
     }
 
+    // update file
     QString urlFile = FileManager::openFile + "/" + text + ".url";
     FileManager::writeToFile(urlFile, newLink);
 
@@ -85,7 +92,9 @@ void LinkEditDialog::on_filePath_editingFinished()
     link = newLink;
 }
 
-
+/**
+ * @brief LinkEditDialog::on_trashButton_clicked deletes attachment block
+ */
 void LinkEditDialog::on_trashButton_clicked()
 {
     this->hide();

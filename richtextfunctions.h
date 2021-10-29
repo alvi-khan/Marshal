@@ -3,7 +3,9 @@
 #include <QTextBrowser>
 #include <QPushButton>
 
-
+/**
+ * @brief The RichTextFunctions class deals with rich-text functionality.
+ */
 class RichTextFunctions
 {
 public:

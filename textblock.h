@@ -3,6 +3,9 @@
 
 #include <QTextBrowser>
 
+/**
+ * @brief The TextBlock class provides a basic text block with customized behaviour.
+ */
 class TextBlock : public QTextBrowser
 {
 public:

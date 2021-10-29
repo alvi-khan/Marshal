@@ -8,6 +8,9 @@ namespace Ui {
 class Reminder;
 }
 
+/**
+ * @brief The Reminder class handles individual reminders stored in the reminder container
+ */
 class Reminder : public QWidget
 {
     Q_OBJECT

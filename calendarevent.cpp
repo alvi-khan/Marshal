@@ -54,6 +54,9 @@ QString CalendarEvent::getEventName()
     return this->ui->eventName->text();
 }
 
+/**
+ * @brief CalendarEvent::saveToDisk creates local file for event
+ */
 void CalendarEvent::saveToDisk()
 {
     QString filePath = "/" + this->ui->eventName->text();
@@ -92,6 +95,9 @@ void CalendarEvent::addToCalendar()
     calendar->addToEventList(eventDate, getEventFilePath());
 }
 
+/**
+ * @brief CalendarEvent::onCustomContextMenu shows custom context menu for event
+ */
 void CalendarEvent::onCustomContextMenu(const QPoint &)
 {
     QMenu menu;
@@ -124,6 +130,10 @@ void CalendarEvent::deleteEvent(CalendarEvent *event)
     RemindersContainer::refreshReminderList();
 }
 
+/**
+ * @brief CalendarEvent::modifyEvent reveals eventDialog
+ * @param event
+ */
 void CalendarEvent::modifyEvent(CalendarEvent *event)
 {
     EventDialog *eventDialog = new EventDialog();
@@ -133,6 +143,9 @@ void CalendarEvent::modifyEvent(CalendarEvent *event)
     connect(eventDialog, &EventDialog::hidden, [=] { updateEvent();});
 }
 
+/**
+ * @brief CalendarEvent::updateEvent updates event with content from eventDialog
+ */
 void CalendarEvent::updateEvent()
 {
     FileManager::updateFileTracker(parentPath + "/files.cal", "/" + selfPath.section("/", -2, -1), "/" + eventName + "/files.mar");
@@ -141,6 +154,9 @@ void CalendarEvent::updateEvent()
     selfPath = selfPath.section("/", 0, -3) + "/" + eventName + "/files.mar";
 }
 
+/**
+ * @brief CalendarEvent::retrieveReminderTime checks for and retrieves time for event reminder
+ */
 void CalendarEvent::retrieveReminderTime()
 {
     QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";

@@ -12,6 +12,9 @@ namespace Ui {
 class CalendarEvent;
 }
 
+/**
+ * @brief The CalendarEvent class contains methods and properties for event widgets for calendar blocks
+ */
 class CalendarEvent : public QFrame
 {
     Q_OBJECT

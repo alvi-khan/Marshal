@@ -59,6 +59,11 @@ void EventDialog::displayDialog(CalendarEvent *event, QPoint point)
     this->show();
 }
 
+/**
+ * @brief EventDialog::calculatePosition calculates where to show the dialog based on click location
+ * @param point
+ * @return
+ */
 QPoint EventDialog::calculatePosition(QPoint point)
 {
     QPoint topLeft, topRight, bottomRight;
@@ -67,12 +72,12 @@ QPoint EventDialog::calculatePosition(QPoint point)
 
     topRight.setX(topLeft.x() + width());
     topRight.setY(topLeft.y());
-    if (!MainWindow::window->visibleRegion().contains(topRight))
+    if (!MainWindow::window->visibleRegion().contains(topRight))    // outside visible region
         topLeft.setX(point.x() - width());
 
     bottomRight.setX(topLeft.x() + width());
     bottomRight.setY(topLeft.y() + height());
-    if (!MainWindow::window->visibleRegion().contains(bottomRight))
+    if (!MainWindow::window->visibleRegion().contains(bottomRight)) // outside visible region
         topLeft.setY(point.y() - height());
     return topLeft;
 }
@@ -85,6 +90,9 @@ void EventDialog::closeEvent(QCloseEvent *closeEvent)
     QWidget::closeEvent(closeEvent);
 }
 
+/**
+ * @brief EventDialog::createEvent creates a new event with dialog information
+ */
 void EventDialog::createEvent()
 {
     QString newText = this->ui->eventName->text();
@@ -97,24 +105,32 @@ void EventDialog::createEvent()
     }
 }
 
+/**
+ * @brief EventDialog::updateEvent updates details of existing event with dialog information
+ */
 void EventDialog::updateEvent()
 {
     QString newText = this->ui->eventName->text();
     if (newText != "")
     {
+        // update calendar's tracker
         QString oldEventPath = event->parentPath + "/" + event->eventName + "/files.mar";
         QString newEventPath = event->parentPath + "/" + newText + "/files.mar";
         FileManager::updateFileTracker(event->parentPath + "/files.cal", "/" + event->eventName + "/files.mar", "/"+ newText + "/files.mar");
+        // update directory name
         QDir dir(oldEventPath.section("/", 0, -2));
         dir.rename(oldEventPath.section("/", 0, -2), newEventPath.section("/", 0, -2));
         event->setEventName(newText);
+        // update reminder if any
         if (event->reminderTime.isValid())
             RemindersContainer::eventRenamed(oldEventPath, newEventPath);
     }
 
+    // reminder already exists
     if (event->reminderTime.isValid())
     {
         QString eventPath = event->parentPath.section("/", 0, -1) + "/" + event->eventName + "/files.mar";
+        // update reminder time
         if (this->ui->checkBox->isChecked())
         {
             QDate date = event->eventDate;
@@ -122,19 +138,22 @@ void EventDialog::updateEvent()
             QDateTime reminderTime(date, time);
             RemindersContainer::updateReminderTime(eventPath, reminderTime);
         }
-        else
+        else    // delete existing reminder
         {
             RemindersContainer::removeReminder(eventPath);
             event->reminderTime = QTime(-1, 0);
         }
     }
-    else
+    else    // create new reminder
     {
         if (this->ui->checkBox->isChecked())    setReminder();
     }
-    event->retrieveReminderTime();
+    event->retrieveReminderTime();  // get the event to re-retrieve the new reminder time (if any)
 }
 
+/**
+ * @brief EventDialog::setReminder creates a new reminder for the event
+ */
 void EventDialog::setReminder()
 {
     QDate date = event->eventDate;

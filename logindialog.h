@@ -7,6 +7,9 @@ namespace Ui {
 class LoginDialog;
 }
 
+/**
+ * @brief The LoginDialog class handles the dialog for user login/registration
+ */
 class LoginDialog : public QDialog
 {
     Q_OBJECT

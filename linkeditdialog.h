@@ -9,6 +9,9 @@ namespace Ui {
 class LinkEditDialog;
 }
 
+/**
+ * @brief The LinkEditDialog class handles the context menu style dialog to modify links
+ */
 class LinkEditDialog : public QWidget
 {
     Q_OBJECT

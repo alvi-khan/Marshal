@@ -52,6 +52,9 @@ void FileManager::createURLBlock(QString fileName, QString filePath)
     DisplayManager::createUrl(openFile+"/"+fileName+".url");
 }
 
+/**
+ * @brief FileManager::writeToFile overwrites file with new content
+ */
 void FileManager::writeToFile(QString filePath, QString content)
 {
     QFile file(filePath);
@@ -66,6 +69,9 @@ void FileManager::writeToFile(QString filePath, QString content)
     file.close();
 }
 
+/**
+ * @brief FileManager::appendToFile adds data to existing content of file
+ */
 void FileManager::appendToFile(QString filePath, QString content)
 {
     QFile file(filePath);

@@ -8,6 +8,9 @@ namespace Ui {
 class RemindersContainer;
 }
 
+/**
+ * @brief The RemindersContainer class handles the container for individual reminders
+ */
 class RemindersContainer : public QDialog
 {
     Q_OBJECT

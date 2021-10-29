@@ -27,6 +27,9 @@ Reminder::~Reminder()
     delete ui;
 }
 
+/**
+ * @brief Reminder::expire sets reminder styling to expired reminder style
+ */
 void Reminder::expire()
 {
     expired = true;
@@ -38,6 +41,9 @@ void Reminder::expire()
                    QFrame#container:hover{background-color: #90732434}");
 }
 
+/**
+ * @brief Reminder::unexpire sets reminder styling to unexpired reminder style
+ */
 void Reminder::unexpire()
 {
    expired = false;
@@ -49,6 +55,9 @@ void Reminder::unexpire()
                   QFrame#container:hover{background-color: #903E3E3E}");
 }
 
+/**
+ * @brief Reminder::setTimer sets a reminder
+ */
 void Reminder::setTimer()
 {
     int millisecondsDiff = QDateTime::currentDateTime().msecsTo(reminderTime);
@@ -61,29 +70,37 @@ void Reminder::setTimer()
     }
 }
 
+/**
+ * @brief Reminder::mouseReleaseEvent opens page for reminder's event
+ * @param event
+ */
 void Reminder::mouseReleaseEvent(QMouseEvent *event)
 {
     MainWindow::window->revealMainPage();
     DisplayManager::openFileFromPath(eventPath.section("/", 0, -2), this->ui->eventName->text());
-    if (expired)    RemindersContainer::removeReminder(this);
+    if (expired)    RemindersContainer::removeReminder(this);   // expired reminders are deleted when opened
     RemindersContainer::hideContainer();
     QWidget::mouseReleaseEvent(event);
 }
 
 void Reminder::setEventPath(QString eventPath)
 {
+    // update reminder tracker
     QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
     FileManager::updateFileTracker(remindersStorage, Reminder::eventPath, eventPath);
+
     Reminder::eventPath = eventPath;
     this->ui->eventName->setText(eventPath.section("/", -2, -2));
 }
 
 void Reminder::setEventTime(QDateTime dateTime)
 {
+    // update reminder tracker
     QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
     QString data = FileManager::readFromFile(remindersStorage);
     data.replace(reminderTime.toString() + "\n" + eventPath, dateTime.toString() + "\n" + eventPath);
     FileManager::writeToFile(remindersStorage, data);
+
     reminderTime = dateTime;
     this->ui->date->setText(reminderTime.date().toString("dd/MM/yyyy"));
     this->ui->time->setText(reminderTime.time().toString("hh:mm"));

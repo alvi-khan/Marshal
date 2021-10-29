@@ -6,6 +6,9 @@
 #include <QSqlDatabase>
 #include <QMessageBox>
 
+/**
+ * @brief The DatabaseManager class manages database communications
+ */
 class DatabaseManager : public QObject
 {
     Q_OBJECT

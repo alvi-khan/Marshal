@@ -65,13 +65,16 @@ void Calendar::insertDayNames()
     this->verticalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
 }
 
+/**
+ * @brief Calendar::populateDates retrieves all data for the current month's dates
+ */
 void Calendar::populateDates()
 {
     clearCells();
 
     QDate date(selectedYear, selectedMonth, 1);
     QDate end(selectedYear, selectedMonth, date.daysInMonth());
-
+    // adding dates
     while (date <= end)
     {
         int row = weekInMonth(date) + 2;
@@ -85,6 +88,9 @@ void Calendar::populateDates()
     populateMonthEvents();
 }
 
+/**
+ * @brief Calendar::heightReset re-adjusts heights of calendar rows
+ */
 void Calendar::heightReset()
 {
     this->resizeRowsToContents();
@@ -102,6 +108,9 @@ void Calendar::clearCells()
                 removeCellWidget(i, j);
 }
 
+/**
+ * @brief Calendar::weekInMonth retrieves week number for a particular date in the current month
+ */
 int Calendar::weekInMonth(QDate date)
 {
     QDate monthStart(date.year(), date.month(), 1);
@@ -119,6 +128,9 @@ void Calendar::setCurrentDateFormat(QLineEdit *dateText)
                             "max-width: 18px;");
 }
 
+/**
+ * @brief Calendar::createWidgetWithItems creates a widget with a layout containing a list of widgets
+ */
 QWidget* Calendar::createWidgetWithItems(QBoxLayout *layout, QList<QWidget *> widgets)
 {
     foreach (QWidget *widget, widgets)
@@ -140,7 +152,7 @@ QWidget* Calendar::createDateText(int date)
     if (today.year() == selectedYear && today.month() == selectedMonth && date == today.day())
         setCurrentDateFormat(lineEdit);
 
-    lineEdit->setAttribute(Qt::WA_TransparentForMouseEvents);
+    lineEdit->setAttribute(Qt::WA_TransparentForMouseEvents);   // lets clicks pass to actual cell beneath
 
     QWidget *widget = createWidgetWithItems(new QVBoxLayout(), {lineEdit});
     widget->layout()->setAlignment(Qt::AlignTop);
@@ -215,10 +227,13 @@ QDate Calendar::getDateFromCell(int row, int column)
     return date;
 }
 
+/**
+ * @brief Calendar::newEventPrompt shows a new event prompt at a particular cell
+ */
 void Calendar::newEventPrompt(int row, int column)
 {
     QDate date = getDateFromCell(row, column);
-    if (!date.isValid())    return;
+    if (!date.isValid())    return; // non-date cell
 
     this->cellWidget(row, column)->setStyleSheet("* {background: #4D4D4D; border-radius: 10px}");
 
@@ -231,11 +246,17 @@ void Calendar::newEventPrompt(int row, int column)
     connect(eventDialog, &EventDialog::hidden, [=] { clearSelectedCell(this->cellWidget(row, column)); });
 }
 
+/**
+ * @brief Calendar::clearSelectedCell removes cell selection formatting
+ */
 void Calendar::clearSelectedCell(QWidget *cellWidget)
 {
     cellWidget->setStyleSheet("*:hover {background: #3E3E3E; border-radius: 10px}");
 }
 
+/**
+ * @brief Calendar::cleanupReminders removes any reminders for current calendar
+ */
 void Calendar::cleanupReminders()
 {
     QString newData = "";

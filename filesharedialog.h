@@ -7,6 +7,9 @@ namespace Ui {
 class FileShareDialog;
 }
 
+/**
+ * @brief The FileShareDialog class handles the dialog shown to pick a user to share with
+ */
 class FileShareDialog : public QDialog
 {
     Q_OBJECT

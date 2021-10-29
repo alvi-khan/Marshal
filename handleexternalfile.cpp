@@ -8,7 +8,9 @@ HandleExternalFile::HandleExternalFile()
 {
 
 }
-
+/**
+ * @brief HandleExternalFile::addExternalFile prompts for file attachment and creates block with attachment
+ */
 void HandleExternalFile::addExternalFile()
 {
     QString prompt = QObject::tr("Open File");

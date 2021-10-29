@@ -50,11 +50,12 @@ void FileShareDialog::init()
     username = "";
 }
 
-
+/**
+ * @brief FileShareDialog::on_username_textChanged generate autocomplete list
+ */
 void FileShareDialog::on_username_textChanged(const QString &arg1)
 {
     QList<QString> users = DatabaseManager::getUserList();
-
 
     QCompleter *userSuggestions = new QCompleter(users, this);
     userSuggestions->setCaseSensitivity(Qt::CaseInsensitive);

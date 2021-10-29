@@ -49,6 +49,12 @@ void DatabaseManager::createTable(QString table)
     executeQuery(query);
 }
 
+/**
+ * @brief DatabaseManager::uploadFile uploads a local file to a database table
+ * @param filePath is the local path to the file
+ * @param tableName is the name of the table to which the file should be uploaded
+ * @param shareFilePath is the relative path to the shared file if any
+ */
 void DatabaseManager::uploadFile(QString filePath, QString tableName, QString shareFilePath)
 {
     QString relativePath = filePath;
@@ -56,7 +62,7 @@ void DatabaseManager::uploadFile(QString filePath, QString tableName, QString sh
 
     if (tableName.endsWith("_shared"))
     {
-        relativePath.replace(shareFilePath, "");
+        relativePath.replace(shareFilePath, "");    // all shared files should be put at root
         if (relativePath.section("/", 0, 1) == "/Private")
             relativePath = "/Shared/" + relativePath.section("/", 2, -1);
     }
@@ -65,6 +71,11 @@ void DatabaseManager::uploadFile(QString filePath, QString tableName, QString sh
     executeQuery(query);
 }
 
+/**
+ * @brief DatabaseManager::saveFile saves a file to local storage
+ * @param filePath is the local path to which the file will be saved
+ * @param data is the file's data
+ */
 void DatabaseManager::saveFile(QString filePath, QByteArray data)
 {
     QString folder = filePath.section("/", 0, -2);
@@ -77,6 +88,9 @@ void DatabaseManager::saveFile(QString filePath, QByteArray data)
     file.close();
 }
 
+/**
+ * @brief DatabaseManager::downloadTo downloads the contents of a table to a directory
+ */
 void DatabaseManager::downloadTo(QString directory, QString table)
 {
     QString queryString("SELECT * FROM " + table + ";");
@@ -91,6 +105,10 @@ void DatabaseManager::downloadTo(QString directory, QString table)
     }
 }
 
+/**
+ * @brief DatabaseManager::uploadTo uploads the contents of a table to a directory
+ * @param shareFilePath is the shared file path if any
+ */
 void DatabaseManager::uploadTo(QString table, QString directory, QString shareFilePath)
 {
     QDirIterator it(directory, QDir::Files | QDir::NoDotAndDotDot,  QDirIterator::Subdirectories);
@@ -174,6 +192,7 @@ void DatabaseManager::loginUser(QString username)
 
     FileManager::writeToFile(QDir::currentPath() + "/user.dat", username);
 
+    // synchronizing in background
     MainWindow::window->toggleLoadingGIF();
     syncing = true;
     QFuture<void> task = QtConcurrent::run(syncFiles);
@@ -195,6 +214,9 @@ void DatabaseManager::logoutUser()
     SidebarManager::reloadSidebar();
 }
 
+/**
+ * @brief DatabaseManager::getSharedUsername reveals dialog to pich user to share with
+ */
 QString DatabaseManager::getSharedUsername()
 {
     FileShareDialog *fileShareDialog = new FileShareDialog();
@@ -239,6 +261,7 @@ void DatabaseManager::shareFile()
     QString sharedFile = FileManager::openFile;
     QString sharedFilePath = sharedFile.section("/", 0, -2);
 
+    // share file in background
     MainWindow::window->toggleLoadingGIF();
     syncing = true;
     QFuture<void> task1 = QtConcurrent::run(createTable, sharedTable);

@@ -11,6 +11,9 @@
 #include <QLineEdit>
 #include <QPair>
 
+/**
+ * @brief The Calendar class contains methods and properties for calendar blocks
+ */
 class Calendar : public QTableWidget
 {
     Q_OBJECT

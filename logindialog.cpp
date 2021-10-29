@@ -63,6 +63,10 @@ void LoginDialog::on_cancelBtn_clicked()
     reject();
 }
 
+/**
+ * @brief LoginDialog::closeEvent triggers as soon as dialog closes
+ * @param event
+ */
 void LoginDialog::closeEvent(QCloseEvent *event)
 {
     MainWindow::window->setGraphicsEffect(nullptr);
@@ -85,13 +89,13 @@ void LoginDialog::on_logoutBtn_clicked()
     this->ui->loginBtn->show();
     this->ui->regBtn->show();
 
-    adjustSize();
-    move(MainWindow::window->geometry().center() - rect().center());
+    adjustSize();   // adjusts size to fit content
+    move(MainWindow::window->geometry().center() - rect().center());    // center window
 }
 
 void LoginDialog::init()
 {
-    loadingMovie = new QMovie(":/Icons/Resources/Icons/Loading.gif");
+    loadingMovie = new QMovie(":/Icons/Resources/Icons/Loading.gif");   // loading icon for synchronization indication
     connect(loadingMovie, &QMovie::frameChanged, [=] {
         if (!DatabaseManager::syncing)  this->ui->loadingText->hide();
         else                            this->ui->loadingText->show();
@@ -119,6 +123,6 @@ void LoginDialog::init()
         this->ui->welcomeLabel->setText("Welcome " + DatabaseManager::username + "!");
     }
 
-    adjustSize();
+    adjustSize();   // adjusts size to fit content
 }
 

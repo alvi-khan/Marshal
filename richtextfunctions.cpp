@@ -18,6 +18,9 @@ void RichTextFunctions::init(QPushButton *boldButton, QPushButton *italicButton,
     RichTextFunctions::underlineButton = underlineButton;
 }
 
+/**
+ * @brief RichTextFunctions::toggleButton toggles button styling
+ */
 void RichTextFunctions::toggleButton(QPushButton *button, bool active)
 {
     if(active)
@@ -63,9 +66,12 @@ void RichTextFunctions::underlineText(QTextBrowser *block)
     block->setFocus();
 }
 
+/**
+ * @brief RichTextFunctions::selectionChange updates button highlights based on current selection
+ */
 void RichTextFunctions::selectionChange(QTextBrowser *block)
 {
-    if (block->isReadOnly())    return;
+    if (block->isReadOnly())    return; // ignore non-text blocks
     QFont font = block->currentFont();
     QString selection = block->textCursor().selection().toHtml();
     if (selection.contains("font-weight:700") || font.bold())

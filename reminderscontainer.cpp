@@ -38,7 +38,7 @@ RemindersContainer::~RemindersContainer()
 void RemindersContainer::init()
 {
     activeContainer = this;
-    foreach(Reminder *reminder, reminders)
+    foreach(Reminder *reminder, reminders)  // add reminders
     {
         this->ui->mainArea->layout()->addWidget(reminder);
         reminder->show();
@@ -60,6 +60,11 @@ void RemindersContainer::hideContainer()
     }
 }
 
+/**
+ * @brief RemindersContainer::addReminder adds a reminder to the visible list
+ * @param eventPath
+ * @param dateTime
+ */
 void RemindersContainer::addReminder(QString eventPath, QDateTime dateTime)
 {
     Reminder *reminder = new Reminder(MainWindow::window, eventPath, dateTime);
@@ -67,6 +72,9 @@ void RemindersContainer::addReminder(QString eventPath, QDateTime dateTime)
     reminder->hide();
 }
 
+/**
+ * @brief RemindersContainer::removeReminder deletes reminder from visilble list and tracker
+ */
 void RemindersContainer::removeReminder(Reminder *reminder)
 {
     reminders.removeOne(reminder);
@@ -75,6 +83,9 @@ void RemindersContainer::removeReminder(Reminder *reminder)
         updateExpiredReminderCount(-1);
 }
 
+/**
+ * @brief RemindersContainer::removeReminder deletes reminder from visilble list and tracker
+ */
 void RemindersContainer::removeReminder(QString eventPath)
 {
     foreach(Reminder *reminder, reminders)
@@ -87,6 +98,9 @@ void RemindersContainer::removeReminder(QString eventPath)
     }
 }
 
+/**
+ * @brief RemindersContainer::deleteReminder removes reminder from reminder tracker
+ */
 void RemindersContainer::deleteReminder(QString eventPath, QDateTime dateTime)
 {
     QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
@@ -95,6 +109,9 @@ void RemindersContainer::deleteReminder(QString eventPath, QDateTime dateTime)
     FileManager::writeToFile(remindersStorage, data);
 }
 
+/**
+ * @brief RemindersContainer::refreshReminderList cleans up invalid reminders
+ */
 void RemindersContainer::refreshReminderList()
 {
     int expiryCount = 0;
@@ -107,6 +124,11 @@ void RemindersContainer::refreshReminderList()
     updateExpiredReminderCount(-(expiredReminders - expiryCount));
 }
 
+/**
+ * @brief RemindersContainer::createNewReminder adds reminder to tracker
+ * @param eventPath
+ * @param dateTime
+ */
 void RemindersContainer::createNewReminder(QString eventPath, QDateTime dateTime)
 {
     QString remindersStorage = QCoreApplication::applicationDirPath() + "/reminders.dat";
@@ -131,6 +153,10 @@ void RemindersContainer::retrieveReminders()
     file.close();
 }
 
+/**
+ * @brief RemindersContainer::updateExpiredReminderCount sets the number of expired reminders
+ * @param count is the value to change by (+ or -)
+ */
 void RemindersContainer::updateExpiredReminderCount(int count)
 {
     expiredReminders += count;
@@ -149,6 +175,9 @@ void RemindersContainer::updateExpiredReminderCount(int count)
     }
 }
 
+/**
+ * @brief RemindersContainer::eventRenamed finds the reminder which was renamed and renames it
+ */
 void RemindersContainer::eventRenamed(QString oldPath, QString newPath)
 {
     foreach (Reminder *reminder, reminders)
@@ -161,6 +190,9 @@ void RemindersContainer::eventRenamed(QString oldPath, QString newPath)
     }
 }
 
+/**
+ * @brief RemindersContainer::updateReminderTime finds the reminder which had its time changed and changes the time
+ */
 void RemindersContainer::updateReminderTime(QString eventPath, QDateTime reminderTime)
 {
     foreach(Reminder *reminder, reminders)

@@ -43,22 +43,28 @@ void SettingsDialog::on_buttonBox_accepted()
     QString directory = this->ui->directoryTextField->text();
     if (directory.endsWith("/")) directory.chop(1);
 
+    // update variables everywhere
     FileManager::homeDirectory = directory + "/Marshal User Files/Private";
     SidebarManager::homeDirectory = FileManager::homeDirectory;
     SidebarManager::sharedDirectory = directory + "/Marshal User Files/Shared";
     DatabaseManager::homeDirectory = FileManager::homeDirectory.section("/", 0, -2);
     DatabaseManager::privateDirectory = DatabaseManager::homeDirectory + "/Private";
     DatabaseManager::sharedDirectory = DatabaseManager::homeDirectory + "/Shared";
+
+    // update settings configuration file
     QString settingsFilePath = QCoreApplication::applicationDirPath() + "/settings.conf";
     FileManager::writeToFile(settingsFilePath, FileManager::homeDirectory);
+
+    // move content to new directory
     QString newDir = directory + "/Marshal User Files";
     QDir dir;
     dir.mkpath(directory);
     dir.rename(oldDir, newDir);
+
+    // close dialog
     MainWindow::window->setGraphicsEffect(nullptr);
     accept();
 }
-
 
 void SettingsDialog::on_buttonBox_rejected()
 {

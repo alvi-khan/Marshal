@@ -9,6 +9,9 @@ namespace Ui {
 class EventDialog;
 }
 
+/**
+ * @brief The EventDialog class handles the new calendar event dialog
+ */
 class EventDialog : public QWidget
 {
     Q_OBJECT
